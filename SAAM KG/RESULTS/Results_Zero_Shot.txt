@@ -1,0 +1,161 @@
+
+Q1 incorrect
+SELECT ?homepage
+WHERE {
+  ?artwork a <http://example.org/Artwork>.
+  ?artwork <http://example.org/hasHomepage> ?homepage.
+}
+
+Q2 incorrect
+SELECT ?holder
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  ?artwork crm:P50_has_current_keeper ?holder.
+}
+
+Q3 incorrect
+SELECT ?image
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  ?artwork crm:P138i_has_representation ?image.
+}
+
+Q4 incorrect
+SELECT DISTINCT ?unit
+WHERE {
+  ?measurement crm:P2_has_type ?unit.
+}
+
+Q5 CORRECT
+SELECT ?artist (COUNT(?production) AS ?productionCount)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist.
+}
+GROUP BY ?artist
+
+Q6 CORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?distinctArtists)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist.
+}
+
+Q7 CORRECT
+SELECT DISTINCT ?place
+WHERE {
+  ?event crm:P7_took_place_at ?place.
+}
+
+Q8 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object;
+           crm:P3_has_note ?note.
+  FILTER regex(?note, "Evening", "i").
+}
+
+Q9 incorrect
+SELECT ?reference
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  ?artwork crm:P67_refers_to ?reference.
+}
+
+Q10 incorrect
+SELECT ?preferredIdentifier
+WHERE {
+  ?artist a crm:E21_Person.
+  ?artist crm:P1_is_identified_by ?identifier.
+  ?identifier a crm:E42_Identifier;
+              crm:P2_has_type/crm:P3_has_note "preferred".
+}
+
+Q11 incorrect
+
+SELECT ?birthPlace
+WHERE {
+  ?artist a crm:E21_Person.
+  ?artist crm:P98i_was_born ?birthEvent.
+  ?birthEvent crm:P7_took_place_at ?birthPlace.
+}
+
+Q12 incorrect
+
+SELECT ?deathPlace
+WHERE {
+  ?artist a crm:E21_Person.
+  ?artist crm:P100i_died_in ?deathEvent.
+  ?deathEvent crm:P7_took_place_at ?deathPlace.
+}
+
+q13 incorrect
+ 
+SELECT ?creator
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  ?artwork crm:P14_carried_out_by ?creator.
+}
+
+q14 incorrect
+SELECT ?component
+WHERE {
+  ?artist a crm:E21_Person.
+  ?artist crm:P131_is_identified_by ?name.
+  ?name crm:P2_has_type/crm:P3_has_note ?component.
+}
+
+q15 incorrect
+
+SELECT ?component ?dimension
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  ?artwork crm:P43_has_dimension/crm:P32_used_general_technique ?component.
+  ?component crm:P43_has_dimension ?dimension.
+}
+
+q16 incorrect
+SELECT ?birthPlace (COUNT(?artist) AS ?artistCount)
+WHERE {
+  ?artist a crm:E21_Person;
+          crm:P98i_was_born/crm:P7_took_place_at ?birthPlace.
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?artistCount)
+LIMIT 1
+
+q17 incorrect
+SELECT DISTINCT ?referenceType
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object;
+           crm:P67_refers_to/crm:P2_has_type ?referenceType.
+}
+
+q18 incorrect
+SELECT ?deathPlace (COUNT(DISTINCT ?artist) AS ?artistCount)
+WHERE {
+  ?artist a crm:E21_Person;
+          crm:P100i_died_in/crm:P7_took_place_at ?deathPlace.
+}
+GROUP BY ?deathPlace
+
+q19 incorrect
+SELECT ?birthPlace
+WHERE {
+  ?artist a crm:E21_Person;
+          crm:P98i_was_born/crm:P7_took_place_at ?birthPlace.
+  FILTER regex(?birthPlace, "greece", "i").
+}
+
+q20 incorrect
+SELECT (COUNT(DISTINCT ?artist) AS ?artistCount)
+WHERE {
+  ?artist a crm:E21_Person;
+          crm:P100i_died_in/crm:P7_took_place_at ?deathPlace.
+  FILTER regex(?deathPlace, "athens", "i").
+  FILTER NOT EXISTS {
+    FILTER regex(?deathPlace, "greece", "i").
+  }
+}
+
+By using the CIDOC-CRM ontology, please generate
+only a SPARQL query (without explanation) for the question 
+Give me the number of artists died in a place that contain the word "athens" but not the word "greece" 

@@ -1,0 +1,80 @@
+You are given a set of properties and classes.
+#Properties###
+rdf:type
+rdfs:subClassOf
+rdfs:subPropertyOf
+dct:created
+dct:modified
+rdfs:label
+rdf:first
+rdf:rest
+rdfs:domain
+rdfs:range
+rdfs:comment
+geo:asWKT
+geo:hasGeometry
+rdf:value
+skos:exactMatch
+crm:P106_is_composed_of
+crm:P107i_is_current_or_former_member_of
+crm:P129i_is_subject_of
+crm:P131_is_identified_by
+crm:P1_is_identified_by
+crm:P2_has_type
+crm:P4_has_time-span
+crm:P7_took_place_at
+crm:P82a_begin_of_the_begin
+crm:P82b_end_of_the_end
+crm:P92i_was_brought_into_existence_by
+crm:P93i_was_taken_out_of_existence_by
+crm:P102_has_title
+crm:P108i_was_produced_by
+crm:P41i_was_classified_by
+crm:P46_is_composed_of
+crm:P52_has_current_owner
+crm:P67i_is_referred_to_by
+crm:P91_has_unit
+foaf:depiction
+foaf:homepage
+skos:broadMatch
+skos:prefLabel
+crm:P14_carried_out_by
+crm:P21_had_general_purpose
+crm:P42_assigned
+crm:P43_has_dimension
+foaf:primaryTopic
+foaf:page
+###End of Properties###
+###Classes###
+geo:Geometry
+wgs84:Feature
+crm:E38_Image
+foaf:Document
+rdfs:Class
+crm:E52_Time-Span
+crm:E64_End_of_Existence
+crm:E82_Actor_Appellation
+crm:E39_Actor
+crm:E33_Linguistic_Object
+crm:E63_Beginning_of_Existence
+crm:E42_Identifier
+crm:E55_Type
+crm:E74_Group
+crm:E53_Place
+crm:E40_Legal_Body
+rdf:Property
+crm:E12_Production
+crm:E35_Title
+crm:E17_Type_Assignment
+crm:E18_Physical_Thing
+crm:E54_Dimension
+void:Dataset
+crm:E22_Man-Made_Object
+crm:E58_Measurement_Unit
+void:DatasetDescription
+sh:NodeShape
+###End of Classes###
+By using these properties and classes
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:  
+The end date of the production of an artwork and the death place of the artist

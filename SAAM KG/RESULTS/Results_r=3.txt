@@ -1,0 +1,447 @@
+Q1 INCORRECT - additional properties-correct path
+SELECT ?homepage 
+WHERE {
+  ?artwork crm:P102_has_title ?title .
+  ?artwork foaf:homepage ?homepage .
+}
+
+Q2 CORRECT
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+SELECT DISTINCT ?holder
+WHERE {
+  ?artwork crm:P52_has_current_owner ?holder .
+}
+
+q3 incorrect - class as property - correct path
+SELECT ?image
+WHERE {
+  ?artwork crm:E22_Man-Made_Object/foaf:depiction ?image .
+}
+
+Q4 CORRECT
+SELECT DISTINCT ?measurementUnitLabel
+WHERE {
+  ?measurementUnit rdf:type crm:E58_Measurement_Unit.
+  ?measurementUnit skos:prefLabel ?measurementUnitLabel.
+}
+
+q5 CORRECT
+SELECT ?artist (COUNT(DISTINCT ?production) AS ?productionCount)
+WHERE {
+  ?production crm:P14_carried_out_by  ?artist.
+  ?production a crm:E12_Production.
+}
+GROUP BY ?artist
+
+Q6 correct
+SELECT (COUNT(DISTINCT ?artist) AS ?distinctArtists)
+WHERE {
+  ?artist a crm:E39_Actor .
+}
+
+Q7 CORRECT
+
+SELECT DISTINCT ?place
+WHERE {
+  ?e22 crm:P7_took_place_at ?place .
+}
+
+Q8 incorrect - incorrect path
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P102_has_title ?title .
+  FILTER(contains(?title, "Evening"))
+}
+
+Q9 INCORRECT - incorrect path
+
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P39_has_actor/crm:P2_has_type ?type.
+}
+
+Q10 CORRECT
+SELECT ?preferredIdentifier
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P131_is_identified_by ?identifier .
+  ?identifier rdf:value ?preferredIdentifier .
+}
+
+Q11 CORRECT
+SELECT ?birthPlaceLabel WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?birthPlaceLabel .
+}
+ 
+Q12 CORRECT
+SELECT ?deathPlaceLabel
+WHERE {
+  ?artist crm:P14_carried_out_by ?actor .
+  ?actor crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+  ?deathPlace rdfs:label ?deathPlaceLabel .
+}
+
+
+q13 CORRECT
+SELECT ?creator
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?actor .
+  ?actor crm:P131_is_identified_by ?identifier .
+  ?identifier rdf:value ?creator .
+}
+
+Q14 INCORRECT - incorrect path
+SELECT DISTINCT ?component
+WHERE {
+  crm:E39_Actor crm:P131_is_identified_by/crm:E82_Actor_Appellation/rdf:value ?component .
+}
+
+Q15 CORRECT
+SELECT DISTINCT ?dimension
+WHERE {
+  ?artwork crm:P46_is_composed_of/crm:P43_has_dimension ?dimension .
+}
+ 
+Q16 CORRECT
+SELECT ?birthPlace (COUNT(?artist) AS ?artistCount)
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?artistCount)
+LIMIT 1
+
+Q17 incorrect - incorrect path
+SELECT DISTINCT ?typeOfReference
+WHERE {
+  ?artwork crm:P67i_is_referred_to_by ?reference.
+  ?reference rdf:value ?typeOfReference.
+}
+
+Q18 INCORRECT - incorrect path
+SELECT ?deathPlace (COUNT(DISTINCT ?artist) as ?numberOfArtists)
+WHERE {
+  ?artist crm:P107i_is_current_or_former_member_of/crm:P93i_was_taken_out_of_existence_by/crm:E64_End_of_Existence/crm:P7_took_place_at ?deathPlace.
+}
+GROUP BY ?deathPlace
+ORDER BY DESC(?numberOfArtists)
+
+q19 incorrect - incorrect path
+SELECT DISTINCT ?birthPlaceLabel
+WHERE {
+  ?artist crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at ?birthPlace.
+  ?birthPlace rdfs:label ?birthPlaceLabel.
+  FILTER (regex(?birthPlaceLabel, "greece", "i"))
+}
+
+Q20 CORRECT
+SELECT (COUNT(DISTINCT ?artist) as ?count)
+WHERE {
+  ?artist crm:P93i_was_taken_out_of_existence_by ?endEvent .
+  ?endEvent crm:P7_took_place_at ?place .
+  ?place rdfs:label ?placeLabel .
+  FILTER(CONTAINS(?placeLabel, "Athens") && !CONTAINS(?placeLabel, "Greece"))
+}
+
+Q21 correct
+SELECT ?artwork ?endTime
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?endTime.
+}
+
+q22 incorrect
+SELECT ?artwork ?startTime
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?startTime .
+}
+
+q23 correct
+SELECT ?birthDate
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?birthDate .
+}
+
+q24 correct
+SELECT ?deathDate
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P93i_was_taken_out_of_existence_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?deathDate .
+}
+
+q25 correct
+SELECT DISTINCT ?dimensionType
+WHERE {
+  ?artwork crm:E46i_is_composed_of ?component .
+  ?component crm:P43_has_dimension ?dimension .
+  ?dimension crm:P2_has_type ?dimensionType .
+}
+
+q26 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:E12_Production/crm:P4_has_time-span/crm:E52_Time-Span/crm:P82a_begin_of_the_begin ?start_date .
+  FILTER (?start_date > "1934-01-01"^^xsd:date)
+}
+
+q27 incorrect
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?begin.
+  FILTER NOT EXISTS { ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P63_has_beginning/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?birth }
+}
+
+q28 correct
+SELECT ?artist
+WHERE {
+  ?artist a crm:E39_Actor.
+  FILTER NOT EXISTS {
+    ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace.
+  }
+}
+
+q29  correct
+SELECT ?artistIdentifier
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P131_is_identified_by ?artistIdentifier .
+  ?artwork a crm:E22_Man-Made_Object .
+}
+
+q30 incorrect
+SELECT ?nationalityLabel
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P107i_is_current_or_former_member_of ?group .
+  ?group crm:P2_has_type/skos:prefLabel "Nationality"@en .
+  ?creator rdfs:label ?nationalityLabel .
+}
+
+q31 correct
+SELECT DISTINCT ?birthPlaceLabel
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P92i_was_brought_into_existence_by ?beginning .
+  ?beginning crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?birthPlaceLabel .
+}
+
+q32 correct
+SELECT ?deathPlaceLabel
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+  ?deathPlace rdfs:label ?deathPlaceLabel .
+}
+
+q33 correct
+SELECT ?placeOfBirth (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?placeOfBirth.
+  ?placeOfBirth a crm:E53_Place.
+}
+GROUP BY ?placeOfBirth
+ORDER BY DESC(?artworkCount)
+
+q34 incorrect
+
+SELECT ?birthPlace (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artist crm:P14_carried_out_by ?actor .
+  ?actor crm:P131_is_identified_by/crm:P106_is_composed_of/crm:P2_has_type/crm:E55_Type/rdf:value "artist" .
+  ?actor crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+q35 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  FILTER NOT EXISTS { ?birthPlace rdfs:label ?birthPlaceLabel }
+}
+
+q36 correct
+SELECT (COUNT(DISTINCT ?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P93i_was_taken_out_of_existence_by ?actor .
+  ?actor crm:P7_took_place_at ?deathPlace .
+}
+
+q37 correct
+SELECT (COUNT(DISTINCT ?artwork) as ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at/rdfs:label ?birthPlaceLabel.
+  FILTER(CONTAINS(?birthPlaceLabel, "California"))
+}
+ 
+Q38 correct
+SELECT ?birthDate
+WHERE {
+  ?production crm:P108i_was_produced_by ?actor .
+  ?actor crm:P14_carried_out_by ?creator .
+  ?creator crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?birthPlace .
+  ?birthEvent crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?birthDate .
+}
+
+Q39 correct
+SELECT ?deathDate
+WHERE {
+  ?production crm:P108i_was_produced_by ?producer .
+  ?producer crm:P14_carried_out_by ?actor .
+  ?actor crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?deathDate .
+}
+
+Q40 INCORRECT
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:E12_Production/crm:P14_carried_out_by/crm:E39_Actor/crm:P93i_was_taken_out_of_existence_by/crm:E64_End_of_Existence/crm:P7_took_place_at/crm:E53_Place/rdfs:label ?deathPlaceLabel.
+  FILTER(CONTAINS(UCASE(?deathPlaceLabel), "BERLIN") = FALSE)
+}
+
+Q41 correct
+SELECT ?artist1 ?artist2 ?birthPlace
+WHERE {
+  ?artist1 crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace.
+  ?artist2 crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace.
+  FILTER (?artist1 != ?artist2)
+}
+
+Q42 correct
+SELECT ?artist1 ?artist2 ?date
+WHERE {
+  ?artist1 a crm:E39_Actor ;
+           crm:P93i_was_taken_out_of_existence_by ?end1 ;
+           rdfs:label ?label1 .
+  ?end1 crm:P4_has_time-span ?timeSpan1 .
+  ?timeSpan1 crm:P82b_end_of_the_end ?date .
+
+  ?artist2 a crm:E39_Actor ;
+           crm:P93i_was_taken_out_of_existence_by ?end2 ;
+           rdfs:label ?label2 .
+  ?end2 crm:P4_has_time-span ?timeSpan2 .
+  ?timeSpan2 crm:P82b_end_of_the_end ?date .
+
+  FILTER (?artist1 != ?artist2)
+}
+ORDER BY ?date
+
+Q43 incorrect
+SELECT ?artist1 ?artist2 ?birthPlace ?deathPlace
+WHERE {
+  ?artist1 a crm:E39_Actor ;
+           crm:P92i_was_brought_into_existence_by ?birthEvent1 ;
+           crm:P93i_was_taken_out_of_existence_by ?deathEvent1 .
+  
+  ?birthEvent1 crm:P7_took_place_at ?birthPlaceEvent1 .
+  ?birthPlaceEvent1 crm:P53_has_former_or_current_location ?birthPlace .
+
+  ?deathEvent1 crm:P7_took_place_at ?deathPlaceEvent1 .
+  ?deathPlaceEvent1 crm:P53_has_former_or_current_location ?deathPlace .
+
+  ?artist2 a crm:E39_Actor ;
+           crm:P92i_was_brought_into_existence_by ?birthEvent2 ;
+           crm:P93i_was_taken_out_of_existence_by ?deathEvent2 .
+  
+  ?birthEvent2 crm:P7_took_place_at ?birthPlaceEvent2 .
+  ?birthPlaceEvent2 crm:P53_has_former_or_current_location ?birthPlace .
+
+  ?deathEvent2 crm:P7_took_place_at ?deathPlaceEvent2 .
+  ?deathPlaceEvent2 crm:P53_has_former_or_current_location ?deathPlace .
+
+  FILTER (?artist1 != ?artist2)
+}
+
+q44 incorrect
+SELECT ?artist1 ?artist2 ?nationality ?birthPlace
+WHERE {
+  ?artist1 a crm:E39_Actor ;
+           crm:P131_is_identified_by/crm:P2_has_type/crm:E82_Actor_Appellation/crm:P106_is_composed_of/crm:E82_Actor_Appellation/crm:P2_has_type/crm:E55_Type/crm:P1_is_identified_by/crm:E42_Identifier/crm:P2_has_type/crm:E58_Measurement_Unit/rdfs:label ?nationality ;
+           crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at/rdfs:label ?birthPlace .
+  
+  ?artist2 a crm:E39_Actor ;
+           crm:P131_is_identified_by/crm:P2_has_type/crm:E82_Actor_Appellation/crm:P106_is_composed_of/crm:E82_Actor_Appellation/crm:P2_has_type/crm:E55_Type/crm:P1_is_identified_by/crm:E42_Identifier/crm:P2_has_type/crm:E58_Measurement_Unit/rdfs:label ?nationality ;
+           crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at/rdfs:label ?birthPlace .
+  
+  FILTER (?artist1 != ?artist2)
+}
+
+q45 correct
+SELECT ?start_date ?end_date
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?start_date ;
+            crm:P82b_end_of_the_end ?end_date .
+}
+
+q46 incorrect
+SELECT DISTINCT ?artwork ?artistBirthPlace
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at/rdfs:label ?artworkStartTimeLabel .
+  FILTER (xsd:integer(?artworkStartTimeLabel) > 1934)
+  
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P131_is_identified_by/crm:E82_Actor_Appellation/crm:P106_is_composed_of/crm:E82_Actor_Appellation/crm:P2_has_type/crm:E53_Place/rdfs:label ?artistBirthPlace .
+  FILTER (CONTAINS(?artistBirthPlace, "Ireland"))
+}
+
+q47 correct
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           rdfs:label ?label .
+  FILTER(REGEX(?label, "Evening", "i")) .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82b_end_of_the_end ?end .
+  FILTER(xsd:date(?end) > "1950")
+}
+
+q48 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           rdfs:label ?label ;
+           crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P131_is_identified_by/crm:E82_Actor_Appellation ?artist ;
+           crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P131_is_identified_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at/rdfs:label ?birthPlace .
+  FILTER (CONTAINS(?label, "Evening") && CONTAINS(?birthPlace, "france"))
+}
+
+q49 incorrect
+
+SELECT ?artwork ?productionStartDate ?artistBirthDate
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?productionTimeSpan .
+  ?productionTimeSpan crm:P82a_begin_of_the_begin ?productionStartDate .
+  
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P107i_is_current_or_former_member_of ?artist .
+  ?artist crm:P92i_was_brought_into_existence_by ?artistBirthEvent .
+  ?artistBirthEvent crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?artistBirthDate .
+}
+
+q50 correct
+SELECT  ?endDate ?deathPlace
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  ?production crm:P14_carried_out_by ?actor .
+  ?actor crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+}
