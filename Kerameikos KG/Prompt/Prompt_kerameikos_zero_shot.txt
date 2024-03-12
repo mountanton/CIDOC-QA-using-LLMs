@@ -1,0 +1,3 @@
+By using the CIDOC-CRM ontology, please produce
+only a SPARQL query (without explanation) for the question
+Which is the technique that was followed for creating the artwork

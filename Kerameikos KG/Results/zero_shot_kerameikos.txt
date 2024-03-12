@@ -1,0 +1,205 @@
+Q51 incorrect 
+SELECT ?artwork ?shape
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P46F_forms_part_of ?shape .
+  ?shape rdf:type crm:E55_Type .
+}
+
+q52 incorrect
+SELECT ?artwork ?owner
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P24i_changed_ownership_through ?ownershipEvent .
+  ?ownershipEvent rdf:type crm:E8_Acquisition ;
+                  crm:P22_transferred_title_to ?owner .
+}
+
+Q53 correct
+SELECT ?artwork ?component
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P46_is_composed_of ?component .
+}
+
+Q54 correct
+SELECT DISTINCT ?technique
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P32_used_general_technique ?technique .
+}
+
+Q55 correct
+SELECT ?artist (COUNT(?production) as ?productionCount)
+WHERE {
+  ?production a crm:E12_Production ;
+              crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?artist
+
+Q56 correct
+SELECT (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?artist a crm:E21_Person.
+}
+
+q57 incorrect
+SELECT DISTINCT ?place
+WHERE {
+  ?event rdf:type crm:E5_Event ;
+         crm:P7_took_place_at ?place .
+}
+
+Q58 incorrect
+SELECT ?place
+WHERE {
+  ?place rdf:type crm:E53_Place ;
+         crm:P1_is_identified_by / rdf:value ?placeName .
+  FILTER(CONTAINS(LCASE(?placeName), "thebes"))
+}
+
+q59 incorrect
+SELECT ?artist ?influence
+WHERE {
+  ?artist rdf:type crm:E21_Person ;
+          crm:P12i_was_present_at ?activity .
+  ?activity rdf:type crm:E7_Activity ;
+            crm:P11_had_participant ?influence .
+}
+
+Q60 incorrect
+SELECT ?shape (COUNT(?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P46F_forms_part_of ?shape .
+  ?shape rdf:type crm:E55_Type .
+}
+GROUP BY ?shape
+
+Q61 incorrect
+SELECT ?place
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+
+Q62 incorrect
+SELECT ?technique
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+
+Q63 incorrect
+SELECT ?creator
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+}
+
+Q64 incorrect
+SELECT ?webpage
+WHERE {
+  ?artwork crm:P48_has_preferred_identifier ?identifier .
+  ?identifier crm:P1_is_identified_by ?owner .
+  ?owner crm:P70i_is_documented_in ?webpage .
+}
+
+Q65 incorrect
+SELECT ?artwork ?location
+WHERE {
+  ?artwork crm:P24i_found_place ?location .
+}
+
+Q66 incorrect
+SELECT ?technique (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P32_used_general_technique ?technique .
+}
+GROUP BY ?technique
+ORDER BY DESC(?count)
+LIMIT 1
+
+Q67 incorrect
+
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P7_took_place_at ?place .
+  FILTER regex(?place, "Athens", "i") .
+}
+
+Q68 incorrect
+SELECT ?place (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ORDER BY DESC(?artworkCount)
+
+Q69 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator a crm:E74_Group .
+}
+
+Q70 incorrect
+SELECT ?period
+WHERE {
+  ?artwork crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?begin .
+  ?timeSpan crm:P82b_end_of_the_end ?end .
+  ?period crm:P82a_begin_of_the_begin ?periodBegin .
+  ?period crm:P82b_end_of_the_end ?periodEnd .
+  FILTER(?begin >= ?periodBegin && ?end <= ?periodEnd)
+}
+
+Q71 incorrect
+SELECT ?endDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P9_consists_of_part ?productionEvent .
+  ?productionEvent crm:P32_ended ?endDate .
+}
+
+q72 incorrect
+SELECT ?startDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P9_consists_of_part ?productionEvent .
+  ?productionEvent crm:P32_started ?startDate .
+}
+
+q73 incorrect
+SELECT ?influencer
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist crm:P131_is_identified_by ?artistName .
+  ?influencer crm:P14_carried_out_by ?otherArtist .
+  ?otherArtist crm:P131_is_identified_by ?influencerName .
+  FILTER (?influencer != ?artist)
+}
+
+Q74 incorrect
+SELECT ?artwork ?creationDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?creationDate .
+}
+ORDER BY ASC(?creationDate)
+LIMIT 5
+
+q75 incorrect
+SELECT ?artwork ?endDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production .
+  ?production crm:P9_consists_of_part ?productionEvent .
+  ?productionEvent crm:P32_ended ?endDate .
+  FILTER (YEAR(?endDate) > -440)
+}
+
+By using the CIDOC-CRM ontology, please produce
+only a SPARQL query (without explanation) for the question
+Which is the technique that was followed for creating the artwork

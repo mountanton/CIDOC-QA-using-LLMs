@@ -1,0 +1,394 @@
+Q51 INCORRECT
+SELECT ?shape
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P45_consists_of/crm:E57_Material/crm:E22_Man-Made_Object/kon:hasShape ?shape .
+}
+
+Q52 CORRECT
+SELECT ?owner
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?owner .
+  ?owner a crm:E21_Person
+}
+
+
+Q53 CORRECT
+SELECT ?artwork ?material
+WHERE {
+  ?artwork crm:P45_consists_of ?material .
+}
+
+Q54 CORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?object crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique .
+}
+
+
+Q55 CORRECT
+SELECT ?artist (COUNT(?production) AS ?productionCount)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person .
+}
+GROUP BY ?artist
+
+
+
+
+Q56 CORRECT
+SELECT (COUNT(DISTINCT ?artist) as ?numArtists) WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person .
+}
+
+Q57 CORRECT
+SELECT DISTINCT ?place WHERE {
+  {
+    ?place a crm:E53_Place .
+  } UNION {
+    ?place a geo:SpatialThing .
+  }
+}
+
+Q58 INCORRECT
+SELECT DISTINCT ?place WHERE {
+  ?place crm:P89_falls_within*/skos:prefLabel ?label .
+  FILTER(regex(?label, "thebes", "i"))
+}
+
+Q59 INCORRECT
+SELECT DISTINCT ?artist ?influencer
+WHERE {
+  ?artist crm:P14_carried_out_by ?production .
+  ?production crm:P15_was_influenced_by ?influencer .
+}
+
+Q60 INCORRECT
+SELECT ?shape (COUNT(?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork crm:P43_has_dimension/crm:P2_has_type ?shape .
+  ?artwork a crm:E22_Man-Made_Object .
+}
+GROUP BY ?shape
+
+
+
+Q61 CORRECT
+SELECT ?place WHERE {
+  ?production crm:P108i_was_produced_by ?productionEvent .
+  ?productionEvent crm:P7_took_place_at ?place .
+}
+
+Q62 CORRECT
+SELECT DISTINCT ?technique WHERE {
+  ?object crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique .
+}
+
+Q63 CORRECT
+SELECT ?creator
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by ?creator .
+}
+
+Q64 CORRECT
+SELECT ?webpage
+WHERE {
+  ?artwork crm:P50_has_current_keeper/foaf:homepage ?webpage .
+}
+
+Q65 INCORRECT
+SELECT ?place
+WHERE {
+  ?artwork crm:O19i_was_object_found_by ?event .
+  ?event crm:P7_took_place_at ?place .
+}
+
+Q66 CORRECT
+SELECT ?technique (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique .
+}
+GROUP BY ?technique
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+Q67 INCORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location/rdfs:label ?placeLabel .
+  FILTER(contains(?placeLabel, "athens"))
+}
+
+Q68 CORRECT
+SELECT ?place (COUNT(DISTINCT ?artwork) AS ?numArtworks)
+WHERE {
+  ?place a crm:E53_Place.
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at ?place.
+}
+GROUP BY ?place
+ORDER BY ?numArtworks
+
+
+Q69 INCORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P14_carried_out_by/crm:E74_Group ?group.
+}
+
+Q70 INCORRECT
+SELECT ?artwork ?period
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:E52_Time-Span ?period.
+}
+
+Q71 CORRECT
+SELECT ?endDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+}
+
+Q72 CORRECT
+SELECT ?startDateTime
+WHERE {
+  ?production crm:P108i_was_produced_by ?artworkProduction .
+  ?artworkProduction crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDateTime .
+}
+
+Q73 CORRECT
+SELECT ?influencer
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+}
+
+Q74 INCORRECT
+SELECT ?artwork ?startYear
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?startYear .
+}
+ORDER BY ?startYear
+LIMIT 5
+
+Q75 INCORRECT
+SELECT ?artwork ?endYear
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?endYear
+  FILTER (?endYear > "-0440"^^xsd:gYear)
+}
+
+Q76 CORRECT
+SELECT ?artwork WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  MINUS {
+    ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by ?influencer .
+  }
+}
+
+Q77 INCORRECT
+SELECT ?artwork ?techniqueDefinition
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:E12_Production/crm:P32_used_general_technique/skos:definition ?techniqueDefinition .
+}
+
+Q78 CORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?startYear .
+  FILTER (?startYear< xsd:gYear("-0500"))
+}
+
+Q79 INCORRECT
+SELECT ?year (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:E52_Time-Span/crm:P82a_begin_of_the_begin ?year.
+}
+GROUP BY ?year
+ORDER BY ?year
+
+Q80 INCORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?count)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  FILTER NOT EXISTS {
+    ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:E52_Time-Span/dcterms:ProvenanceStatement ?startYear.
+  }
+}
+
+
+Q81 INCORRECT
+SELECT ?lat ?long
+WHERE {
+  ?object crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location/geo:lat ?lat .
+  ?object crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location/geo:long ?long .
+}
+
+Q82 INCORRECT
+SELECT DISTINCT ?exactMatchLink
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by/crm:E21_Person/skos:exactMatch ?exactMatchLink .
+}
+
+Q83 INCORRECT
+SELECT (COUNT(?artwork) AS ?count) ?latitude
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location/geo:lat ?latitude .
+}
+GROUP BY ?latitude
+
+Q84 INCORRECT
+SELECT ?latitude ?longitude
+WHERE {
+  ?artwork crm:P43_has_dimension/crm:P2_has_type ?shape .
+  FILTER(CONTAINS(LOWER(?shape), "amphoriskos"))
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location/geo:lat ?latitude .
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location/geo:long ?longitude .
+}
+
+Q85 CORRECT
+
+SELECT ?influencer_link
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by ?influencer .
+  ?influencer skos:exactMatch ?influencer_link .
+  FILTER(CONTAINS(STR(?influencer_link), "wikidata"))
+}
+
+Q86 CORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount) ?membership
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by/org:hasMembership ?membership .
+}
+
+group by (?membership)
+
+Q87 CORRECT
+SELECT ?membership
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by ?influencer .
+  ?influencer org:hasMembership ?membership .
+}
+
+Q88 INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location ?location .
+  FILTER NOT EXISTS { ?location geo:lat ?lat }
+}
+
+Q89 INCORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:SpatialThing/geo:long ?longitude .
+}
+
+Q90 CORRECT
+SELECT ?definition
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer skos:definition ?definition .
+}
+
+Q91 CORRECT
+SELECT ?artwork1 ?artwork2
+WHERE {
+  ?artwork1 crm:P108i_was_produced_by/crm:P7_took_place_at ?place .
+  ?artwork2 crm:P108i_was_produced_by/crm:P7_took_place_at ?place .
+  FILTER (?artwork1 != ?artwork2)
+}
+
+q92 INCORRECT
+SELECT ?technique ?shape ?place
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+  ?artwork crm:P45_consists_of/crm:P108i_was_produced_by/crm:E22_Man-Made_Object/kon:hasShape ?shape .
+  ?production crm:P7_took_place_at/geo:location ?place .
+}
+
+Q93 INCORRECT
+SELECT DISTINCT ?artist
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?production crm:P32_used_general_technique ?technique1 .
+  ?otherProduction crm:P14_carried_out_by ?artist .
+  ?otherProduction crm:P32_used_general_technique ?technique2 .
+  FILTER (?artwork != ?otherProduction && ?technique1 != ?technique2)
+}
+
+Q94 CORRECT
+
+SELECT ?artwork ?startDate ?endDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+}
+
+Q95 INCORRECT
+SELECT DISTINCT ?productionYear
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P89_falls_within* ?athens .
+  ?athens a crm:E53_Place .
+  ?production crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?productionYearLiteral .
+  BIND(str(?productionYearLiteral) AS ?productionYear)
+}
+
+Q96 INCORRECT
+SELECT ?shape (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P32_used_general_technique/kon:hasShape ?shape .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:E52_Time-Span/crm:P82b_end_of_the_end ?endTime .
+  FILTER (?endTime > "-0300"^^xsd:dateTime)
+} GROUP BY ?shape
+
+Q97 CORRECT
+SELECT DISTINCT ?endDate ?influencer
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span/crm:P82b_end_of_the_end ?endDateLiteral .
+  BIND(str(?endDateLiteral) AS ?endDate)
+  
+ 
+    ?production crm:P14_carried_out_by ?artist .
+    ?artist crm:P15_was_influenced_by ?influencer .
+  
+}
+
+Q98 INCORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by ?artist .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:E52_Time-Span/crm:P82b_end_of_the_end ?endTime .
+  FILTER (?endTime < "-0500"^^xsd:dateTime)
+}
+
+Q99 CORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?count)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?end .
+  FILTER (?start != ?end)
+}
+
+Q100 INCORRECT
+SELECT ?artwork ?start
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start .
+  FILTER (CONTAINS(STR(?artwork), "amphoriskos"))
+}
+ORDER BY ?start
+LIMIT 5

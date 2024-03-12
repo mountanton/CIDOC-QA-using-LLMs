@@ -1,0 +1,470 @@
+q51 CORRECT
+SELECT DISTINCT ?artwork ?shape
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork kon:hasShape ?shape .
+}
+
+q52 CORRECT
+SELECT ?artwork ?owner
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P50_has_current_keeper ?owner .
+}
+
+q53 CORRECT
+SELECT ?artwork ?component
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P45_consists_of ?component .
+}
+
+q54 CORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?technique rdf:type kon:Technique .
+}
+
+q55 CORRECT
+SELECT ?artist (COUNT(?production) AS ?productionCount)
+WHERE {
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?artist
+
+q56 INCORRECT
+SELECT (COUNT(DISTINCT ?artist) as ?artistCount)
+WHERE {
+    ?artist a foaf:Person .
+}
+
+Q57 CORRECT
+SELECT DISTINCT ?place
+WHERE {
+  ?place rdf:type crm:E53_Place .
+}
+
+Q58 CORRECT
+SELECT ?place WHERE {
+  ?place a crm:E53_Place ;
+         rdfs:label ?label .
+  FILTER(regex(?label, "thebes", "i"))
+}
+
+q59 INCORRECT
+SELECT ?artist ?influencer
+WHERE {
+  ?artist a kon:Artist ;
+          crm:P15_was_influenced_by ?influencer .
+}
+
+q60 INCORRECT
+SELECT ?shape (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork a kon:Artwork ;
+           kon:hasShape ?shape .
+}
+GROUP BY ?shape
+
+q61 INCORRECT
+SELECT ?place
+WHERE {
+
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           prov:wasGeneratedBy/prov:used ?activity .
+  ?activity rdf:type prov:Activity ;
+            prov:atLocation ?place .
+}
+
+q62 INCORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?activity .
+  ?activity rdf:type kon:Technique .
+  ?activity rdfs:label ?technique .
+}
+
+q63 INCORRECT
+SELECT ?creator
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           dcterms:creator ?creator .
+}
+
+q64 INCORRECT
+SELECT ?ownerWebpage
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P50_has_current_keeper ?owner .
+  ?owner rdf:type foaf:Person .
+  ?owner foaf:homepage ?ownerWebpage .
+}
+
+q65 INCORRECT
+SELECT ?artwork ?location
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P55_has_current_location ?location .
+}
+
+q66 INCORRECT
+SELECT ?technique (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P2_has_type ?technique .
+}
+GROUP BY ?technique
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+q67 INCORRECT
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production ;
+           geo:location ?location .
+  ?location skos:prefLabel ?locationLabel .
+  FILTER(CONTAINS(UCASE(?locationLabel), "ATHENS"))
+}
+
+q68 CORRECT
+SELECT ?place (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ORDER BY DESC(?artworkCount)
+
+q69 INCORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           dcterms:creator ?group .
+  ?group rdf:type crm:E74_Group .
+}
+
+q70 INCORRECT
+SELECT ?period
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P10_falls_within ?period .
+}
+
+Q71 INCORRECT
+SELECT ?endDate
+WHERE {
+  ?production rdf:type crm:E12_Production ;
+              crm:P82b_end_of_the_end ?endDate .
+}
+
+q72 INCORRECT
+SELECT ?artwork ?startDate
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production ;
+           crm:P4_has_time-span ?timeSpan .
+  ?production rdf:type prov:Activity, prov:Create ;
+              prov:startedAtTime ?startDate .
+}
+
+Q73 INCORRECT
+SELECT ?influencer
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P15_was_influenced_by ?influencer .
+  ?artist rdf:type foaf:Person .
+  ?artist foaf:topic ?artwork .
+  ?artwork crm:P14_carried_out_by ?artist .
+}
+
+Q74 INCORRECT
+SELECT ?artwork ?title ?created
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object.
+  ?artwork dcterms:title ?title.
+  ?artwork dcterms:created ?created.
+}
+ORDER BY ?created
+LIMIT 5
+
+Q75 INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type/crm:P2_has_type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by/prov:Activity/prov:endedAtTime ?endTime .
+  FILTER (xsd:integer(?endTime) > -440)
+}
+
+Q76 INCORRECT
+
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object.
+  FILTER NOT EXISTS {
+    ?artwork crm:P15_was_influenced_by ?influencer.
+  }
+}
+
+Q77 INCORRECT
+SELECT ?techniqueDefinition
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           kon:hasShape ?shape ;
+           kon:Technique ?technique .
+  ?technique skos:definition ?techniqueDefinition .
+}
+
+Q78 INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production rdf:type prov:Activity, prov:Create ;
+              prov:used/crm:P4_has_time-span/dcterms:begin ?beginDate .
+  FILTER (?beginDate < "-0500-01-01T00:00:00Z")
+}
+
+Q79 CORRECT
+
+SELECT ?year (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startYear .
+  BIND(YEAR(?startYear) AS ?year)
+}
+GROUP BY ?year
+ORDER BY ?year
+
+Q80 INCORRECT
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  OPTIONAL { ?artwork crm:P4_has_time-span ?timeSpan .
+             ?timeSpan crm:P82a_begin_of_the_begin ?begin .
+             ?timeSpan crm:P82b_end_of_the_end ?end .
+           }
+  FILTER (!BOUND(?begin) || !BOUND(?end))
+}
+
+Q81 INCORRECT
+SELECT ?lat ?long
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place ;
+              geo:lat ?lat ;
+              geo:long ?long .
+}
+
+Q82 INCORRECT
+SELECT ?exactMatchLink
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P15_was_influenced_by ?influencer .
+  ?artist rdf:type crm:E21_Person .
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist foaf:name ?artistName .
+  ?influencer skos:exactMatch ?exactMatchLink .
+}
+
+q83 incorrect
+SELECT ?latitude (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork geo:lat ?latitude .
+}
+GROUP BY ?latitude
+
+Q84 INCORRECT
+SELECT ?lat ?long
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork kon:hasShape ?shape .
+  ?shape kon:hasShape ?shapeLabel .
+  FILTER(REGEX(?shapeLabel, "amphoriskos", "i")) .
+  ?artwork geo:lat ?lat .
+  ?artwork geo:long ?long .
+}
+
+q85 incorrect
+SELECT DISTINCT ?exactMatchLink
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P15_was_influenced_by ?influencer .
+  ?artist rdf:type crm:E21_Person .
+  ?artist foaf:name ?artistName .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?influencer skos:exactMatch ?exactMatchLink .
+  FILTER (CONTAINS(?exactMatchLink, "wikidata"))
+}
+
+Q86 INCORRECT
+SELECT ?membership (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?influencer a foaf:Person ;
+              org:hasMembership ?membership .
+  ?artist a foaf:Person ;
+          crm:P15_was_influenced_by ?influencer .
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?membership
+
+Q87 INCORRECT
+SELECT ?membership
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P15_was_influenced_by ?influencer .
+  ?influencer rdf:type foaf:Person ;
+              org:hasMembership ?membership .
+}
+
+Q88 INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  OPTIONAL { 
+    ?artwork geo:lat ?lat .
+  }
+  FILTER(!bound(?lat))
+}
+
+q89 incorrect
+SELECT (COUNT(DISTINCT ?artwork) as ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?productionEvent .
+  ?productionEvent geo:long ?longitude .
+}
+
+Q90 INCORRECT
+SELECT ?influencerDefinition
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P15_was_influenced_by ?influencer .
+  ?artist rdf:type foaf:Person .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?influencer rdfs:label ?influencerDefinition .
+}
+
+Q91 INCORRECT
+SELECT ?artwork1 ?artwork2
+WHERE {
+  ?artwork1 rdf:type crm:E22_Man-Made_Object .
+  ?artwork2 rdf:type crm:E22_Man-Made_Object .
+  ?artwork1 crm:P7_took_place_at ?place .
+  ?artwork2 crm:P7_took_place_at ?place .
+  FILTER (?artwork1 != ?artwork2)
+}
+
+Q92 INCORRECT
+SELECT ?technique ?shape ?place
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           kon:hasShape ?shape ;
+           crm:P32_used_general_technique ?technique ;
+           crm:P7_took_place_at ?place .
+}
+
+Q93 INCORRECT
+SELECT DISTINCT ?artist
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?activity .
+  ?activity rdf:type prov:Activity ;
+            prov:used ?technique .
+  ?technique rdf:type kon:Technique .
+  ?artist rdf:type foaf:Person ;
+          prov:wasAssociatedWith ?activity .
+}
+GROUP BY ?artist
+HAVING (COUNT(DISTINCT ?technique) > 1)
+
+Q94 INCORRECT
+SELECT ?startDate ?endDate
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?productionEvent prov:used ?artwork ;
+                   rdf:type crm:E12_Production ;
+                   crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate ;
+            crm:P82b_end_of_the_end ?endDate .
+}
+
+Q95 incorrect
+SELECT DISTINCT ?productionYear
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?productionActivity .
+  ?productionActivity rdf:type prov:Activity .
+  ?productionActivity prov:used ?productionPlace .
+  ?productionPlace rdf:type crm:E53_Place .
+  ?productionPlace rdfs:label "Athens" .
+  ?productionActivity crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginDate .
+  ?beginDate dcterms:created ?productionYear .
+}
+
+Q96 INCORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+          crm:P108i_was_produced_by/prov:endedAtTime ?endTime ;
+          kon:hasShape ?shape .
+  FILTER (?endTime > "-0300")
+}
+
+Q97 INCORRECT
+SELECT ?endDate ?influencer
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object.
+  ?artwork crm:P108i_was_produced_by ?production.
+  ?production crm:P4_has_time-span/crm:P82b_end_of_the_end ?endDate.
+  ?production crm:P15_was_influenced_by ?influencer.
+}
+
+Q98 INCORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?distinctArtists)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P82b_end_of_the_end ?endTime .
+  FILTER (?endTime < "-0500")
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist rdf:type foaf:Person .
+}
+
+Q99 INCORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?productionActivity .
+  ?productionActivity rdf:type prov:Activity ;
+                     rdf:type/prov:Create|prov:Modify ;
+                     prov:used/prov:wasGeneratedBy ?timeSpan .
+  ?timeSpan rdf:type crm:E52_Time-Span ;
+            crm:P82a_begin_of_the_begin ?begin ;
+            crm:P82b_end_of_the_end ?end .
+  FILTER (?begin != ?end)
+}
+
+Q100 INCORRECT
+SELECT ?artwork ?title ?created
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object.
+  ?artwork kon:hasShape ?shape.
+  ?shape kon:hasShape ?shapeLabel.
+  FILTER(STR(?shapeLabel) CONTAINS "amphoriskos").
+  ?artwork dcterms:created ?created.
+  ?artwork dcterms:title ?title.
+}
+ORDER BY ?created
+LIMIT 5
+
