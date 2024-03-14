@@ -200,6 +200,225 @@ WHERE {
   FILTER (YEAR(?endDate) > -440)
 }
 
-By using the CIDOC-CRM ontology, please produce
-only a SPARQL query (without explanation) for the question
-Which is the technique that was followed for creating the artwork
+q76 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P65_shows_visual_item ?visualItem .
+  FILTER NOT EXISTS {
+    ?visualItem crm:P14_carried_out_by/crm:P12_occurred_in/crm:P9_consists_of ?influencer .
+  }
+}
+
+q77 incorrect
+SELECT ?technique ?definition
+WHERE {
+  ?technique a crm:E55_Type ;
+              rdfs:label ?definition .
+  FILTER regex(?definition, "technique", "i") .
+}
+
+q78 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start .
+  FILTER (?start < "-0500"^^xsd:dateTime)
+}
+
+q79 incorrect
+SELECT (year(xsd:dateTime(?start)) AS ?production_year) (COUNT(?artwork) AS ?artwork_count)
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start .
+}
+GROUP BY ?production_year
+ORDER BY ?production_year
+
+q80 incorrect
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  FILTER NOT EXISTS {
+    ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start .
+  }
+}
+
+q81 incorrect
+SELECT ?artwork ?latitude ?longitude
+WHERE {
+  ?artwork crm:P7_took_place_at/crm:P89_falls_within/crm:P7_is_defined_by ?place .
+  ?place crm:P92_brought_into_existence ?spatialThing .
+  ?spatialThing crm:P2_has_type ?placeType .
+  FILTER (?placeType = crm:E53_Place)
+  OPTIONAL { ?spatialThing crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start }
+  OPTIONAL { ?spatialThing crm:P4_has_time-span/crm:P82b_end_of_the_end ?end }
+  OPTIONAL { ?spatialThing crm:P87_is_identified_by ?name }
+  OPTIONAL { ?spatialThing crm:P89_falls_within ?parentPlace }
+  OPTIONAL { ?spatialThing crm:P168_place_is_defined_by ?geometry }
+  OPTIONAL { ?geometry crm:P162_has_coordinates ?coordinate }
+  OPTIONAL { ?coordinate crm:P2_has_type/crm:P127_had_range ?latitude }
+  OPTIONAL { ?coordinate crm:P2_has_type/crm:P127i_had_range_begin ?longitude }
+}
+
+q82 incorrect
+SELECT ?influencer
+WHERE {
+  ?artwork crm:P14_carried_out_by/crm:P12_occurred_in/crm:P9_consists_of ?influencer .
+}
+
+q83 incorrect
+SELECT ?latitude (COUNT(?artwork) AS ?artwork_count)
+WHERE {
+  ?artwork crm:P7_took_place_at/crm:P89_falls_within/crm:P7_is_defined_by ?place .
+  ?place crm:P168_place_is_defined_by ?geometry .
+  ?geometry crm:P162_has_coordinates ?coordinate .
+  ?coordinate crm:P2_has_type/crm:P127_had_range ?latitude .
+}
+GROUP BY ?latitude
+
+q84 incorrect
+SELECT ?latitude ?longitude
+WHERE {
+  ?artwork crm:P45_consists_of ?shape .
+  ?shape crm:P2_has_type/crm:P90_has_value ?shapeValue .
+  FILTER(contains(lcase(?shapeValue), "amphoriskos"))
+  ?artwork crm:P7_took_place_at/crm:P89_falls_within/crm:P7_is_defined_by ?place .
+  ?place crm:P168_place_is_defined_by ?geometry .
+  ?geometry crm:P162_has_coordinates ?coordinate .
+  ?coordinate crm:P2_has_type/crm:P127_had_range ?latitude .
+  ?coordinate crm:P2_has_type/crm:P127i_had_range_begin ?longitude .
+}
+
+q85 incorrect
+SELECT ?influencer
+WHERE {
+  ?artwork crm:P14_carried_out_by/crm:P12_occurred_in/crm:P9_consists_of ?influencer .
+  FILTER(STRSTARTS(STR(?influencer), "http://www.wikidata.org/entity/"))
+}
+
+
+q86 incorrect
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+
+SELECT ?membership (COUNT(?artwork) AS ?artwork_count)
+WHERE {
+  ?artwork crm:P14_carried_out_by/crm:P12_occurred_in/crm:P9_consists_of ?influencer .
+  ?influencer crm:P11_had_participant ?membership .
+}
+GROUP BY ?membership
+
+
+q87 incorrect
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+
+SELECT ?membership
+WHERE {
+  ?artwork crm:P14_carried_out_by/crm:P12_occurred_in/crm:P9_consists_of ?influencer .
+  ?influencer crm:P11_had_participant ?membership .
+}
+
+q88 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P7_took_place_at/crm:P89_falls_within/crm:P7_is_defined_by ?place .
+  ?place crm:P168_place_is_defined_by ?geometry .
+  ?geometry crm:P162_has_coordinates ?coordinate .
+  FILTER NOT EXISTS { ?coordinate crm:P2_has_type/crm:P127_had_range ?latitude }
+}
+
+q89 incorrect
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P7_took_place_at/crm:P89_falls_within/crm:P7_is_defined_by ?place .
+  ?place crm:P168_place_is_defined_by ?geometry .
+  ?geometry crm:P162_has_coordinates ?coordinate .
+  ?coordinate crm:P2_has_type/crm:P127i_had_range_begin ?longitude .
+}
+
+q90 incorrect
+SELECT ?definition
+WHERE {
+  crm:P14_carried_out_by rdfs:comment ?definition .
+}
+
+q91 incorrect
+SELECT ?artwork1 ?artwork2
+WHERE {
+  ?artwork1 crm:P7_took_place_at/crm:P89_falls_within ?place .
+  ?artwork2 crm:P7_took_place_at/crm:P89_falls_within ?place .
+  FILTER(?artwork1 != ?artwork2)
+}
+
+q92 incorrect
+SELECT ?technique ?shape ?place
+WHERE {
+  ?artwork crm:P2_has_type ?technique .
+  ?artwork crm:P45_consists_of ?shape .
+  ?artwork crm:P7_took_place_at/crm:P89_falls_within ?place .
+}
+
+q93 incorrect
+SELECT ?artist
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artwork crm:P2_has_type ?technique .
+}
+GROUP BY ?artist
+HAVING (COUNT(DISTINCT ?technique) > 1)
+
+q94 incorrect
+SELECT ?start_date ?end_date
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start_date .
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+}
+
+q95 incorrect
+SELECT ?start_date ?end_date
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start_date .
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+}
+
+q96 incorrect
+SELECT ?shape (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+  ?artwork crm:P45_consists_of ?shape .
+  FILTER (year(?end_date) > -300)
+}
+GROUP BY ?shape
+
+q97 incorrect
+SELECT ?end_date ?influencer
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+  ?artwork crm:P14_carried_out_by/crm:P12_occurred_in/crm:P9_consists_of ?influencer .
+}
+
+q98 incorrect
+SELECT (COUNT(DISTINCT ?artist) AS ?artist_count)
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+  FILTER (year(?end_date) < -500)
+}
+
+q99 incorrect
+
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start_date .
+  ?artwork crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+  FILTER (year(?start_date) != year(?end_date))
+}
+
+q100 incorrect
+SELECT ?artwork ?start_date
+WHERE {
+  ?artwork crm:P45_consists_of ?shape .
+  ?shape crm:P2_has_type/crm:P90_has_value ?shapeValue .
+  FILTER(contains(lcase(?shapeValue), "amphoriskos"))
+  ?artwork crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start_date .
+}
+ORDER BY ?start_date
+LIMIT 5
