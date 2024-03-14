@@ -44,7 +44,7 @@ WHERE {
 }
 
 
-Q57. All the distinct places of the KG
+Q57. I want all the distinct places of the KG
 
 SELECT  DISTINCT ?place
 WHERE {
@@ -126,7 +126,8 @@ GROUP BY ?technique
 ORDER BY DESC(?techCount)
 LIMIT 1
 
-Q67.  Give me the number artworks produced in a place containing the word "Athens."
+Q67.  Give me the number artworks produced in a place containing the word "Athens"
+
 SELECT  (count(?artwork) as ?cnt) WHERE { 
 ?artwork crm:P108i_was_produced_by ?prod .  
 ?prod crm:P7_took_place_at ?place 
@@ -134,6 +135,7 @@ SELECT  (count(?artwork) as ?cnt) WHERE {
 } 
 
 Q68. Give me the distinct  places  grouped by the number of artworks that were produced there.
+
 SELECT  ?place (count(?artwork) as ?cnt) WHERE { 
 ?artwork crm:P108i_was_produced_by ?prod .  
 ?prod crm:P7_took_place_at ?place . 
@@ -258,7 +260,7 @@ SELECT ?S ?lat ?lon WHERE {
 }
 
 
-Q82. give me exact match Links for the influencer of the artist of an artwork
+Q82. give me exact match links for the influencer of the artist of an artwork
 
 SELECT ?artist ?infl ?links WHERE { 
 ?artwork crm:P108i_was_produced_by ?prod .  
