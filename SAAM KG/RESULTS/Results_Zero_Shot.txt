@@ -156,6 +156,296 @@ WHERE {
   }
 }
 
-By using the CIDOC-CRM ontology, please generate
-only a SPARQL query (without explanation) for the question 
-Give me the number of artists died in a place that contain the word "athens" but not the word "greece" 
+q21 incorrect
+SELECT ?productionEnd
+WHERE {
+  ?productionEvent a e:E12_Production ;
+                   time:hasEnd ?productionEnd .
+}
+
+
+q22 incorrect
+SELECT ?productionStart
+WHERE {
+  ?productionEvent a e:E12_Production ;
+                   time:hasBeginning ?productionStart .
+}
+
+q23 incorrect
+
+SELECT ?birthDate
+WHERE {
+  ?artist a e:E21_Person ;
+          crm:P98_brought_into_life ?birthEvent .
+  ?birthEvent time:hasTime ?birthDate .
+}
+
+
+q24 incorrect
+SELECT ?deathDate
+WHERE {
+  ?artist a e:E21_Person ;
+          crm:P100_was_death_of ?deathEvent .
+  ?deathEvent time:hasTime ?deathDate .
+}
+
+q25 incorrect
+SELECT DISTINCT ?dimensionType
+WHERE {
+  ?component crm:P46i_forms_part_of ?artwork .
+  ?artwork crm:P43_has_dimension ?dimension .
+  ?dimension a ?dimensionType .
+}
+
+q26 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108_has_produced ?productionEvent .
+  ?productionEvent crm:P4_has_time-span/crm:begin_of_the_begin ?productionStart .
+  FILTER(?productionStart > "1934-01-01"^^xsd:date)
+}
+
+
+q27 incorrect
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  FILTER NOT EXISTS {
+    ?creator crm:P98_brought_into_life ?person .
+    ?person crm:P98_brought_into_life ?birthEvent .
+    ?birthEvent a crm:E67_Birth .
+  }
+}
+q28 incorrect
+SELECT DISTINCT ?artist
+WHERE {
+  ?artist crm:P98_brought_into_life ?person .
+  OPTIONAL {
+    ?person crm:P7_took_place_at ?birthPlace .
+  }
+  FILTER (!BOUND(?birthPlace))
+}
+
+q29 incorrect
+SELECT ?artist
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+}
+LIMIT 1
+
+q30 incorrect
+SELECT ?nationality
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P107_has_current_or_former_member ?nationality .
+}
+LIMIT 1
+
+q31 incorrect
+SELECT ?birthPlace
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P98_brought_into_life ?person .
+  ?person crm:P7_took_place_at ?birthPlace .
+}
+LIMIT 1
+
+q32 incorrect
+SELECT ?deathPlace
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P100_was_death_place_of ?person .
+  ?person crm:P7_took_place_at ?deathPlace .
+}
+LIMIT 1
+
+
+q33 incorrect
+SELECT ?birthPlace (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P98_brought_into_life ?person .
+  ?person crm:P7_took_place_at ?birthPlace .
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?artworkCount)
+
+q34 incorrect
+SELECT ?birthPlace (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P98_brought_into_life ?person .
+  ?person crm:P7_took_place_at ?birthPlace .
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+q35 incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  FILTER NOT EXISTS {
+    ?creator crm:P98_brought_into_life/crm:P7_took_place_at ?birthPlace .
+  }
+}
+
+q36 incorrect
+SELECT (COUNT(DISTINCT ?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P100_was_death_place_of ?person .
+  ?person crm:P7_took_place_at ?deathPlace .
+}
+
+q37 incorrect
+SELECT (COUNT(DISTINCT ?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P98_brought_into_life ?person .
+  ?person crm:P7_took_place_at ?birthPlace .
+  FILTER(CONTAINS(UCASE(?birthPlace), "CALIFORNIA"))
+}
+
+q38 incorrect
+SELECT ?birthDate
+WHERE {
+  ?production crm:P108_has_produced ?artwork .
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P98_brought_into_life ?person .
+  ?person crm:P82a_begin_of_the_begin ?birthDate .
+}
+
+q39 incorrect
+SELECT ?deathDate
+WHERE {
+  ?production crm:P108_has_produced ?artwork .
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P100_was_death_place_of ?person .
+  ?person crm:P82b_end_of_the_end ?deathDate .
+}
+
+
+q40 incorrect
+SELECT (COUNT(DISTINCT ?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?creator crm:P100_was_death_place_of ?person .
+  ?person crm:P7_took_place_at ?deathPlace .
+  FILTER NOT EXISTS {
+    FILTER(CONTAINS(UCASE(?deathPlace), "BERLIN"))
+  }
+}
+
+q41 incorrect
+SELECT ?artist1 ?artist2
+WHERE {
+  ?artist1 crm:P98_brought_into_life ?person1 .
+  ?person1 crm:P7_took_place_at ?birthPlace .
+  ?artist2 crm:P98_brought_into_life ?person2 .
+  ?person2 crm:P7_took_place_at ?birthPlace .
+  FILTER (?artist1 != ?artist2)
+}
+
+
+q42 incorrect
+SELECT ?artist1 ?artist2 ?deathDate
+WHERE {
+  ?artist1 crm:P100_was_death_place_of ?person1 .
+  ?person1 crm:P7_took_place_at ?deathPlace ;
+           crm:P82b_end_of_the_end ?deathDate .
+  
+  ?artist2 crm:P100_was_death_place_of ?person2 .
+  ?person2 crm:P7_took_place_at ?deathPlace ;
+           crm:P82b_end_of_the_end ?deathDate .
+  
+  FILTER (?artist1 != ?artist2)
+}
+
+q43 incorrect
+SELECT ?artist1 ?artist2 ?birthDeathPlace
+WHERE {
+  ?artist1 crm:P98_brought_into_life ?person1 ;
+           crm:P100_was_death_place_of ?person1 .
+  ?person1 crm:P7_took_place_at ?birthDeathPlace .
+  
+  ?artist2 crm:P98_brought_into_life ?person2 ;
+           crm:P100_was_death_place_of ?person2 .
+  ?person2 crm:P7_took_place_at ?birthDeathPlace .
+  
+  FILTER (?artist1 != ?artist2)
+}
+q44 incorrect
+SELECT ?artist1 ?artist2 ?nationality ?birthPlace
+WHERE {
+  ?artist1 crm:P98_brought_into_life ?person1 ;
+           crm:P107_has_current_or_former_member ?nationality ;
+           crm:P7_took_place_at ?birthPlace .
+  
+  ?artist2 crm:P98_brought_into_life ?person2 ;
+           crm:P107_has_current_or_former_member ?nationality ;
+           crm:P7_took_place_at ?birthPlace .
+  
+  FILTER (?artist1 != ?artist2)
+}
+
+q45 incorrect
+SELECT ?artwork ?productionStartDate ?productionEndDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production ;
+           crm:P14_carried_out_by ?creator .
+  ?production crm:P4_has_time-span/crm:begin_of_the_begin ?productionStartDate ;
+              crm:P4_has_time-span/crm:end_of_the_end ?productionEndDate .
+}
+
+q46 incorrect
+SELECT DISTINCT ?artwork ?artist ?birthPlace
+WHERE {
+  ?artwork crm:P108_has_produced ?production ;
+           crm:P14_carried_out_by ?artist .
+  ?production crm:P4_has_time-span/crm:begin_of_the_begin ?productionStartDate .
+  ?artist crm:P98_brought_into_life ?person ;
+          crm:P7_took_place_at ?birthPlace .
+  ?person crm:P7_took_place_at ?birthPlaceFilter .
+  FILTER (?productionStartDate > "1934-01-01"^^xsd:date && CONTAINS(UCASE(?birthPlaceFilter), "IRELAND"))
+}
+
+q47 incorrect
+SELECT DISTINCT ?artwork ?label ?productionEndDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production ;
+           rdfs:label ?label .
+  ?production crm:P4_has_time-span/crm:end_of_the_end ?productionEndDate .
+  
+  FILTER (CONTAINS(UCASE(?label), "EVENING") && ?productionEndDate > "1950-01-01"^^xsd:date)
+}
+q48 incorrect
+SELECT DISTINCT ?artwork ?label ?artist ?birthPlace
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist ;
+           rdfs:label ?label .
+  ?artist crm:P98_brought_into_life ?person ;
+          crm:P7_took_place_at ?birthPlace .
+  ?person crm:P7_took_place_at ?birthPlaceFilter .
+  
+  FILTER (CONTAINS(UCASE(?label), "EVENING") && CONTAINS(UCASE(?birthPlaceFilter), "FRANCE"))
+}
+q49 incorrect
+SELECT ?artwork ?productionStartDate ?artist ?birthDate
+WHERE {
+  ?artwork crm:P108_has_produced ?production ;
+           crm:P14_carried_out_by ?artist .
+  ?production crm:P4_has_time-span/crm:begin_of_the_begin ?productionStartDate .
+  ?artist crm:P98_brought_into_life ?person .
+  ?person crm:P82a_begin_of_the_begin ?birthDate .
+}
+  
+q50 incorrect
+SELECT ?artwork ?productionEndDate ?artist ?deathPlace
+WHERE {
+  ?artwork crm:P108_has_produced ?production ;
+           crm:P14_carried_out_by ?artist .
+  ?production crm:P4_has_time-span/crm:end_of_the_end ?productionEndDate .
+  ?artist crm:P100_was_death_place_of ?person .
+  ?person crm:P7_took_place_at ?deathPlace .
+}
