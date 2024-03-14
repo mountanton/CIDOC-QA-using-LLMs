@@ -43,7 +43,7 @@ WHERE {
 }
 
 
-Q7. All the distinct places of the KG
+Q7. I want all the distinct places of the KG
 
 SELECT  DISTINCT ?place
 WHERE {
@@ -177,7 +177,7 @@ SELECT ?artwork ?date WHERE {
 ?tsp crm:P82a_begin_of_the_begin ?date 
 } 
 
-Q23. The birth date of an artist
+Q23. Give me the birth date of any artist
 
 SELECT ?actor ?begin WHERE { 
 ?actor crm:P92i_was_brought_into_existence_by ?out .    
@@ -185,7 +185,7 @@ SELECT ?actor ?begin WHERE {
 ?ts crm:P82a_begin_of_the_begin ?begin
 }
 
-Q24. The death date of an artist
+Q24. Give me the death date of any artist
 
 SELECT ?actor ?end WHERE { 
 ?actor crm:P93i_was_taken_out_of_existence_by ?out .    
@@ -326,7 +326,7 @@ SELECT ?actor ?end WHERE {
 ?ts crm:P82b_end_of_the_end  ?end
 } 
 
-Q40. The number of artworks where the death place of the authors does not include the word berlin
+Q40. Give me the number of artworks where the death place of the authors does not include the word berlin
 
 SELECT (count(?artwork) as ?count)  WHERE {  
 ?artwork crm:P108i_was_produced_by ?prod .     
@@ -337,7 +337,7 @@ SELECT (count(?artwork) as ?count)  WHERE {
 
 
 Queries (Multiple Paths Difficult)
-Q41. All the pairs of artists that born in the same place
+Q41. I want all the pairs of artists that born in the same place
 
 SELECT ?artist1 ?artist2 ?place  WHERE {  
 ?artist1 crm:P92i_was_brought_into_existence_by ?birth .
@@ -347,7 +347,7 @@ SELECT ?artist1 ?artist2 ?place  WHERE {
 ?birth2 crm:P7_took_place_at ?place .  filter(?artist1!=?artist2)
 } 
 
-Q42. The pairs of artists that died in the same date
+Q42. Give me all the pairs of artists that died in the same date
 
 
 SELECT ?artist1 ?artist2 ?end WHERE {   
@@ -360,7 +360,7 @@ SELECT ?artist1 ?artist2 ?end WHERE {
 ?ts2 crm:P82b_end_of_the_end  ?end .filter(?artist1!=?artist2)
 } 
 
-Q43. The pairs of artists with the same birth and death place
+Q43. Give me all the pairs of artists with the same birth and death place
 
 
 SELECT DISTINCT ?artist1 ?birthPlace ?deathPlace
@@ -374,7 +374,7 @@ WHERE {
   FILTER (?artist1 != ?artist2)
 }
 
-Q44. Pairs of artists with the same nationality and birth place
+Q44. I want the pairs of artists with the same nationality and birth place
 
 SELECT ?artist1 ?artist2 ?place ?nationality  WHERE {  
 ?artist1 crm:P92i_was_brought_into_existence_by ?birth .
@@ -387,7 +387,7 @@ SELECT ?artist1 ?artist2 ?place ?nationality  WHERE {
  filter(?artist1!=?artist2)
 } 
 
-Q45. The start and the end date of the production of an artwork
+Q45. Give me the start and the end date of the production of an artwork
 
 SELECT ?artwork ?start ?end WHERE { 
 ?artwork crm:P108i_was_produced_by ?prod .  
@@ -396,7 +396,7 @@ SELECT ?artwork ?start ?end WHERE {
 ?tsp crm:P82b_end_of_the_end ?end 
 } 
 
-Q46. All the artworks started after the year 1934 and the birth place of the artists includes the word ireland
+Q46. I want all the artworks started after the year 1934 and the birth place of the artists includes the word ireland
 
 SELECT ?artwork ?place WHERE { 
 ?artwork crm:P108i_was_produced_by ?prod .  
@@ -428,7 +428,7 @@ SELECT ?artwork ?label ?place WHERE {
 ?birth crm:P7_took_place_at ?place  .filter( regex(?label,"Evening") && regex(?place,"france")) 
 }
 
-Q49. The production starting date of an artwork and the birth date of the artist of the artwork
+Q49. Give me the production starting date of an artwork and the birth date of the artist of the artwork
 
 SELECT ?artwork ?start ?birthdate WHERE {   
 ?artwork crm:P108i_was_produced_by ?prod .  
@@ -441,7 +441,7 @@ SELECT ?artwork ?start ?birthdate WHERE {
 ?tsp crm:P82a_begin_of_the_begin ?start 
 } 
 
-Q50. The end date of the production of an artwork and the death place of the artist
+Q50. I want the end date of the production of an artwork and the death place of the artist
 
 SELECT ?artwork ?end ?place WHERE {   
 ?artwork crm:P108i_was_produced_by ?prod .  
