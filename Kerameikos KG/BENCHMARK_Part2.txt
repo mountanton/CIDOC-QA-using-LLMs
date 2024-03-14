@@ -21,7 +21,7 @@ WHERE {
  ?artwork crm:P45_consists_of ?components           
 }
 
-Q4. Give me all the unique techniques 
+Q54. Give me all the unique techniques 
 
 SELECT distinct ?tech
 WHERE {
