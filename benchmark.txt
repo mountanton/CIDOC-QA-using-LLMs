@@ -35,6 +35,7 @@ SELECT ?artist (COUNT(?production) AS ?productionCount)
 WHERE {
  ?production crm:P14_carried_out_by ?artist     
 }
+GROUP BY ?artist
 
 Q6. Give me the number of distinct artists
 
@@ -277,7 +278,10 @@ SELECT ?placeLabel  (COUNT(?artwork) AS ?artwork) WHERE {
 Q34. Which is the place of birth of artists with the most artworks?
 
 SELECT ?placeLabel  (COUNT(?artwork) AS ?artworkCount) WHERE {  
-?artwork crm:P108i_wa_place_at ?placeLabel . 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?actor .  
+?actor crm:P92i_was_brought_into_existence_by ?existence .  
+?existence crm:P7_took_wa_place_at ?placeLabel . 
 } 
 order by desc (?artworkCount)
 limit 1
@@ -288,10 +292,7 @@ SELECT ?artwork WHERE {
 ?artwork crm:P108i_was_produced_by ?prod .     
 ?prod crm:P14_carried_out_by ?actor .   
 ?actor crm:P92i_was_brought_into_existence_by ?birth 
-.filter not exists {?bs_produced_by ?prod .  
-?prod crm:P14_carried_out_by ?actor .  
-?actor crm:P92i_was_brought_into_existence_by ?existence .  
-?existence crm:P7_tookirth crm:P7_took_place_at ?place}
+.filter not exists {?birth crm:P7_took_place_at ?place}
 } 
 
 Q36. How many artworks have a creator where information about their death place is given
