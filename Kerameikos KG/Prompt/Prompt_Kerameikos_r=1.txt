@@ -92,6 +92,9 @@ You are given the following triple patterns of the form {Class}-->Property-->{Cl
 {crm:E74_Group}-->skos:definition-->{Literal}
 {crm:E74_Group}-->rdfs:seeAlso-->{Literal}
 {crm:E74_Group}-->rdfs:label-->{Literal}
+{crm:E53_Place}-->crm:P168_place_is_defined_by-->{crmgeo:SP5_Geometric_Place_Expression}
+{crmgeo:SP5_Geometric_Place_Expression}-->geo:long-->(Literal)
+{crmgeo:SP5_Geometric_Place_Expression}-->geo:lat-->(Literal)
 ###end of Path Patterns###
 By using properties and classes of the above patterns,
 and  by never putting a class as a property,  
