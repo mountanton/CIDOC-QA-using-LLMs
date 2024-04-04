@@ -98,5 +98,4 @@ You are given the following triple patterns of the form {Class}-->Property-->{Cl
 ###end of Path Patterns###
 By using properties and classes of the above patterns,
 and  by never putting a class as a property,  
-please generate only a SPARQL query {without explanation} for answering the question:  
-How many artworks have  no information about the year that their production started?
+please generate only a SPARQL query (without explanation) for answering the question Q
