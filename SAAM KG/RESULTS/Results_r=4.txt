@@ -513,9 +513,3 @@ WHERE {
   ?artist crm:P93i_was_taken_out_of_existence_by/crm:E64_End_of_Existence/crm:P7_took_place_at ?deathPlace .
   ?deathPlace rdfs:label ?deathPlaceLabel .
 }
-
-R=1 6
-R=2 7
-R=3 6
-R=4 5
-mixed 3
