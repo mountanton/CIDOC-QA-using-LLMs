@@ -429,9 +429,3 @@ WHERE {
 }
 ORDER BY ?creationDate
 LIMIT 5
-
-9
-3
-2
-3
-3
