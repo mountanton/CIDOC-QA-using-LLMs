@@ -95,5 +95,4 @@ and (Class)-->Property-->{Class}-->{Property}-->(Class) or {Literal} ,
 ###End of Patterns
 By using the properties and classes of the above patterns,
 and  by never putting a class as a property,  
-please generate only a SPARQL query (without explanation) for answering the question:  
- The end date of the production of an artwork and the death place of the artist
+please generate only a SPARQL query (without explanation) for answering the question Q
