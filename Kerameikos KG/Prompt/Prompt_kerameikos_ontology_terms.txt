@@ -122,5 +122,4 @@ crm:E74_Group
 ###End of Classes###
 By using these properties and classes
 and  by never putting a class as a property,  
-please generate only a SPARQL query (without explanation) for answering the question:  
-Give me the 5 oldest artworks that its shape contains the word "amphoriskos"
+please generate only a SPARQL query (without explanation) for answering the question Q
