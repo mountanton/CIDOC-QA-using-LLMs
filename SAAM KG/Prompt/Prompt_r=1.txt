@@ -1,4 +1,4 @@
-You are given the following path patterns of the form  (Class))-->Property-->(Class) or {Literal}
+You are given the following path patterns of the form  (Class)-->Property-->(Class) or {Literal}
 ### Triple Patterns)
 (crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)
 (crm:E22_Man-Made_Object)-->crm:P41i_was_classified_by-->(crm:E17_Type_Assignment)
