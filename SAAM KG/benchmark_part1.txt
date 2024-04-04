@@ -1,4 +1,5 @@
-Queries (R=1)
+Queries (R=1) SAAM KG
+
 Q1. Which is the homepage of an artwork
 
 SELECT distinct ?x
@@ -34,6 +35,7 @@ SELECT ?artist (COUNT(?production) AS ?productionCount)
 WHERE {
  ?production crm:P14_carried_out_by ?artist     
 }
+GROUP BY ?artist
 
 Q6. Give me the number of distinct artists
 
@@ -73,7 +75,8 @@ WHERE {
 }
 
 
-Queries (R=2)
+Queries (R=2) SAAM KG
+
 Q11. Which is the birth place of an artist?
 
 SELECT ?actor ?place WHERE { 
@@ -160,7 +163,8 @@ WHERE {
   FILTER(CONTAINS(LCASE(?placeLabel), "athens") && !CONTAINS(LCASE(?placeLabel), "greece"))
 }
 
-Queries (R=3)
+Queries (R=3) SAAM KG
+
 Q21. When the production of the artwork ended?
 
 SELECT ?artwork ?date WHERE { 
@@ -241,7 +245,8 @@ SELECT ?artwork  ?nationality WHERE {
 ?actor crm:P107i_is_current_or_former_member_of ?country .      
 }  
 
-Queries (R=4)
+Queries (R=4) SAAM KG
+
 Q31. Which is the birth place of the creator of an artwork?
 
 SELECT ?artwork  ?placeLabel WHERE {  
@@ -273,7 +278,10 @@ SELECT ?placeLabel  (COUNT(?artwork) AS ?artwork) WHERE {
 Q34. Which is the place of birth of artists with the most artworks?
 
 SELECT ?placeLabel  (COUNT(?artwork) AS ?artworkCount) WHERE {  
-?artwork crm:P108i_wa_place_at ?placeLabel . 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?actor .  
+?actor crm:P92i_was_brought_into_existence_by ?existence .  
+?existence crm:P7_took_wa_place_at ?placeLabel . 
 } 
 order by desc (?artworkCount)
 limit 1
@@ -284,10 +292,7 @@ SELECT ?artwork WHERE {
 ?artwork crm:P108i_was_produced_by ?prod .     
 ?prod crm:P14_carried_out_by ?actor .   
 ?actor crm:P92i_was_brought_into_existence_by ?birth 
-.filter not exists {?bs_produced_by ?prod .  
-?prod crm:P14_carried_out_by ?actor .  
-?actor crm:P92i_was_brought_into_existence_by ?existence .  
-?existence crm:P7_tookirth crm:P7_took_place_at ?place}
+.filter not exists {?birth crm:P7_took_place_at ?place}
 } 
 
 Q36. How many artworks have a creator where information about their death place is given
@@ -336,7 +341,8 @@ SELECT (count(?artwork) as ?count)  WHERE {
 } 
 
 
-Queries (Multiple Paths Difficult)
+Queries (Multiple Paths Difficult) SAAM KG
+
 Q41. I want all the pairs of artists that born in the same place
 
 SELECT ?artist1 ?artist2 ?place  WHERE {  
