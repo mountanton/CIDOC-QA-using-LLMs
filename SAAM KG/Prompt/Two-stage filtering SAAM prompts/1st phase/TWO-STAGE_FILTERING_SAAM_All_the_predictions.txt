@@ -1,0 +1,153 @@
+Q1. Which is the homepage of an artwork
+List of Classes: {crm:E22_Man-Made_Object, foaf:Document}
+List of Properties: {foaf:homepage}
+Q2. Who is the holder of an artwork
+List of Classes:{crm:E22_Man-Made_Object, crm:E40_Legal_Body}
+List of Properties:{crm:P52_has_current_owner}
+Q3. Give me the image of an artwork
+List of Classes:{crm:E22_Man-Made_Object,crm:E38_Image}
+List of Properties:{foaf:depiction}
+Q4. Give me all the measurement units
+List of Classes: {crm:E58_Measurement_Unit}
+List of Properties: {skos:prefLabel}
+Q5. Give me the number of productions per artist
+List of Classes: {E12_Production, E39_Actor}
+List of Properties: {P14_carried_out_by}
+Q6. Give me the number of distinct artists
+List of Classes: {crm:E39_Actor, crm:E82_Actor_Appellation}
+List of Properties: {crm:P107i_is_current_or_former_member_of, crm:P131_is_identified_by}
+Q7. I want all the distinct places
+List of Classes: {crm:E53_Place}
+List of Properties: {crm:P7_took_place_at}
+Q8. Give me all the artworks containing the word "Evening"
+List of Classes: {crm:E22_Man-Made_Object, crm:E35_Title, crm:E33_Linguistic_Object}
+List of Properties: {crm:P102_has_title, rdf:value}
+Q9. Give me the references of an artwork
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E40_Legal_Body, crm:E42_Identifier, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence, crm:E74_Group, crm:E53_Place, crm:E18_Physical_Thing, crm:E55_Type, crm:E35_Title, crm:E33_Linguistic_Object, crm:E38_Image, crm:E82_Actor_Appellation, crm:E52_Time-Span, crm:E54_Dimension, crm:E58_Measurement_Unit}
+List of Properties: {crm:P108i_was_produced_by, crm:P41i_was_classified_by, crm:P46_is_composed_of, crm:P129i_is_subject_of, crm:P67i_is_referred_to_by, crm:P102_has_title, foaf:depiction, crm:P14_carried_out_by, crm:P52_has_current_owner, crm:P1_is_identified_by, crm:P4_has_time
+Q10. Give me the preferred identifier  of an artist
+List of Classes: {crm:E39_Actor, crm:E82_Actor_Appellation, crm:E42_Identifier}
+List of Properties: {crm:P1_is_identified_by, crm:P131_is_identified_by, crm:P106_is_composed_of, crm:P2_has_type, rdf:value}
+Q11. Which is the birth place of an artist?
+List of Classes: {crm:E39_Actor, crm:E53_Place}
+List of Properties: {crm:P7_took_place_at, crm:P131_is_identified_by}
+Q12. Which is the death place of an artist?
+List of Classes: {crm:E39_Actor, crm:E53_Place, crm:E64_End_of_Existence}
+List of Properties: {crm:P93i_was_taken_out_of_existence_by, crm:P7_took_place_at}
+Q13. Who is the creator of an artwork?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E42_Identifier, crm:E82_Actor_Appellation}
+List of Properties: {crm:P108i_was_produced_by, crm:P129i_is_subject_of, crm:P1_is_identified_by}
+Q14. Which are the components of the name of an artist?
+List of Classes: {crm:E82_Actor_Appellation, crm:E33_Linguistic_Object, crm:E42_Identifier, crm:E35_Title, crm:E55_Type}
+List of Properties: {rdf:value, crm:P2_has_type}
+Q15. Which are the dimensions of the components of an artwork?
+List of Classes: {crm:E18_Physical_Thing, crm:E54_Dimension}
+List of Properties: {crm:P43_has_dimension, rdf:value}
+Q16. Which is the place of birth with the most artists?
+List of Classes: {crm:E53_Place, crm:E39_Actor}
+List of Properties: {crm:P7_took_place_at, crm:P131_is_identified_by, crm:P107i_is_current_or_former_member_of}
+Q17. give me all the types of references of the artworks
+List of Classes: {crm:E33_Linguistic_Object, crm:E35_Title, crm:E38_Image, crm:E42_Identifier, crm:E53_Place, crm:E40_Legal_Body, crm:E18_Physical_Thing, crm:E55_Type}
+List of Properties: {crm:P67i_is_referred_to_by, crm:P102_has_title, foaf:depiction, crm:P1_is_identified_by, crm:P7_took_place_at, crm:P52_has_current_owner, crm:P41i_was_classified_by, crm:P46_is_composed_of, crm:P129i_is_subject_of}
+Q18. Give me the distinct death places grouped by the number of artists.
+List of Classes: {crm:E39_Actor, crm:E53_Place}
+List of Properties: {crm:P93i_was_taken_out_of_existence_by, crm:P7_took_place_at}
+Q19. Give me the birth place of an artist including the word "greece"
+List of Classes: {crm:E39_Actor, crm:E53_Place, crm:E63_Beginning_of_Existence}
+List of Properties: {crm:P131_is_identified_by, crm:P7_took_place_at, rdfs:label}
+Q20. Give me the number of artists died in a place that contain the word "athens" but not the word "greece" 
+List of Classes: {crm:E39_Actor, crm:E64_End_of_Existence, crm:E53_Place, crm:E82_Actor_Appellation}
+List of Properties: {crm:P93i_was_taken_out_of_existence_by, crm:P7_took_place_at, rdfs:label}
+Q21. When the production of the artwork ended?
+List of Classes: {crm:E12_Production, crm:E64_End_of_Existence, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P82b_end_of_the_end}
+Q22. When the production of the artwork started?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E52_Time-Span, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P14_carried_out_by, crm:P4_has_time-span, crm:P7_took_place_at, crm:P1_is_identified_by, crm:P93i_was_taken_out_of_existence_by, crm:P131_is_identified_by, crm:P82a_begin_of_the_begin}
+Q23. Give me the birth date of any artist
+List of Classes: {crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E82_Actor_Appellation, crm:E52_Time-Span}
+List of Properties: {crm:P92i_was_brought_into_existence_by, crm:P7_took_place_at, crm:P106_is_composed_of, crm:P131_is_identified_by, crm:P82a_begin_of_the_begin, rdf:value}
+Q24. Give me the death date of any artist
+List of Classes: {crm:E39_Actor, crm:E64_End_of_Existence}
+List of Properties: {crm:P93i_was_taken_out_of_existence_by, crm:P4_has_time-span, crm:P82b_end_of_the_end}
+Q25. Which are the types of the dimensions of the components of an artwork?
+List of Classes: {crm:E18_Physical_Thing, crm:E54_Dimension, crm:E55_Type}
+List of Properties:{crm:P43_has_dimension, crm:P2_has_type}
+Q26. For which artworks the production started after 1934-01-01?
+List of Classes: {crm:E12_Production, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P82a_begin_of_the_begin}
+Q27. Which artworks have a creator where no information about their birth  is given?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence}
+List of Properties: {crm:P108i_was_produced_by, crm:P129i_is_subject_of, crm:P67i_is_referred_to_by, crm:P102_has_title, crm:P52_has_current_owner, crm:P1_is_identified_by, crm:P4_has_time-span, crm:P7_took_place_at, crm:P43_has_dimension, crm:P2_has_type, crm:P4_has_time-span, crm:P7_took_place_at, crm:P93i_was_taken_out_of_existence_by, crm:P107i_is_current_or_former_member_of, crm:P131_is_identified_by}
+Q28. For which artists we do not have information about their birth place?
+List of Classes: {crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E82_Actor_Appellation}
+List of Properties: {crm:P7_took_place_at}
+Q29. Give me the identifier of the artist of an artwork?
+List of Classes: {crm:E22_Man-Made_Object, crm:E39_Actor, crm:E82_Actor_Appellation, crm:E42_Identifier}
+List of Properties: {crm:P1_is_identified_by, crm:P108i_was_produced_by, crm:P39_actor_was_identified_by, crm:P129i_is_subject_of}
+Q30. Which is the nationality of the creator of an artwork?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E40_Legal_Body, crm:E82_Actor_Appellation}
+List of Properties: {crm:P108i_was_produced_by, crm:P14_carried_out_by, crm:P129i_is_subject_of, crm:P52_has_current_owner, crm:P1_is_identified_by, crm:P93i_was_taken_out_of_existence_by, crm:P107i_is_current_or_former_member_of, crm:P131_is_identified_by}
+Q31. Which is the birth place of the creator of an artwork?
+List of Classes: {crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E53_Place}
+List of Properties: {crm:P131_is_identified_by, crm:P7_took_place_at, crm:P93i_was_taken_out_of_existence_by}
+Q32. Which is the death place of the creator of an artwork?
+List of Classes: {crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E53_Place, crm:E64_End_of_Existence}
+List of Properties: {crm:P93i_was_taken_out_of_existence_by, crm:P7_took_place_at, crm:P1_is_identified_by}
+Q33. Find the number of artworks per  place of birth of artists
+List of Classes: {crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E53_Place, crm:E22_Man-Made_Object}
+List of Properties: {crm:P1_is_identified_by, crm:P7_took_place_at, crm:P108i_was_produced_by, crm:P39_measured, crm:P129i_is_subject_of, crm:P131_is_identified_by, crm:P41i_was_classified_by}
+Q34. Which is the place of birth of artists with the most artworks?
+List of Classes: {crm:E22_Man-Made_Object, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E53_Place, crm:E82_Actor_Appellation, foaf:Document}
+List of Properties: {crm:P108i_was_produced_by, crm:P129i_is_subject_of, crm:P67i_is_referred_to_by, crm:P102_has_title, crm:P52_has_current_owner, crm:P1_is_identified_by, crm:foaf_depiction, crm:P4_has_time-span, crm:P7_took_place_at, crm:P93i_was_taken_out_of_existence_by, crm:P107i_is_current_or_former_member_of, crm:P131_is_identified_by}
+Q35.  Give me the artworks that have a creator where information about their birth place is not given
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E64_End_of_Existence, crm:E63_Beginning_of_Existence, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, crm:P93i_was_taken_out_of_existence_by}
+Q36. How many artworks have a creator where information about their death place is given
+List of Classes: {crm:E22_Man-Made_Object, crm:E39_Actor, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P131_is_identified_by, crm:P7_took_place_at}
+Q37. give me the number of the artworks whose artist was born in a place which contains the word "California"
+List of Classes: {crm:E22_Man-Made_Object, crm:E39_Actor, crm:E53_Place, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence}
+List of Properties: {crm:P108i_was_produced_by, crm:P41i_was_classified_by, crm:P46_is_composed_of, crm:P129i_is_subject_of, crm:P67i_is_referred_to_by, crm:P102_has_title, crm:P52_has_current_owner, crm:P1_is_identified_by, crm:P4_has_time-span, crm:P7_took_place_at, crm:P43_has_dimension, crm:P2_has_type, crm:P42_assigned, crm:P91_has_unit, crm:P92i_was_brought_into_existence_by, crm:P93i_was_taken_out_of_existence_by, crm:P107i_is_current_or_former_member_of, crm:P106_is_composed_of, foaf:homepage, foaf:depiction, rdfs:label, rdf:value, rdf:value, skos:exactMatch, skos:prefLabel, skos:broadMatch}
+Q38. When did the creator of a production born?
+List of Classes: {crm:E12_Production, crm:E39_Actor, crm:E63_Beginning_of_Existence}
+List of Properties: {crm:P14_carried_out_by, crm:P4_has_time-span, crm:P92i_was_brought_into_existence_by}
+Q39. When did the creator of a production die?
+List of Classes: {crm:E12_Production, crm:E39_Actor, crm:E64_End_of_Existence}
+List of Properties: {crm:P14_carried_out_by, crm:P1_is_identified_by, crm:P93i_was_taken_out_of_existence_by, crm:P4_has_time-span}
+Q40. Give me the number of artworks where the death place of the authors does not include the word berlin
+List of Classes: {crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence, crm:E53_Place}
+List of Properties: {crm:P7_took_place_at, crm:P93i_was_taken_out_of_existence_by, rdfs:label}
+Q41. I want all the pairs of artists that born in the same place
+List of Classes: {crm:E39_Actor, crm:E53_Place}
+List of Properties: {crm:P131_is_identified_by, crm:P7_took_place_at}
+Q42. Give me all the pairs of artists that died in the same date
+List of Classes: {crm:E39_Actor, crm:E64_End_of_Existence, crm:E63_Beginning_of_Existence}
+List of Properties: {crm:P4_has_time-span, crm:P93i_was_taken_out_of_existence_by}
+Q43. Give me all the pairs of artists with the same birth and death place
+List of Classes: {crm:E39_Actor, crm:E53_Place, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence}
+List of Properties:{crm:P7_took_place_at, crm:P93i_was_taken_out_of_existence_by, crm:P131_is_identified_by, crm:P1_is_identified_by}
+Q44. I want the pairs of artists with the same nationality and birth place
+List of Classes: {crm:E39_Actor, crm:E53_Place, crm:E82_Actor_Appellation}
+List of Properties: {crm:P131_is_identified_by, crm:P107i_is_current_or_former_member_of, crm:P93i_was_taken_out_of_existence_by, crm:P106_is_composed_of, crm:P7_took_place_at}
+Q45. Give me the start and the end date of the production of an artwork
+List of Classes: {crm:E12_Production, crm:E22_Man-Made_Object, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence}
+List of Properties: {crm:P108i_was_produced_by, crm:P14_carried_out_by, crm:P4_has_time-span, crm:P7_took_place_at}
+Q46. I want all the artworks started after the year 1934 and the birth place of the artists includes the word ireland
+List of Classes: {crm:E22_Man-Made_Object, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E53_Place}
+List of Properties: {crm:P7_took_place_at, crm:P1_is_identified_by, crm:P4_has_time-span}
+Q47. Give me all the artworks whose label contains the word "evening" and their production ended after 1950
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E64_End_of_Existence, crm:E35_Title, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P41i_was_classified_by, crm:P46_is_composed_of, crm:P129i_is_subject_of, crm:P67i_is_referred_to_by, crm:P102_has_title, crm:P52_has_current_owner, crm:P1_is_identified_by, crm:P4_has_time-span, crm:P7_took_place_at, crm:P2_has_type, rdfs:label}
+Q48. Give me  artworks whose label contains the word "Evening" and its artist birth place contains the word "france" 
+List of Classes: {crm:E22_Man-Made_Object, crm:E39_Actor, crm:E53_Place}
+List of Properties: {crm:P1_is_identified_by, crm:P102_has_title, crm:P67i_is_referred_to_by, crm:P131_is_identified_by, crm:P41i_was_classified_by, crm:P129i_is_subject_of, crm:P7_took_place_at}
+Q49. Give me the production starting date of an artwork and the birth date of the artist of the artwork
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E82_Actor_Appellation}
+List of Properties: {crm:P108i_was_produced_by, crm:P14_carried_out_by, crm:P4_has_time-span, crm:P93i_was_taken_out_of_existence_by, crm:P131_is_identified_by, crm:P7_took_place_at, crm:P106_is_composed_of, crm:P1_is_identified_by, crm:P82a_begin_of_the_begin}
+Q50. I want the end date of the production of an artwork and the death place of the artist
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E39_Actor, crm:E63_Beginning_of_Existence, crm:E64_End_of_Existence, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P4_has_time-span, crm:P7_took_place_at, crm:P1_is_identified_by, crm:P93i_was_taken_out_of_existence_by}
+QX
+
+

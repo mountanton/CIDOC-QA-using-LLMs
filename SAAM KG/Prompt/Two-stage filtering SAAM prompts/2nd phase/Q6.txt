@@ -1,0 +1,28 @@
+You are given the following path patterns of the form (Class)-->Property-->(Class) or {Literal},
+(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}   and
+(Class)-->Property-->(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}: 
+###Path Patterns
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->URI
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P2_has_type-->{Literal}
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E58_Measurement_Unit)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P2_has_type-->(crm:E52_Time-Span)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+###end of Path Patterns###
+By using properties and classes of the above patterns, 
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:
+Give me the number of distinct artists

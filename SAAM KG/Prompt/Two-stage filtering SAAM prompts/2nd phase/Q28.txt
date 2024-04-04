@@ -1,0 +1,21 @@
+You are given the following path patterns of the form (Class)-->Property-->(Class) or {Literal},
+(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}   and
+(Class)-->Property-->(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}: 
+###Path Patterns
+(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
+(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
+###end of Path Patterns###
+By using properties and classes of the above patterns, 
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:
+For which artists we do not have information about their birth place?

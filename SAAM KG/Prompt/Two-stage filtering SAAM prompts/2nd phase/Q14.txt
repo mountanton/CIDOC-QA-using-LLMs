@@ -1,0 +1,88 @@
+You are given the following path patterns of the form (Class)-->Property-->(Class) or {Literal},
+(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}   and
+(Class)-->Property-->(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}: 
+###Path Patterns
+(crm:E39_Actor-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
+(crm:E22_Man-Made_Object)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
+(crm:E22_Man-Made_Object)-->crm:P67i_is_referred_to_by-->(crm:E33_Linguistic_Object)
+(crm:E22_Man-Made_Object)-->crm:P102_has_title-->(crm:E35_Title)
+(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E82_Actor_Appellation-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E54_Dimension)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E22_Man-Made_Object)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E17_Type_Assignment)-->crm:P42_assigned-->(crm:E55_Type)
+(crm:E55_Type)-->crm:P91_has_unit-->(crm:E58_Measurement_Unit)
+(crm:E82_Actor_Appellation-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E42_Identifier)-->rdfs:label-->{Literal}
+(crm:E55_Type)-->rdfs:label-->{Literal}
+(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E33_Linguistic_Object)-->rdf:value-->{Literal}
+(crm:E42_Identifier)-->rdf:value-->{Literal}
+(crm:E35_Title)-->rdf:value-->{Literal}
+(crm:E54_Dimension)-->rdf:value-->{Literal}
+(crm:E33_Linguistic_Object)-->crm:P2_has_type-->URI
+(crm:E82_Actor_Appellation)-->crm:P2_has_type-->URI
+(crm:E42_Identifier)-->crm:P2_has_type-->URI
+(crm:E74_Group)-->crm:P2_has_type-->URI
+(crm:E55_Type)-->crm:P2_has_type-->URI
+(crm:E35_Title)-->crm:P2_has_type-->URI
+(crm:E55_Type)-->skos:prefLabel-->{Literal}
+(crm:E55_Type)-->skos:broadMatch-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E18_Physical_Thing)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->URI
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->URI
+(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->URI
+(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->crm:P2_has_type-->URI
+(crm:E22_Man-Made_Object)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->URI
+(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P2_has_type-->URI
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->URI
+(crm:E22_Man-Made_Object)-->crm:P102_has_title-->(crm:E35_Title)-->crm:P2_has_type-->URI
+(crm:E22_Man-Made_Object)-->crm:P67i_is_referred_to_by-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->URI
+(crm:E22_Man-Made_Object)-->crm:P41i_was_classified_by-->(crm:E17_Type_Assignment)-->crm:P42_assigned-->(crm:E55_Type)
+(crm:E54_Dimension)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P91_has_unit-->(crm:E58_Measurement_Unit)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E22_Man-Made_Object)-->crm:P46_is_composed_of-->(crm:E18_Physical_Thing)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->crm:P2_has_type-->URI
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P2_has_type-->{Literal}
+(crm:E18_Physical_Thing)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P91_has_unit-->(crm:E58_Measurement_Unit)
+(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P46_is_composed_of-->(crm:E18_Physical_Thing)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P41i_was_classified_by-->(crm:E17_Type_Assignment)-->crm:P42_assigned-->(crm:E55_Type)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E58_Measurement_Unit)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->(crm:E53_Place)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->(crm:E53_Place)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->crm:P2_has_type-->(crm:E52_Time-Span)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P2_has_type-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P46_is_composed_of-->(crm:E18_Physical_Thing)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P91_has_unit-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdfs:label-->{Literal}
+###end of Path Patterns###
+By using properties and classes of the above patterns, 
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:
+Which are the components of the name of an artist?
