@@ -497,9 +497,3 @@ WHERE {
   ?artist crm:E64_End_of_Existence/crm:P7_took_place_at ?deathPlace .
   FILTER(?artistName = "ArtistName" && LANG(?deathPlace) = "")
 }
-
-R=1 9
-R=2 5
-R=3 2
-R=4 2
-mixed 1
