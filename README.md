@@ -7,8 +7,7 @@ The evaluation collection is provided in different folders according to the type
 
 ## A. SPARQL Queries for Creating the Patterns
 
-### Pattern Templates of Radius 1
-
+### SPARQL Template for Path Patterns of Radius 1 (Triple Patterns)
 
 
 ```sparql
@@ -19,3 +18,15 @@ WHERE {
  .filter(!regex(?property,rdf:type))
 }
 ```
+### SPARQL Template for Path Patterns of Radius 2 
+
+```sparql
+SELECT distinct ?class1 ?property ?class2  ?property2 ?class3
+WHERE {
+  ?subject1 ?property ?object1 . ?object1 ?property2 ?object2 .
+  ?subject1 a ?class1 . ?object1 a ?class2
+  optional{?object2 a ?class3} 
+ .filter(regex(?property,"cidoc") && !regex(?property2,rdf:type))
+}
+```
+
