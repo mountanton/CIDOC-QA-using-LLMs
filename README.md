@@ -30,3 +30,32 @@ WHERE {
 }
 ```
 
+### SPARQL Template for Path Patterns of Radius 3
+
+```sparql
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT distinct ?class1 ?property ?class2  ?property2 ?class3 ?property3 ?class4
+WHERE {
+  ?subject1 ?property ?object1 . ?object1 ?property2 ?object2 . ?object2 ?property3 ?object3 .
+  ?subject1 a ?class1 . ?object1 a ?class2 . ?object2 a ?class3
+  optional{?object3 a ?class4} 
+ .filter(regex(?property,"cidoc") && regex(?property2,"cidoc") && !regex(?property3,rdf:type))
+}
+```
+
+### SPARQL Template for Path Patterns of Radius 4
+```sparql
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT distinct ?class1 ?property ?class2  ?property2 ?class3 ?property3 ?class4 ?property4 ?class5
+WHERE {
+  ?subject1 ?property ?object1 . ?object1 ?property2 ?object2 . ?object2 ?property3 ?object3 . ?object3 ?property4 ?object4 .
+  ?subject1 a ?class1 . ?object1 a ?class2 . ?object2 a ?class3 . ?object3 a ?class4
+  optional{?object4 a ?class5} 
+ .filter(regex(?property,"cidoc") && regex(?property2,"cidoc") && regex(?property3,"cidoc")  && !regex(?property4,rdf:type))
+}
+
+
+```
+
