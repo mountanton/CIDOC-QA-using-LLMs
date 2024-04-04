@@ -1,4 +1,5 @@
-Queries (R=1)
+Queries (R=1) Kerameikos KG
+
 Q51. Which is the shape of any artwork
 
 SELECT distinct ?s ?shape
@@ -74,7 +75,8 @@ WHERE {
  ?s a crm:E22_Man-Made_Object
 } group by ?shape
 
-Queries (R=2)
+Queries (R=2) Kerameikos KG
+
 Q61. Which is the place where an artwork created?
 
 SELECT ?artwork ?place WHERE { 
@@ -159,7 +161,8 @@ WHERE {
   ?prod crm:P10_falls_within ?period . 
 }
 
-Queries (R=3)
+Queries (R=3) Kerameikos KG
+
 Q71. When the production of the artwork ended?
 
 SELECT ?artwork ?date WHERE { 
@@ -248,7 +251,8 @@ SELECT (count(?artwork) as ?cnt)  WHERE {
 
 
 
-Queries (R=4)
+Queries (R=4) Kerameikos KG
+
 Q81. Which are the coordinates of the place that an artwork produced
 
 SELECT ?S ?lat ?lon WHERE {
@@ -348,7 +352,7 @@ SELECT ?artwork ?infl ?member WHERE {
 ?inlf skos:definition ?definition}
 
 
-Queries (Multiple Paths Difficult)
+Queries (Multiple Paths Difficult) Kerameikos KG
 
 Q91. Give me all the pairs of artworks that were produced in the same place
 
@@ -450,7 +454,6 @@ SELECT count(?artwork) WHERE {
 .filter(?start!=?end)
 } 
 
-
 Q100. Give me the 5 oldest artworks that its shape contains the word "amphoriskos"
 
 SELECT ?artwork ?year WHERE { 
@@ -461,6 +464,3 @@ SELECT ?artwork ?year WHERE {
 } 
 order by asc (?year)
 limit 5
-
-
-
