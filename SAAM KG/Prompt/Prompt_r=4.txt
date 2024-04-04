@@ -1,6 +1,6 @@
 You are given the following path patterns of the form (Class)-->Property-->(Class)-->...-->(Class) or {Literal} ,  
 ###Path Patterns
-(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production))
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)
 (crm:E22_Man-Made_Object)-->crm:P41i_was_classified_by-->(crm:E17_Type_Assignment)
 (crm:E22_Man-Made_Object)-->crm:P46_is_composed_of-->(crm:E18_Physical_Thing)
 (crm:E39_Actor-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
@@ -159,7 +159,6 @@ You are given the following path patterns of the form (Class)-->Property-->(Clas
 (crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
 (crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->rdfs:label-->{Literal}
 ###end of Path Patterns###
-By using the above path patterns of the form (Class)-->Property-->(Class)-->...-->(Class) or {Literal} 
+By using properties and classes from the above patterns
 and  by never putting a class as a property,  
-please generate only a SPARQL query (without explanation) for answering the question:  
-The pairs of artists that died in the same date
+please generate only a SPARQL query (without explanation) for answering the question Q
