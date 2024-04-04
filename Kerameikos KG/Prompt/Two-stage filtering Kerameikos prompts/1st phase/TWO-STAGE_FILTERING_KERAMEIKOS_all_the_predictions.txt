@@ -1,0 +1,151 @@
+Q51. Which is the shape of any artwork
+List of Classes: {crm:E22_Man-Made_Object, kon:Shape}
+List of Properties: {kon:hasShape}
+Q52. Who is the owner of an artwork
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person, crm:E40_Legal_Body}
+List of Properties: {crm:P50_has_current_keeper, crm:P14_carried_out_by}
+Q53. What each artwork comprises of
+List of Classes: {crm:E22_Man-Made_Object, crm:E57_Material, crm:E36_Visual_Item, crm:E73_Information_Object, crm:E54_Dimension}
+List of Properties: {crm:P45_consists_of, crm:P138i_has_representation, crm:P129i_is_subject_of, crm:P43_has_dimension, dcterms:format, dcterms:conformsTo, crm:P90_has_value, crm:P91_has_unit}
+Q54. Give me all the unique techniques 
+List of Classes: {kon:Technique}
+List of Properties: {crm:P32_used_general_technique}
+Q55. Give me the number of productions per artist
+List of Classes: {crm:E12_Production, crm:E21_Person}
+List of Properties: {crm:P14_carried_out_by, crm:P9_consists_of}
+Q56. Give me the number of distinct artists
+List of Classes:{crm:E21_Person}
+List of Properties:{crm:P14_carried_out_by,crm:P15_was_influenced_by}
+Q57. I want all the distinct places of the KG
+List of Classes: {crm:E53_Place}
+List of Properties: {geo:location, crm:P168_place_is_defined_by, skos:broader, crm:P89_falls_within, crm:P7_took_place_at}
+Q58. Give me all the places containing the word "Thebes"
+List of Classes: {crm:E53_Place}
+List of Properties: {skos:prefLabel, skos:exactMatch, skos:definition, skos:broader, rdfs:label, skos:inScheme, skos:closeMatch}
+Q59. Tell me who influenced each artist
+List of Classes: {crm:E21_Person, crm:E74_Group}
+List of Properties: {crm:P15_was_influenced_by}
+Q60. Give me the number of artworks per shape
+List of Classes:{crm:E22_Man-Made_Object,kon:Shape}
+List of Properties:{crm:P138i_has_representation,kon:hasShape}
+Q61. Which is the place where an artwork created?
+List of Classes:{crm:E22_Man-Made_Object,crm:E12_Production,crm:E53_Place}
+List of Properties:{crm:P108i_was_produced_by,crm:P7_took_place_at}
+Q62. Which is the technique that was followed for creating the artwork
+List of Classes: {crm:E12_Production, kon:Technique}
+List of Properties: {crm:P32_used_general_technique}
+Q63. Who is the creator of an artwork?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person}
+List of Properties: {crm:P14_carried_out_by}
+Q64. Which is the webpage of the owner of the artwork?
+List of Classes: {crm:E22_Man-Made_Object, crm:E40_Legal_Body}
+List of Properties: {foaf:homepage, crm:P50_has_current_keeper}
+Q65. Where was each artwork  founded?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crmsci:S19_Encounter_Event, crm:E53_Place}
+List of Properties: {crmsci:O19i_was_object_found_by, crm:P7_took_place_at}
+Q66. Which is the technique with the most artworks?
+List of Classes: {crm:E12_Production, kon:Technique}
+List of Properties: {crm:P32_used_general_technique, crm:P50_has_current_keeper}
+Q67.  Give me the number artworks produced in a place containing the word "Athens"
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at}
+Q68. Give me the distinct  places  grouped by the number of artworks that were produced there.
+List of Classes: {crm:E53_Place, crm:E12_Production, crm:E22_Man-Made_Object}
+List of Properties: {crm:P7_took_place_at, crm:P108i_was_produced_by}
+Q69. Give me the artwork which was created by a group of people
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person, crm:E74_Group}
+List of Properties: {crm:P108i_was_produced_by, crm:P14_carried_out_by}
+Q70. Give me the period when an artwork falls within
+List of Classes: {crm:E22_Man-Made_Object, crm:E4_Period, crm:E12_Production, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P50_has_current_keeper, crmsci:O19i_was_object_found_by, crm:P14_carried_out_by, crm:P10_falls_within}
+Q71. When the production of the artwork ended?
+List of Classes: {crm:E12_Production, crm:E22_Man-Made_Object, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P108i_was_produced_by}
+Q72. When the production of the artwork started?
+List of Classes: {crm:E12_Production, crm:E53_Place, crm:E52_Time-Span}
+List of Properties: {crm:P7_took_place_at, crm:P4_has_time-span, crm:P10_falls_within}
+Q73. Give me the influencer of the artist of an artwork
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person, crm:E74_Group}
+List of Properties: {crm:P14_carried_out_by, crm:P15_was_influenced_by}
+Q74. Give me the 5 oldest artworks
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E4_Period, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P108i_was_produced_by, crmsci:O19i_was_object_found_by, crm:P14_carried_out_by, crm:P7_took_place_at}
+Q75. For which artworks the production ended after the year -0440?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E52_Time-Span}
+List of Properties: {crm:P108i_was_produced_by, crm:P4_has_time-span, crm:P82b_end_of_the_end, crm:P1_is_identified_by, crm:P138i_has_representation, crmsci:O19i_was_object_found_by}
+Q76. Which artworks have  no information about the influencer of its artist?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person}
+List of Properties: {crm:P14_carried_out_by, crm:P15_was_influenced_by}
+Q77. Give me a definition of the used technique of an artwork
+List of Classes: {crm:E12_Production, kon:Technique}
+List of Properties: {crm:P32_used_general_technique, skos:definition}
+Q78. For which artworks the production began before the year -0500?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E4_Period, crm:E52_Time-Span}
+List of Properties: {crm:P7_took_place_at, crm:P4_has_time-span, crm:P82a_begin_of_the_begin}
+Q79. Count the artworks for each year (when their production started)
+List of Classes:{crm:E22_Man-Made_Object,crm:E12_Production,crm:E4_Period,crm:E52_Time-Span,crm:E21_Person}
+List of Properties:{crm:P108i_was_produced_by,crm:P7_took_place_at,crm:P4_has_time-span,crm:P14_carried_out_by,crm:P10_falls_within,crm:P82a_begin_of_the_begin,crm:P82b_end_of_the_end}
+Q80. How many artworks have  no information about the year that their production started?
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P7_took_place_at, crm:P82a_begin_of_the_begin}
+Q81. Which are the coordinates of the place that an artwork produced
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place, crmgeo:SP5_Geometric_Place_Expression, geo:SpatialThing}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, crm:P168_place_is_defined_by, crmgeo:SP5_Geometric_Place_Expression, geo:long, geo:lat}
+Q82. give me exact match links for the influencer of the artist of an artwork
+List of Classes: {crm:E21_Person, crm:E22_Man-Made_Object, crm:E12_Production, crm:E74_Group}
+List of Properties: {crm:P14_carried_out_by, crm:P15_was_influenced_by, skos:exactMatch}
+Q83. Count the number of artworks grouped by the latitude of their place of production
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place, crmgeo:SP5_Geometric_Place_Expression}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, geo:lat}
+Q84. Give me the latitude and longitude of the artworks that their shape contains the word "amphoriskos"
+List of Classes: {crm:E22_Man-Made_Object, crmgeo:SP5_Geometric_Place_Expression}
+List of Properties: {crm:P45_consists_of, kon:hasShape, crmgeo:SP5_Geometric_Place_Expression, geo:long, geo:lat}
+Q85. Give me exact match links for the influencer of the artist of an artwork including the word "wikidata"
+List of Classes: {crm:E21_Person, crm:E74_Group, crm:E22_Man-Made_Object}
+List of Properties: {crm:P15_was_influenced_by, skos:exactMatch, crm:P14_carried_out_by, crm:P138i_has_representation}
+Q86. give me the number of artworks per membership of the influencer of the artist  
+List of Classes: {crm:E21_Person, crm:E22_Man-Made_Object, crm:E12_Production, org:Membership}
+List of Properties: {crm:P15_was_influenced_by, crm:P14_carried_out_by, crm:P9_consists_of}
+Q87. give me the membership of the influencer of the artist of any artwork
+List of Classes: {crm:E21_Person, crm:E12_Production, crm:E22_Man-Made_Object, crmsci:S19_Encounter_Event, crm:E74_Group}
+List of Properties: {crm:P14_carried_out_by, crm:P15_was_influenced_by, org:hasMembership}
+Q88. give me the artworks that the latitude of their production place is not given 
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place, crmgeo:SP5_Geometric_Place_Expression}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, geo:lat}
+Q89. count the artworks that we know the longitute of their production place 
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place, crmgeo:SP5_Geometric_Place_Expression, geo:SpatialThing}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, crm:P168_place_is_defined_by,geo:long}
+Q90. Give me the definition for the influencer of the artist of any artwork
+List of Classes: {crm:E21_Person, crm:E74_Group, crm:E22_Man-Made_Object, crmsci:S19_Encounter_Event}
+List of Properties: {crm:P15_was_influenced_by, crm:P14_carried_out_by, crm:P108i_was_produced_by, crmsci:O19i_was_object_found_by, crm:P32_used_general_technique}
+Q91. Give me all the pairs of artworks that were produced in the same place
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, crm:P168_place_is_defined_by}
+Q92. Give me the technique, shape and place where an artwork produced
+List of Classes: {crm:E22_Man-Made_Object, kon:Shape, crm:E12_Production, crm:E21_Person, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, kon:hasShape, crm:P7_took_place_at, crm:P32_used_general_technique}
+Q93. Give me the artists that created a specific artwork with more than one distinct techniques
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, kon:Technique, crm:E21_Person}
+List of Properties: {crm:P108i_was_produced_by, crm:P32_used_general_technique, crm:P14_carried_out_by}
+Q94. Give me the start and the end date of the production of an artwork
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E52_Time-Span}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, crm:P4_has_time-span, crm:P82a_begin_of_the_begin, crm:P82b_end_of_the_end}
+Q95.  Give me the production year of the artworks that were produced in "Athens"
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E53_Place}
+List of Properties: {crm:P108i_was_produced_by, crm:P7_took_place_at, crm:P4_has_time-span}
+Q96. Give me the number of artworks for each shape, for the artworks ended after -0300
+List of Classes: {crm:E22_Man-Made_Object, kon:Shape, crm:E52_Time-Span}
+List of Properties: {kon:hasShape, crm:P82b_end_of_the_end}
+Q97. Give me the end date of the production of an artwork and the influencer of its artist
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person}
+List of Properties: {crm:P4_has_time-span, crm:P14_carried_out_by, crm:P15_was_influenced_by}
+Q98. Give me the number of distinct artists that ended an artwork before -0500
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E21_Person, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span, crm:P14_carried_out_by}
+Q99. Give me the number of artworks without the same  production start and end year
+List of Classes: {crm:E22_Man-Made_Object, crm:E12_Production, crm:E52_Time-Span}
+List of Properties: {crm:P4_has_time-span}
+Q100. Give me the 5 oldest artworks that its shape contains the word "amphoriskos"
+List of Classes: {crm:E22_Man-Made_Object, kon:Shape, crm:E12_Production, crm:E21_Person}
+List of Properties: {crm:P108i_was_produced_by, kon:hasShape, crm:P4_has_time-span, crm:P14_carried_out_by, crmsci:O19i_was_object_found_by}
+QX

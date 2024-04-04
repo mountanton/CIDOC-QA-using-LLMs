@@ -1,0 +1,16 @@
+You are given the following path patterns of the form (Class)-->Property-->(Class) or {Literal},
+(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}   and
+(Class)-->Property-->(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}: 
+###Path Patterns
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P10_falls_within-->(crm:E4_Period)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E4_Period)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P10_falls_within-->(crm:E4_Period)-->crm:P4_has_time-span-->crm:E52_Time-Span
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E4_Period)-->crm:P4_has_time-span-->crm:E52_Time-Span
+###end of Path Patterns###
+By using properties and classes of the above patterns, 
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:
+Give me the start and the end date of the production of an artwork
