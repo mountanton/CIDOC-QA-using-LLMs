@@ -71,5 +71,11 @@ WHERE {
 }
 ```
 
-## B. Evaluation Benchmark- Queries and Prompts
+## B. Evaluation Benchmark- Queries and Prompt Templates
+In this page you can find the evaluation benchmark and the prompt templates for each method and KG.
+
+## C. Evaluation Results  
+In this page you can find all the generated queries for each method and the corresponding results in excel files.
+
+
 
