@@ -769,12 +769,14 @@ SELECT ?Artwork ?technique ?link WHERE {
 
 Q86. give me the number of artworks per membership of the influencer of the artist  
 
-SELECT ?artwork ?location WHERE {  
-?artwork crmsci:O19i_was_object_found_by ?found .     
-?found  crm:P7_took_place_at ?place .   
-?place crm:P89_falls_within ?falls 
-. ?falls geo:location ?location
-} 
+SELECT ?membership (COUNT(DISTINCT ?artwork) AS ?numberOfArtworks)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer org:hasMembership ?membership .
+}
+GROUP BY ?membership
 
 Q87. give me the membership of the influencer of the artist of any artwork
 
