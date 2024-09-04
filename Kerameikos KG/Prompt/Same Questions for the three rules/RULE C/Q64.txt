@@ -1,0 +1,65 @@
+You are given the following path patterns of the form (Class)-->Property-->(Class) or {Literal},
+(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}   and
+(Class)-->Property-->(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}: 
+###Path Patterns
+(crm:E40_Legal_Body)-->foaf:homepage-->(void:Dataset)
+(crm:E78_Collection)-->crm:P50_has_current_keeper-->(crm:E40_Legal_Body)
+(crm:E22_Man-Made_Object)-->crm:P50_has_current_keeper-->(crm:E40_Legal_Body)
+(crm:E22_Man-Made_Object)-->crm:P45_consists_of-->(crm:E57_Material)
+(crm:E22_Man-Made_Object)-->kon:hasShape-->(kon:Shape)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E33_E41_Linguistic_Appellation)
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E22_Man-Made_Object)-->crm:P138i_has_representation-->(crm:E36_Visual_Item)
+(crm:E22_Man-Made_Object)-->crm:P129i_is_subject_of-->(crm:E73_Information_Object)
+(crm:E22_Man-Made_Object)-->crmsci:O19i_was_object_found_by-->crmsci:S19_Encounter_Event
+(crm:E22_Man-Made_Object)-->crm:P43_has_dimension-->(crm:E54_Dimension)
+(crm:E40_Legal_Body)-->skos:prefLabel-->{Literal}
+(crm:E40_Legal_Body)-->skos:exactMatch-->{Literal}
+(crm:E40_Legal_Body)-->skos:definition-->{Literal}
+(crm:E40_Legal_Body)-->foaf:homepage-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P32_used_general_technique-->(kon:Technique)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P10_falls_within-->(crm:E4_Period)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E74_Group)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P9_consists_of-->(crm:E12_Production)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E4_Period)
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E33_E41_Linguistic_Appellation)-->crm:P190_has_symbolic_content-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P190_has_symbolic_content-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E33_E41_Linguistic_Appellation)-->crm:P2_has_type-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P2_has_type-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P90_has_value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P43_has_dimension-->(crm:E54_Dimension)-->crm:P91_has_unit-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P50_has_current_keeper-->(crm:E40_Legal_Body)-->foaf:homepage-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P50_has_current_keeper-->(crm:E40_Legal_Body)-->foaf:thumbnail-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)-->crm:P15_was_influenced_by-->(crm:E21_Person)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E74_Group)-->crm:P15_was_influenced_by-->(crm:E21_Person)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P9_consists_of-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P10_falls_within-->(crm:E4_Period)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E4_Period)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P7_took_place_at-->(crm:E53_Place)-->skos:broader-->(crm:E53_Place)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)-->crm:P15_was_influenced_by-->(crm:E74_Group)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P9_consists_of-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E74_Group)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P7_took_place_at-->(crm:E53_Place)-->crm:P168_place_is_defined_by-->(geo:SpatialThing)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P7_took_place_at-->(crm:E53_Place)-->geo:location-->(geo:SpatialThing)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P10_falls_within-->(crm:E4_Period)-->crm:P4_has_time-span-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)-->crm:P15_was_influenced_by-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E74_Group)-->crm:P15_was_influenced_by-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E4_Period)-->crm:P4_has_time-span-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P7_took_place_at-->(crm:E53_Place)-->crm:P168_place_is_defined_by-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P7_took_place_at-->(crm:E53_Place)-->geo:location-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P9_consists_of-->(crm:E12_Production)-->crm:P14_carried_out_by-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)-->skos:related-->(crm:E21_Person)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P10_falls_within-->(crm:E4_Period)-->crm:P4_has_time-span-->crm:E52_Time-Span
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E4_Period)-->crm:P4_has_time-span-->crm:E52_Time-Span
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E21_Person)-->org:hasMembership-->(org:Membership)
+###end of Path Patterns###
+By using properties and classes of the above patterns, 
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:
+Which is the webpage of the owner of the artwork?

@@ -1,0 +1,134 @@
+Q51. INCORRECT
+
+SELECT DISTINCT ?artwork ?shape
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production kon:hasShape ?shape .
+}
+
+Q54. CORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?production crm:P32_used_general_technique ?technique .
+}
+
+Q55. CORRECT
+
+SELECT ?artist (COUNT(?production) AS ?productionCount)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person .
+}
+GROUP BY ?artist
+
+Q56. INCORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?numArtists)
+WHERE {
+  ?manMadeObject crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  FILTER (isIRI(?artist) && ( ?artist rdf:type crm:E21_Person || ?artist rdf:type foaf:Person ))
+}
+
+Q59. INCORRECT
+SELECT ?artist ?influencer
+WHERE {
+  ?artist crm:P15_was_influenced_by ?influencer .
+  FILTER (?artist rdf:type crm:E21_Person)
+}
+
+Q61. CORRECT
+SELECT DISTINCT ?place
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+
+Q62. CORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique
+}
+
+Q63. CORRECT
+SELECT DISTINCT ?creator
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+}
+
+Q64. CORRECT
+SELECT ?homepage WHERE {
+  ?artwork crm:P50_has_current_keeper ?owner .
+  ?owner foaf:homepage ?homepage .
+}
+
+Q67. CORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place rdfs:label ?placeLabel .
+  FILTER(CONTAINS(LCASE(?placeLabel), "athens"))
+}
+
+Q68. CORRECT
+SELECT ?place (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ORDER BY DESC(?artworkCount)
+
+Q69. INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?group .
+  ?group crm:P15_was_influenced_by ?person .
+  ?person crm:P15_was_influenced_by ?group .
+}
+
+Q71. CORRECT
+SELECT ?endDate WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+}
+
+Q76. CORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  FILTER NOT EXISTS {
+    ?artist crm:P15_was_influenced_by ?influencer
+  }
+}
+
+Q91. INCORRECT
+SELECT ?artwork1 ?artwork2
+WHERE {
+  ?artwork1 crm:P108i_was_produced_by ?production1 .
+  ?production1 crm:P7_took_place_at ?place1 .
+  ?artwork2 crm:P108i_was_produced_by ?production2 .
+  ?production2 crm:P7_took_place_at ?place2 .
+  ?place1 crm:P168_place_is_defined_by ?spatialThing1 .
+  ?place2 crm:P168_place_is_defined_by ?spatialThing2 .
+  ?spatialThing1 geo:lat ?lat1 .
+  ?spatialThing1 geo:long ?long1 .
+  ?spatialThing2 geo:lat ?lat2 .
+  ?spatialThing2 geo:long ?long2 .
+  FILTER (?lat1 = ?lat2 && ?long1 = ?long2)
+}
+
+Q99. INCORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?begin .
+  ?timeSpan crm:P82b_end_of_the_end ?end .
+  FILTER (xsd:dateTime(?begin) != xsd:dateTime(?end))
+}
