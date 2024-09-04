@@ -1,0 +1,89 @@
+You are given the following path patterns of the form (Class)-->Property-->(Class) or {Literal},
+(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}   and
+(Class)-->Property-->(Class)-->Property-->(Class)-->Property-->(Class) or {Literal}: 
+###Path Patterns
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production))
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)
+(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E52_Time-Span)-->rdfs:label-->{Literal}
+(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)
+(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->crm:P2_has_type-->URI
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)
+(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->rdf:value-->{Literal}
+(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->rdfs:label-->{Literal}
+(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->rdfs:label-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->rdfs:label-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E58_Measurement_Unit)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->crm:P2_has_type-->(crm:E53_Place)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->crm:P2_has_type-->(crm:E53_Place)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->crm:P2_has_type-->(crm:E52_Time-Span)
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P2_has_type-->(crm:E55_Type)-->crm:P2_has_type-->(crm:E52_Time-Span)
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82a_begin_of_the_begin-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->crm:P82b_end_of_the_end-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->crm:P106_is_composed_of-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P129i_is_subject_of-->(crm:E33_Linguistic_Object)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P131_is_identified_by-->(crm:E82_Actor_Appellation)-->rdf:value-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdf:value-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->rdfs:label-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P4_has_time-span-->(crm:E52_Time-Span)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P1_is_identified_by-->(crm:E42_Identifier)-->rdfs:label-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P92i_was_brought_into_existence_by-->(crm:E63_Beginning_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
+(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P93i_was_taken_out_of_existence_by-->(crm:E64_End_of_Existence)-->crm:P7_took_place_at-->(crm:E53_Place)-->rdfs:label-->{Literal}
+(crm:E22_Man-Made_Object)-->crm:P108i_was_produced_by-->(crm:E12_Production)-->crm:P14_carried_out_by-->(crm:E39_Actor)-->crm:P107i_is_current_or_former_member_of-->(crm:E74_Group)-->rdfs:label-->{Literal}
+###end of Path Patterns###
+By using properties and classes of the above patterns, 
+and  by never putting a class as a property,  
+please generate only a SPARQL query (without explanation) for answering the question:
+For which artworks the production started after 1934-01-01?

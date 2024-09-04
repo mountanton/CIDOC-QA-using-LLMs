@@ -1,0 +1,115 @@
+Q1. CORRECT
+SELECT ?homepage
+WHERE {
+  ?artwork crm:E22_Man-Made_Object foaf:homepage ?homepage .
+}
+
+Q2. CORRECT
+SELECT ?holder
+WHERE {
+  ?artwork crm:E22_Man-Made_Object crm:P52_has_current_owner ?holder .
+}
+
+Q3. CORRECT
+SELECT ?image
+WHERE {
+  ?artwork foaf:depiction ?image .
+}
+
+Q4. CORRECT
+SELECT ?unit ?label
+WHERE {
+  ?unit a crm:E58_Measurement_Unit .
+  ?unit skos:prefLabel ?label .
+}
+
+Q5. CORRECT
+SELECT ?artist (COUNT(?production) AS ?numProductions)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E39_Actor .
+}
+GROUP BY ?artist
+
+Q7. CORRECT
+SELECT DISTINCT ?place ?label
+WHERE {
+  ?place a crm:E53_Place .
+  ?place rdfs:label ?label .
+}
+
+Q12. CORRECT
+SELECT ?artist ?deathPlace ?label
+WHERE {
+  ?artist crm:P93i_was_taken_out_of_existence_by ?endOfExistence .
+  ?endOfExistence crm:P7_took_place_at ?deathPlace .
+  ?deathPlace rdfs:label ?label .
+}
+
+Q15. CORRECT
+SELECT ?artwork ?dimension ?dimensionValue
+WHERE {
+  ?artwork crm:P46_is_composed_of ?physicalThing .
+  ?physicalThing crm:P43_has_dimension ?dimension .
+  ?dimension rdf:value ?dimensionValue .
+}
+
+Q18. CORRECT
+SELECT ?deathPlace (COUNT(DISTINCT ?artist) AS ?artistCount)
+WHERE {
+  ?artist crm:P93i_was_taken_out_of_existence_by ?endOfExistence .
+  ?endOfExistence crm:P7_took_place_at ?deathPlace .
+}
+GROUP BY ?deathPlace
+
+Q21. INCORRECT
+SELECT ?endDate
+WHERE {
+  ?production crm:P14_carried_out_by ?actor .
+  ?actor crm:P93i_was_taken_out_of_existence_by ?endOfExistence .
+  ?endOfExistence crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+}
+
+
+Q24. CORRECT
+SELECT ?deathDate
+WHERE {
+  ?actor crm:P93i_was_taken_out_of_existence_by ?endOfExistence .
+  ?endOfExistence crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?deathDate .
+}
+
+Q25 CORRECT
+SELECT DISTINCT ?dimensionType
+WHERE {
+  ?artwork crm:P46_is_composed_of ?physicalThing .
+  ?physicalThing crm:P43_has_dimension ?dimension .
+  ?dimension crm:P2_has_type ?dimensionType .
+}
+
+Q26. CORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+  FILTER (xsd:date(?startDate) > "1934-01-01"^^xsd:date)
+}
+
+Q38. CORRECT
+SELECT DISTINCT ?actor ?birthDate
+WHERE {
+  ?production crm:P14_carried_out_by ?actor .
+  ?actor crm:P92i_was_brought_into_existence_by ?beginningOfExistence .
+  ?beginningOfExistence crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?birthDate .
+}
+
+
+
+
+
+
+
+
