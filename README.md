@@ -1,7 +1,7 @@
 # CIDOC QA using Large Language Models (LLMs)
 
 This page contains the evaluation collection for answering natural questions  over CIDOC-CRM by using LLMs. 
-In particular 100  natural questions (and the corresponding SPARQL queries) are provided  (of different radius or depth), which were produced by using the Smithsonian American Art Museum (SAAM) KG and the Kerameikos KG.
+In particular 120  natural questions (and the corresponding SPARQL queries) are provided  (of different radius or depth), which were produced by using the Smithsonian American Art Museum (SAAM) KG and the Kerameikos KG.
 
 The evaluation collection is provided in different folders according to the type of the questions.
 
