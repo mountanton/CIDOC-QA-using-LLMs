@@ -1,0 +1,667 @@
+Q1. CORRECT
+SELECT ?artwork ?homepage
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork foaf:homepage ?homepage .
+}
+ limit 500
+ 
+Q2. CORRECT
+SELECT ?holder ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P52_has_current_owner ?holder .
+}
+ limit 500
+
+Q3. CORRECT
+SELECT ?image
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork foaf:depiction ?image .
+}
+ limit 500
+ 
+Q4. CORRECT
+SELECT ?measurementUnit
+WHERE {
+  ?measurementUnit rdf:type crm:E58_Measurement_Unit .
+}
+ limit 500
+ 
+Q5. CORRECT
+SELECT ?artist (COUNT(?production) AS ?numberOfProductions)
+WHERE {
+  ?production rdf:type crm:E12_Production.
+  ?production crm:P14_carried_out_by ?artist.
+  ?artist rdf:type crm:E39_Actor.
+}
+GROUP BY ?artist
+ limit 500
+ 
+Q6. CORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+}
+ limit 500
+ 
+Q7. CORRECT
+SELECT DISTINCT ?place
+WHERE {
+  ?place a crm:E53_Place .
+}
+ limit 500
+ 
+Q8. CORRECT
+SELECT ?artwork ?label
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork rdfs:label ?label .
+  FILTER(CONTAINS(LCASE(?label), "evening"))
+}
+ limit 500
+ 
+Q9. CORRECT
+SELECT ?artwork ?reference
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P67i_is_referred_to_by ?reference .
+}
+ limit 500
+ 
+Q10. INCORRECT
+SELECT ?artist ?preferredIdentifier
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P1_is_identified_by ?identifier .
+  ?identifier rdf:type crm:E42_Identifier ;
+              skos:prefLabel ?preferredIdentifier .
+}
+ limit 500
+ 
+Q11. CORRECT
+SELECT ?place WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent rdf:type crm:E63_Beginning_of_Existence .
+  ?birthEvent crm:P7_took_place_at ?place .
+}
+ limit 500
+ 
+Q12. INCORRECT
+SELECT ?artist ?deathPlace WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?event rdf:type crm:E64_End_of_Existence .
+  ?event crm:P93i_was_taken_out_of_existence_by ?artist .
+  ?event crm:P7_took_place_at ?deathPlace .
+}
+ limit 500
+ 
+Q13. CORRECT
+SELECT ?creator
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?creationEvent .
+  ?creationEvent crm:P14_carried_out_by ?creator .
+}
+ limit 500
+ 
+Q14. INCORRECT
+SELECT ?component
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P1_is_identified_by ?identifier .
+  ?identifier rdf:type crm:E82_Actor_Appellation ;
+              crm:P106_is_composed_of ?component .
+}
+ limit 500
+ 
+Q15. CORRECT
+SELECT ?component ?dimension
+WHERE {
+  ?artwork crm:P46_is_composed_of ?component .
+  ?component crm:P43_has_dimension ?dimension .
+}
+ limit 500
+ 
+Q16. CORRECT
+SELECT ?place (COUNT(?artist) AS ?artistCount)
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ORDER BY DESC(?artistCount)
+LIMIT 1
+
+Q17. INCORRECT
+SELECT DISTINCT ?referenceType WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P67i_is_referred_to_by ?reference .
+  ?reference rdf:type ?referenceType .
+}
+ limit 500
+ 
+Q18. CORRECT
+SELECT ?deathPlace (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+}
+GROUP BY ?deathPlace
+ limit 500
+ 
+Q19. CORRECT
+SELECT ?artist ?birthPlace
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?label .
+  FILTER(CONTAINS(LCASE(?label), "greece"))
+}
+ limit 500
+ 
+Q20. CORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?place .
+  ?place rdfs:label ?placeLabel .
+  FILTER(CONTAINS(LCASE(?placeLabel), "athens") && !CONTAINS(LCASE(?placeLabel), "greece"))
+}
+ limit 500
+ 
+Q21. INCORRECT
+SELECT ?endDate
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?production rdf:type crm:E12_Production .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P93i_was_taken_out_of_existence_by ?endEvent .
+  ?endEvent crm:P82b_end_of_the_end ?endDate .
+}
+ limit 500
+ 
+Q22. INCORRECT
+SELECT ?beginDate WHERE {
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P82a_begin_of_the_begin ?beginDate .
+}
+ limit 500
+ 
+Q23. INCORRECT
+SELECT ?artist ?birthDate WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P82a_begin_of_the_begin ?birthDate .
+}
+
+
+Q24. INCORRECT
+SELECT ?artist ?birthDate
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent rdf:type crm:E63_Beginning_of_Existence .
+  ?birthEvent crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?birthDate .
+}
+ limit 500
+ 
+Q25. CORRECT
+SELECT DISTINCT ?type
+WHERE {
+  ?artwork crm:P46_is_composed_of ?component .
+  ?component crm:P43_has_dimension ?dimension .
+  ?dimension crm:P2_has_type ?type .
+}
+ limit 500
+ 
+Q26. INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?production crm:P108i_was_produced_by ?artwork .
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?beginDate .
+  FILTER(?beginDate > "1934-01-01"^^xsd:date)
+}
+ limit 500
+ 
+Q27. INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?creator .
+  FILTER NOT EXISTS {
+    ?creator crm:P92i_was_brought_into_existence_by ?birthEvent .
+  }
+}
+ limit 500
+ 
+Q28. INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist a crm:E39_Actor .
+  FILTER NOT EXISTS {
+    ?artist crm:P92i_was_brought_into_existence_by ?event .
+    ?event crm:P7_took_place_at ?place .
+  }
+}
+ limit 500
+ 
+Q29. INCORRECT
+SELECT ?identifier
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist crm:P1_is_identified_by ?identifier .
+}
+ limit 500
+ 
+Q30. INCORRECT
+SELECT ?nationality WHERE {
+  ?artwork crm:P108i_was_produced_by ?creator .
+  ?creator crm:P2_has_type ?nationality .
+}
+ limit 500
+ 
+Q31. INCORRECT
+SELECT ?birthPlace WHERE {
+  ?artwork crm:P108i_was_produced_by ?creator.
+  ?creator crm:P92i_was_brought_into_existence_by ?birthEvent.
+  ?birthEvent crm:P7_took_place_at ?birthPlace.
+}
+ limit 500
+ 
+Q32. INCORRECT
+SELECT ?deathPlace WHERE {
+  ?artwork crm:P108i_was_produced_by ?creator .
+  ?creator crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+}
+ limit 500
+ 
+Q33. INCORRECT
+SELECT ?place (COUNT(?artwork) AS ?artworkCount) WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+} GROUP BY ?place
+ limit 500
+ 
+Q34. INCORRECT
+SELECT ?birthPlace WHERE {
+  {
+    SELECT ?artist (COUNT(?artwork) AS ?artworkCount) WHERE {
+      ?artwork crm:P108i_was_produced_by ?artist.
+      ?artist rdf:type crm:E39_Actor.
+    }
+    GROUP BY ?artist
+    ORDER BY DESC(?artworkCount)
+    LIMIT 1
+  }
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent.
+  ?birthEvent crm:P7_took_place_at ?birthPlace.
+}
+
+Q35. INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  FILTER NOT EXISTS {
+    ?creator crm:P92i_was_brought_into_existence_by ?birthEvent .
+    ?birthEvent crm:P7_took_place_at ?birthPlace .
+  }
+}
+ limit 500
+ 
+Q36. INCORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?creator .
+  ?creator crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+}
+ limit 500
+ 
+Q37. CORRECT
+SELECT (COUNT(?artwork) AS ?numberOfArtworks)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?place rdfs:label ?placeLabel .
+  FILTER(CONTAINS(LCASE(?placeLabel), "california"))
+}
+ limit 500
+ 
+Q38. INCORRECT
+SELECT ?birthDate WHERE {
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P98i_was_born ?birthEvent .
+  ?birthEvent crm:P82a_begin_of_the_begin ?birthDate .
+}
+ limit 500
+ 
+Q39. INCORRECT
+SELECT ?deathDate WHERE {
+  ?production rdf:type crm:E12_Production ;
+              crm:P14_carried_out_by ?creator .
+  ?deathEvent crm:P93i_was_taken_out_of_existence_by ?creator ;
+              crm:P82b_end_of_the_end ?deathDate .
+}
+ limit 500
+ 
+Q40. INCORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount) WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?author .
+  ?author crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+  ?deathPlace rdfs:label ?deathPlaceLabel .
+  FILTER(!CONTAINS(LCASE(?deathPlaceLabel), "berlin"))
+}
+ limit 500
+ 
+Q41. CORRECT
+SELECT ?artist1 ?artist2 ?place
+WHERE {
+  ?artist1 rdf:type crm:E39_Actor .
+  ?artist2 rdf:type crm:E39_Actor .
+  ?artist1 crm:P92i_was_brought_into_existence_by ?birthEvent1 .
+  ?artist2 crm:P92i_was_brought_into_existence_by ?birthEvent2 .
+  ?birthEvent1 crm:P7_took_place_at ?place .
+  ?birthEvent2 crm:P7_took_place_at ?place .
+  FILTER(?artist1 != ?artist2)
+}
+ limit 500
+ 
+Q42. INCORRECT
+SELECT ?artist1 ?artist2 ?place
+WHERE {
+  ?artist1 rdf:type crm:E39_Actor .
+  ?artist2 rdf:type crm:E39_Actor .
+  ?artist1 crm:P92i_was_brought_into_existence_by ?birthEvent1 .
+  ?artist2 crm:P92i_was_brought_into_existence_by ?birthEvent2 .
+  ?birthEvent1 crm:P7_took_place_at ?place .
+  ?birthEvent2 crm:P7_took_place_at ?place .
+  FILTER(?artist1 != ?artist2)
+}
+
+Q43. CORRECT
+SELECT ?artist1 ?artist2
+WHERE {
+  ?artist1 rdf:type crm:E39_Actor ;
+           crm:P92i_was_brought_into_existence_by ?birthEvent1 ;
+           crm:P93i_was_taken_out_of_existence_by ?deathEvent1 .
+  ?artist2 rdf:type crm:E39_Actor ;
+           crm:P92i_was_brought_into_existence_by ?birthEvent2 ;
+           crm:P93i_was_taken_out_of_existence_by ?deathEvent2 .
+  ?birthEvent1 crm:P7_took_place_at ?birthPlace .
+  ?deathEvent1 crm:P7_took_place_at ?deathPlace .
+  ?birthEvent2 crm:P7_took_place_at ?birthPlace .
+  ?deathEvent2 crm:P7_took_place_at ?deathPlace .
+  FILTER(?artist1 != ?artist2)
+}
+ limit 500
+ 
+Q44. INCORRECT
+SELECT ?artist1 ?artist2
+WHERE {
+  ?artist1 rdf:type crm:E39_Actor .
+  ?artist2 rdf:type crm:E39_Actor .
+  ?artist1 crm:P107i_is_current_or_former_member_of ?nationality .
+  ?artist2 crm:P107i_is_current_or_former_member_of ?nationality .
+  ?artist1 crm:P7_took_place_at ?birthPlace .
+  ?artist2 crm:P7_took_place_at ?birthPlace .
+  FILTER(?artist1 != ?artist2)
+}
+ limit 500
+ 
+Q45. CORRECT
+SELECT ?artwork ?start_date ?end_date
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?production rdf:type crm:E12_Production .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?start_date .
+  ?timespan crm:P82b_end_of_the_end ?end_date .
+}
+ limit 500
+ 
+Q46. INCORRECT
+SELECT ?artwork ?artist ?birthPlace
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P92i_was_brought_into_existence_by ?event .
+  ?event crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginDate .
+  FILTER(?beginDate > "1934-12-31"^^xsd:date) .
+  
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?placeLabel .
+  FILTER(CONTAINS(LCASE(?placeLabel), "ireland")) .
+}
+ limit 500
+ 
+Q47. INCORRECT
+SELECT ?artwork ?label ?endDate WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork rdfs:label ?label .
+  FILTER(CONTAINS(LCASE(?label), "evening")) .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P93i_was_taken_out_of_existence_by ?endEvent .
+  ?endEvent crm:P82b_end_of_the_end ?endDate .
+  FILTER(?endDate > "1950-01-01"^^xsd:date) .
+}
+ limit 500
+ 
+Q48. INCORRECT
+SELECT ?artwork ?artworkLabel ?artist ?birthPlace
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           rdfs:label ?artworkLabel ;
+           crm:P14_carried_out_by ?artist .
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent rdf:type crm:E63_Beginning_of_Existence ;
+              crm:P7_took_place_at ?birthPlaceURI .
+  ?birthPlaceURI rdfs:label ?birthPlace .
+  FILTER(CONTAINS(LCASE(?artworkLabel), "evening"))
+  FILTER(CONTAINS(LCASE(?birthPlace), "france"))
+}
+ limit 500
+ 
+Q49. INCORRECT
+SELECT ?artwork ?productionStartDate ?artist ?birthDate
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionStartDate .
+  
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P98i_was_born ?birthEvent .
+  ?birthEvent crm:P4_has_time-span ?birthTimeSpan .
+  ?birthTimeSpan crm:P82a_begin_of_the_begin ?birthDate .
+}
+ limit 500
+ 
+Q50. INCORRECT
+SELECT ?endDate ?deathPlace WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  
+  ?artist crm:P14_carried_out_by ?production .
+  ?artist crm:P93i_was_taken_out_of_existence_by ?deathEvent .
+  ?deathEvent rdf:type crm:E64_End_of_Existence .
+  ?deathEvent crm:P7_took_place_at ?deathPlace .
+}
+
+
+Q1-ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?artist .
+
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+
+  ?birthEvent a crm:E63_Beginning_of_Existence ;
+              crm:P7_took_place_at ?place ;
+              crm:P4_has_time-span ?timeSpan .
+
+  ?place a crm:E53_Place ;
+         geo:asWKT ?location .
+  
+  FILTER(CONTAINS(STR(?location), "Toulouse"))
+
+  ?timeSpan crm:P82a_begin_of_the_begin ?begin ;
+            crm:P82b_end_of_the_end ?end .
+
+  FILTER(?begin >= "1803-05-18"^^xsd:date && ?end <= "1815-06-20"^^xsd:date)
+}
+ limit 500
+ 
+Q2-ENRICHED INCORRECT
+SELECT DISTINCT ?artist
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?place rdf:type crm:E53_Place ;
+         skos:prefLabel ?cityName .
+  FILTER(?cityName IN ("Rome", "Milan", "Naples"))
+}
+ limit 500
+ 
+Q3 ENRICHED INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?place a crm:E53_Place ;
+         geo:asWKT ?geometry .
+
+  ?greece a crm:E53_Place ;
+          crm:P46_is_composed_of ?place .
+  ?greece rdfs:label "Greece"@en .
+
+  ?capital a crm:E53_Place ;
+           rdfs:label "Athens"@en .
+
+  FILTER(?place != ?capital)
+}
+
+Q4 ENRICHED INCORRECT
+SELECT ?artwork ?title
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P102_has_title ?titleObj .
+  ?titleObj crm:P1_is_identified_by ?title .
+  FILTER (regex(?title, "Mercury|Venus|Earth|Mars|Jupiter|Saturn|Uranus|Neptune", "i"))
+}
+ limit 500
+ 
+Q5 ENRICHED INCORRECT
+SELECT ?artist ?name
+WHERE {
+  ?artist a crm:E39_Actor ;
+          foaf:depiction ?name .
+  FILTER(CONTAINS(LCASE(?name), "vincent") || CONTAINS(LCASE(?name), "pablo"))
+}
+ limit 500
+ 
+Q6 ENRICHED INCORRECT
+SELECT (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P92i_was_brought_into_existence_by ?creationEvent .
+  ?artwork crm:P93i_was_taken_out_of_existence_by ?endEvent .
+  
+  ?creationEvent crm:P82a_begin_of_the_begin ?startDate .
+  ?endEvent crm:P82b_end_of_the_end ?endDate .
+  
+  FILTER(?startDate > "1945-09-02"^^xsd:date && ?endDate < "1989-11-09"^^xsd:date)
+}
+ limit 500
+ 
+Q7 ENRICHED INCORRECT
+SELECT ?artist ?artwork
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P4_has_time-span ?birthTimeSpan .
+  ?birthTimeSpan crm:P82b_end_of_the_end ?birthDate .
+  FILTER(?birthDate > "1992-08-09"^^xsd:date) .
+  
+  ?artwork crm:P14_carried_out_by ?artist ;
+           a crm:E22_Man-Made_Object .
+}
+ limit 500
+ 
+Q8 ENRICHED INCORRECT
+SELECT ?artist ?artistName
+WHERE {
+    ?elGreco crm:P131_is_identified_by "El Greco" .
+    ?elGreco crm:P107i_is_current_or_former_member_of ?place .
+    ?artist crm:P107i_is_current_or_former_member_of ?place .
+    ?artist crm:P2_has_type crm:E39_Actor .
+    ?artist rdfs:label ?artistName .
+    FILTER(?artist != ?elGreco)
+}
+ limit 500
+
+Q9 ENRICHED INCORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?place skos:prefLabel "Italy"@en .
+  
+  ?leonardo rdf:type crm:E39_Actor ;
+            skos:prefLabel "Leonardo Da Vinci"@en ;
+            crm:P92i_was_brought_into_existence_by ?leonardoBirthEvent ;
+            crm:P93i_was_taken_out_of_existence_by ?leonardoDeathEvent .
+  
+  ?leonardoBirthEvent crm:P82a_begin_of_the_begin ?leonardoBirthDate .
+  ?leonardoDeathEvent crm:P82b_end_of_the_end ?leonardoDeathDate .
+  
+  ?birthEvent crm:P82a_begin_of_the_begin ?birthDate .
+  
+  FILTER(?birthDate >= ?leonardoBirthDate && ?birthDate <= ?leonardoDeathDate)
+}
+ limit 500
+ 
+Q10 ENRICHED INCORRECT
+SELECT ?artwork ?title ?productionDate WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P102_has_title ?title ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionDate .
+  FILTER (regex(?title, "Zeus|Hera|Poseidon|Demeter|Athena|Apollo|Artemis|Ares|Aphrodite|Hephaestus|Hermes|Hestia", "i"))
+}
+ limit 500

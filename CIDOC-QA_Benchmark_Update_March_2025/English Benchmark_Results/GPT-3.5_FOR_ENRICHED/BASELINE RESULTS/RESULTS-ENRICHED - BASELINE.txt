@@ -1,0 +1,276 @@
+Q1-Enriched.  Give me artworks that were produced by artists born during
+the Napoleonic Wars in Toulouse INCORRECT
+
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?place geo:asWKT ?location .
+  FILTER(CONTAINS(STR(?location), "Toulouse"))
+  ?birthEvent crm:P82a_begin_of_the_begin ?birthBegin .
+  ?birthEvent crm:P82b_end_of_the_end ?birthEnd .
+  FILTER(?birthBegin >= "1803-05-18"^^xsd:date && ?birthEnd <= "1815-06-20"^^xsd:date)
+}
+ limit 500
+
+Q2-Enriched. Give me the artists that were born in one of the three largest
+cities of Italy. INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?place .
+  ?place crm:P2_has_type ?cityType ;
+         skos:prefLabel ?cityName .
+  
+  VALUES ?cityName {"Rome" "Milan" "Naples"} .
+  ?cityType skos:exactMatch geo:asWKT .
+}
+ limit 500
+ 
+
+Q3-Enriched Give me the artists born in any city of Greece apart from its
+capital INCORRECT
+
+SELECT ?artist ?artistName ?birthPlace
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdf:type crm:E53_Place .
+  ?birthPlace geo:asWKT ?location .
+  ?birthPlace rdfs:label ?placeName .
+
+  FILTER(STR(?placeName) != "Athens" && STR(?location) CONTAINS "Greece")
+
+  OPTIONAL { ?artist rdfs:label ?artistName }
+}
+ limit 500
+
+Q4-Enriched. Give me artworks having in their title the name of one of the
+planets INCORRECT
+SELECT ?artwork ?title
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P102_has_title ?title .
+  FILTER(CONTAINS(LCASE(?title), "mercury") || 
+         CONTAINS(LCASE(?title), "venus") || 
+         CONTAINS(LCASE(?title), "earth") || 
+         CONTAINS(LCASE(?title), "mars") || 
+         CONTAINS(LCASE(?title), "jupiter") || 
+         CONTAINS(LCASE(?title), "saturn") || 
+         CONTAINS(LCASE(?title), "uranus") || 
+         CONTAINS(LCASE(?title), "neptune"))
+}
+ limit 500
+
+Q5-Enriched. Give me artists whose bio contain information about Picasso
+SELECT ?artist
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P14_carried_out_by ?bio .
+  ?bio rdf:type crm:E33_Linguistic_Object ;
+       rdf:value ?bioValue .
+  FILTER(CONTAINS(?bioValue, "Picasso"))
+}
+ limit 500
+
+Q6-Enriched. Give me the number of artworks started after the Second
+World War and finished before the fall of Berlin Wall INCORRECT
+
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P82a_begin_of_the_begin ?beginning ;
+           crm:P82b_end_of_the_end ?end .
+  FILTER (?beginning > "1945-09-02"^^xsd:date && ?end < "1989-11-09"^^xsd:date)
+}
+ limit 500
+
+Q7-Enriched. Give me for each artist his artworks only if he was born after the
+olympic games in barcelona INCORRECT
+SELECT ?artist ?artwork
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birth ;
+          crm:P108i_was_produced_by ?artwork .
+  ?birth crm:P82b_end_of_the_end ?birthdate .
+  FILTER(?birthdate > "1992-07-25"^^xsd:date) .
+}
+ limit 500
+
+Q8-Enriched. I want artists born in a city that El Greco lived. INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P131_is_identified_by ?birthPlace .
+  ?birthPlace rdf:type crm:E53_Place ;
+              rdfs:label ?city .
+  FILTER(CONTAINS(?city, "El Greco"))
+  ?elGreco crm:P131_is_identified_by ?elGrecoBirthPlace .
+  ?elGrecoBirthPlace rdf:type crm:E53_Place ;
+                     rdfs:label "El Greco's birth city" .
+}
+ limit 500
+
+
+Q9-Enriched. Give me the number of artists born  in Italy during the lifetime of Leonardo Da Vinci  INCORRECT
+SELECT (COUNT(?artist) AS ?count)
+WHERE {
+  ?artist rdf:type crm:E39_Actor ;
+          crm:P2_has_type ?type ;
+          crm:P131_is_identified_by ?birthPlace ;
+          crm:P92i_was_brought_into_existence_by ?birthEvent .
+  ?birthEvent crm:P4_has_time-span ?birthTimeSpan .
+  FILTER(?birthPlace = crm:E53_Place_Italy && ?birthTimeSpan >= crm:P82a_begin_of_the_begin_LeonardoDaVinci && ?birthTimeSpan <= crm:P82b_end_of_the_end_LeonardoDaVinci)
+}
+ limit 500
+
+
+Q10-Enriched. Give me the production date of  artworks including in their title one of the 12 Greek Gods INCORRECT
+SELECT ?productionDate
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:E12_Production ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionDate .
+  ?artwork crm:P102_has_title ?title .
+  FILTER(REGEX(?title, "Zeus|Poseidon|Hades|Hera|Demeter|Athena|Apollo|Artemis|Ares|Aphrodite|Hermes|Hephaestus", "i"))
+}
+ limit 500
+
+Q11-Enriched. Give me artworks that were produced after the end year of
+the construction of Parthenon INCORRECT
+SELECT ?artwork WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P12i_was_present_at ?production .
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82b_end_of_the_end ?endYear .
+  FILTER(?endYear > 432 BC) .
+  ?production crm:P108i_was_produced_by ?activity .
+  ?activity rdf:type prov:Activity .
+  ?activity prov:used ?technique .
+  ?technique rdf:type kon:Technique .
+  ?activity prov:wasAssociatedWith ?person .
+  ?person rdf:type foaf:Person .
+  ?person foaf:name ?artistName .
+  ?artwork rdfs:label ?artworkLabel .
+  ?artwork dcterms:description ?artworkDescription .
+}
+ limit 500
+
+Q12-Enriched. Give me the production year of artworks during the lifetime
+of Aristotle INCORRECT
+
+SELECT ?productionYear
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?productionEvent .
+  ?productionEvent crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginDate .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  ?person rdf:type crm:E21_Person .
+  ?person crm:P15_was_influenced_by ?influenceEvent .
+  ?influenceEvent crm:P7_took_place_at ?influenceLocation .
+  ?influenceLocation crm:P89_falls_within ?aristotleLifespan .
+  ?aristotleLifespan rdf:type crm:E52_Time-Span .
+  ?aristotleLifespan crm:P82a_begin_of_the_begin ?aristotleBeginDate .
+  ?aristotleLifespan crm:P82b_end_of_the_end ?aristotleEndDate .
+  FILTER(?beginDate >= ?aristotleBeginDate && ?endDate <= ?aristotleEndDate)
+  ?productionEvent dcterms:created ?productionYear .
+}
+ limit 500
+
+Q13-Enriched. Give me the artworks including in their title one of the 12 Greek
+Gods INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           dcterms:title ?title .
+  FILTER(REGEX(?title, "Zeus|Hera|Poseidon|Demeter|Athena|Apollo|Artemis|Ares|Aphrodite|Hephaestus|Hermes|Hestia", "i"))
+}
+ limit 500
+
+
+Q14-Enriched. Give me the artworks produced in Athens after the Battle of Marathon INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P12i_was_present_at ?place ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?begin ;
+            crm:P82b_end_of_the_end ?end .
+  FILTER(?place = <http://dbpedia.org/resource/Athens> && ?begin > "490-01-01"^^xsd:date)
+}
+ limit 500
+
+
+Q15-ENRICHED Give me the artworks produced during the years of Golden Age of Athens INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production ;
+           crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?begin ;
+            crm:P82b_end_of_the_end ?end .
+  FILTER(?begin >= "480-01-01"^^xsd:date && ?end <= "404-12-31"^^xsd:date)
+}
+ limit 500
+
+Q16-Enriched. Give me the artworks including in their title the Greek God of Fire INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           rdfs:label ?label .
+  FILTER(REGEX(?label, "Greek God of Fire", "i"))
+}
+ limit 500
+ 
+Q17-Enriched. Give me artists including in their definition something related to the son of Peleus and Thetis INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist rdf:type foaf:Person ;
+          rdfs:comment ?comment .
+  FILTER(CONTAINS(?comment, "son of Peleus and Thetis"))
+}
+ limit 500
+ 
+Q18-Enriched. Give me the artworks whose pruducation started  after the Battle of Marathon and before the Battle of Thermopylae INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production ;
+           crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?begin ;
+            crm:P82b_end_of_the_end ?end .
+  FILTER(?begin > "490-09-12"^^xsd:date && ?end < "480-08-11"^^xsd:date)
+}
+ limit 500
+ 
+ 
+Q19-ENRICHED. Give me artworks produced in the place where Socrates was born INCORRECT
+SELECT ?artwork
+WHERE {
+  ?socrates rdf:type foaf:Person ;
+           foaf:name "Socrates" ;
+           crm:P168_place_is_defined_by ?birthPlace .
+  ?birthPlace rdf:type crm:E53_Place .
+  ?artwork rdf:type crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production ;
+           crm:P7_took_place_at ?birthPlace .
+}
+ limit 500
+
+Q20-ENRICHED. I want artworks including in their title the name of the last king of Troy during the Trojan War. INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P102_has_title ?title .
+  ?title rdfs:label ?label .
+  FILTER(CONTAINS(LCASE(?label), "priam"))
+}
+ limit 500

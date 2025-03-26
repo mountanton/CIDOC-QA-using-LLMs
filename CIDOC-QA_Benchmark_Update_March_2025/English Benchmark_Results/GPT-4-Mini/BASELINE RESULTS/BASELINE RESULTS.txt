@@ -1,0 +1,880 @@
+Queries (R=1) SAAM KG
+
+Q1. Which is the homepage of an artwork CORRECT
+
+SELECT ?homepage
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork foaf:homepage ?homepage .
+}
+ limit 500
+ 
+Q2. Who is the holder of an artwork CORRECT
+SELECT ?holder
+WHERE {
+  ?artwork crm:P52_has_current_owner ?holder .
+}
+ limit 500
+
+
+Q3. Give me the image of an artwork INCORRECT
+SELECT ?image
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P14_carried_out_by ?creator .
+  ?artwork foaf:depiction ?image .
+}
+ limit 500
+
+
+
+Q4. Give me all the measurement units CORRECT
+
+SELECT ?unit WHERE {
+  ?unit rdf:type crm:E58_Measurement_Unit .
+}
+ limit 500
+
+
+Q5. Give me the number of productions per artist CORRECT
+
+SELECT ?artist (COUNT(?production) AS ?numberOfProductions)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E39_Actor .
+}
+GROUP BY ?artist
+ limit 500
+ 
+Q6. Give me the number of distinct artists
+
+SELECT (COUNT(DISTINCT ?artist) AS ?distinctArtistsCount)
+WHERE {
+  ?artist rdf:type crm:E39_Actor .
+}
+ limit 500
+
+Q7. I want all the distinct places of the KG CORRECT
+
+SELECT DISTINCT ?place
+WHERE {
+  ?place rdf:type crm:E53_Place .
+}
+ limit 500
+ 
+Q8. Give me all the artworks containing the word "Evening" INCORRECT
+
+SELECT ?artwork ?title
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P102_has_title ?title .
+  FILTER(CONTAINS(LCASE(?title), "evening"))
+}
+ limit 500
+
+Q9. Give me the references of an artwork INCORRECT
+
+SELECT ?artwork ?reference
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P102_has_title ?reference .
+}
+ limit 500
+
+
+
+Q10. Give me the preferred identifier  of an artist INCORRECT
+
+SELECT ?preferredIdentifier
+WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P42_assigned ?preferredIdentifier .
+}
+ limit 500
+
+Queries (R=2) SAAM KG
+
+Q11. Which is the birth place of an artist? INCORRECT
+
+SELECT ?birthPlace WHERE {
+  ?artist crm:P52_has_current_owner ?birthPlace .
+  ?artist rdf:type crm:E39_Actor .
+}
+ limit 500
+
+Q12. Which is the death place of an artist? INCORRECT
+SELECT ?deathPlace WHERE {
+  ?artist crm:P7_took_place_at ?deathPlace .
+  ?artist rdf:type crm:E39_Actor .
+}
+ limit 500
+ 
+
+Q13. Who is the creator of an artwork? INCORRECT
+
+SELECT ?creator 
+WHERE { 
+  ?artwork dct:created ?creator . 
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+}
+ limit 500
+
+Q14. Which are the components of the name of an artist? INCORRECT
+
+SELECT ?component
+WHERE {
+  ?artist crm:P106_is_composed_of ?component .
+  ?artist a crm:E39_Actor .
+}
+ limit 500
+
+
+Q15. Which are the dimensions of the components of an artwork? CORRECT
+
+SELECT ?dimension ?component
+WHERE {
+  ?artwork crm:P106_is_composed_of ?component .
+  ?component crm:P43_has_dimension ?dimension .
+}
+ limit 500
+
+Q16. Which is the place of birth with the most artists? INCORRECT
+ 
+SELECT ?placeOfBirth (COUNT(?artist) AS ?artistCount)
+WHERE {
+  ?artist crm:P107i_is_current_or_former_member_of ?group .
+  ?group crm:P21_had_general_purpose ?placeOfBirth .
+}
+GROUP BY ?placeOfBirth
+ORDER BY DESC(?artistCount)
+LIMIT 1
+
+Q17. give me all the types of references of the artworks INCORRECT
+
+SELECT DISTINCT ?type
+WHERE {
+  ?artwork crm:P102_has_title ?title .
+  ?title a ?type .
+}
+ limit 500
+
+
+Q18. Give me the distinct death places grouped by the number of artists. INCORRECT
+SELECT ?deathPlace (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?artist crm:P107i_is_current_or_former_member_of ?deathPlace .
+}
+GROUP BY ?deathPlace
+ limit 500
+
+Q19. Give me the birth place of an artist including the word "greece" INCORRECT
+
+SELECT ?birthPlace
+WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P131_is_identified_by ?birthPlace .
+  FILTER(CONTAINS(?birthPlace, "greece"))
+}
+ limit 500
+
+Q20. Give me the number of artists died in a place that contain the word "athens" but not the word "greece"  INCORRECT
+
+SELECT (COUNT(DISTINCT ?artist) AS ?numberOfArtists) WHERE {
+    ?artist rdf:type crm:E39_Actor .
+    ?artist crm:P7_took_place_at ?place .
+    ?place rdfs:label ?placeLabel .
+    FILTER(CONTAINS(LCASE(?placeLabel), "athens") && !CONTAINS(LCASE(?placeLabel), "greece"))
+}
+ limit 500
+ 
+Queries (R=3) SAAM KG
+
+Q21. When the production of the artwork ended? INCORRECT
+SELECT ?endDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P82b_end_of_the_end ?endDate .
+}
+ limit 500
+
+Q22. When the production of the artwork started? INCORRECT
+
+SELECT ?startDate
+WHERE {
+  ?artwork crm:P12_produced ?production .
+  ?production crm:P82a_begin_of_the_begin ?startDate .
+}
+ limit 500
+ 
+Q23. Give me the birth date of any artist INCORRECT
+
+SELECT ?birthDate WHERE {
+  ?artist rdf:type crm:E39_Actor .
+  ?artist crm:P1_is_identified_by ?birthDate .
+}
+ limit 500
+
+Q24. Give me the death date of any artist INCORRECT
+
+SELECT ?deathDate WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?deathDate .
+}
+ limit 500 
+ 
+ 
+Q25. Which are the types of the dimensions of the components of an artwork? INCORRECT
+
+SELECT DISTINCT ?dimensionType
+WHERE {
+  ?artwork crm:P106_is_composed_of ?component .
+  ?component crm:P43_has_dimension ?dimension .
+  ?dimension rdf:type ?dimensionType .
+}
+ limit 500
+
+Q26. For which artworks the production started after 1934-01-01? INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P82a_begin_of_the_begin ?startDate .
+  FILTER(?startDate > "1934-01-01"^^xsd:date)
+}
+ limit 500
+
+Q27. Which artworks have a creator where no information about their birth  is given? INCORRECT
+
+SELECT ?artwork ?creator
+WHERE {
+  ?artwork crm:P14_carried_out_by ?creator .
+  OPTIONAL { ?creator crm:P1_is_identified_by ?birthInfo . }
+  FILTER(!BOUND(?birthInfo))
+}
+ limit 500
+
+Q28. For which artists we do not have information about their birth place? INCORRECT
+
+SELECT ?artist
+WHERE {
+  ?artist a crm:E39_Actor .
+  OPTIONAL { ?artist crm:P53_has_current_owner ?birthPlace . }
+  FILTER (!BOUND(?birthPlace))
+}
+ limit 500
+ 
+Q29. Give me the identifier of the artist of an artwork? INCORRECT
+SELECT ?artistIdentifier
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist crm:P1_is_identified_by ?artistIdentifier .
+}
+ limit 500
+
+Q30. Which is the nationality of the creator of an artwork? INCORRECT
+SELECT ?nationality
+WHERE {
+  ?artwork dct:created ?creator .
+  ?creator crm:P2_has_type ?nationality .
+}
+ limit 500
+ 
+
+
+Queries (R=4) SAAM KG
+
+Q31. Which is the birth place of the creator of an artwork?
+
+
+
+
+Q32. Which is the death place of the creator of an artwork?
+
+Q33. Find the number of artworks per  place of birth of artists
+
+Q34. Which is the place of birth of artists with the most artworks?
+
+Q35.  Give me the artworks that have a creator where information about their birth place is not given
+
+Q36. How many artworks have a creator where information about their death place is given
+Q37. give me the number of the artworks whose artist was born in a place which contains the word "California"
+
+
+Q38. When did the creator of a production born?
+
+Q39. When did the creator of a production die?
+
+Q40. Give me the number of artworks where the death place of the authors does not include the word berlin
+
+
+Queries (Multiple Paths Difficult) SAAM KG
+
+Q41. I want all the pairs of artists that born in the same place
+
+Q42. Give me all the pairs of artists that died in the same date
+
+
+Q43. Give me all the pairs of artists with the same birth and death place
+
+
+Q44. I want the pairs of artists with the same nationality and birth place
+
+
+Q45. Give me the start and the end date of the production of an artwork
+
+
+Q46. I want all the artworks started after the year 1934 and the birth place of the artists includes the word ireland
+
+
+Q47. Give me all the artworks whose label contains the word "evening" and their production ended after 1950
+
+
+Q48. Give me  artworks whose label contains the word "Evening" and its artist birth place contains the word "france" 
+
+Q49. Give me the production starting date of an artwork and the birth date of the artist of the artwork
+
+
+Q50. I want the end date of the production of an artwork and the death place of the artist
+
+
+Queries (R=1) Kerameikos KG
+
+Q51. Which is the shape of any artwork CORRECT
+SELECT ?artwork ?shape
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork kon:hasShape ?shape .
+}
+ limit 500
+
+Q52. Who is the owner of an artwork CORRECT
+
+SELECT ?owner
+WHERE {
+  ?artwork crm:P50_has_current_keeper ?owner .
+}
+ limit 500
+ 
+Q53. What each artwork comprises of INCORRECT
+
+SELECT ?artwork ?comprisesOf
+WHERE {
+  ?artwork crm:P9_consists_of ?comprisesOf .
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+}
+ limit 500
+
+Q54. Give me all the unique techniques  CORRECT
+
+SELECT DISTINCT ?technique 
+WHERE {
+  ?technique rdf:type kon:Technique .
+}
+ limit 500
+
+Q55. Give me the number of productions per artist CORRECT
+SELECT ?artist (COUNT(?production) AS ?numberOfProductions)
+WHERE {
+  ?production rdf:type crm:E12_Production .
+  ?production crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?artist
+ limit 500
+ 
+Q56. Give me the number of distinct artists INCORRECT
+
+SELECT (COUNT(DISTINCT ?artist) AS ?distinctArtistsCount)
+WHERE {
+  ?artist rdf:type crm:E21_Person .
+}
+ limit 500
+
+Q57. I want all the distinct places of the KG CORRECT
+
+SELECT  DISTINCT ?place
+WHERE {
+ ?place a crm:E53_Place
+}
+
+Q58. Give me all the places containing the word "Thebes" INCORRECT
+
+SELECT   ?place ?label
+WHERE {
+ ?place rdfs:label ?label . filter(contains(?label,"Thebes"))
+}
+
+
+Q59. Tell me who influenced each artist  CORRECT
+SELECT ?artist ?influencer
+WHERE {
+  ?artist rdf:type crm:E21_Person .
+  ?influencer crm:P15_was_influenced_by ?artist .
+}
+ limit 500
+
+Q60. Give me the number of artworks per shape INCORRECT
+SELECT ?shape (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P43_has_dimension ?shape .
+  ?shape a kon:Shape .
+}
+GROUP BY ?shape
+ limit 500
+
+Queries (R=2) Kerameikos KG
+
+Q61. Which is the place where an artwork created? INCORRECT
+SELECT ?place WHERE {
+  ?artwork crm:P1_is_identified_by ?artworkId .
+  ?artwork crm:P89_falls_within ?place .
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+}
+ limit 500
+
+
+Q62. Which is the technique that was followed for creating the artwork CORRECT
+SELECT ?technique
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+ limit 500
+
+
+
+Q63. Who is the creator of an artwork? INCORRECT
+
+SELECT ?creator
+WHERE {
+  ?artwork dcterms:creator ?creator .
+}
+ limit 500
+ 
+Q64. Which is the webpage of the owner of the artwork?  INCORRECT
+SELECT ?homepage
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?owner .
+  ?owner foaf:homepage ?homepage .
+}
+ limit 500
+
+Q65. Where was each artwork  founded? INCORRECT
+SELECT ?artwork ?location
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork geo:location ?location .
+}
+ limit 500
+
+
+Q66. Which is the technique with the most artworks? INCORRECT
+SELECT ?technique (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P32_used_general_technique ?technique .
+}
+GROUP BY ?technique
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+Q67.  Give me the number artworks produced in a place containing the word "Athens" INCORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?numberOfArtworks)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place geo:location ?location .
+  FILTER(CONTAINS(LCASE(?location), "athens"))
+}
+ limit 500
+
+Q68. Give me the distinct  places  grouped by the number of artworks that were produced there. INCORRECT
+SELECT ?place (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?place .
+  ?place a crm:E53_Place .
+}
+GROUP BY ?place
+ORDER BY DESC(?artworkCount)
+ limit 500
+
+
+Q69. Give me the artwork which was created by a group of people INCORRECT
+SELECT ?artwork WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P14_carried_out_by ?group .
+  ?group rdf:type crm:E74_Group .
+}
+ limit 500
+
+
+Q70. Give me the period when an artwork falls within INCORRECT
+SELECT ?period WHERE {
+  ?artwork crm:P10_falls_within ?period .
+}
+ limit 500
+
+Queries (R=3) Kerameikos KG
+
+Q71. When the production of the artwork ended? INCORRECT
+SELECT ?endDate
+WHERE {
+  ?artwork rdf:type crm:E12_Production .
+  ?artwork crm:P82b_end_of_the_end ?endDate .
+}
+ limit 500
+ 
+Q72. When the production of the artwork started? CORRECT
+SELECT ?startDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+}
+ limit 500
+
+Q73. Give me the influencer of the artist of an artwork INCORRECT
+SELECT ?influencer WHERE {
+    ?artwork crm:P2_has_type crm:E22_Man-Made_Object .
+    ?artwork crm:P15_was_influenced_by ?influencer .
+    ?influencer a foaf:Person .
+}
+ limit 500
+
+Q74. Give me the 5 oldest artworks INCORRECT
+SELECT ?artwork ?created
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork dcterms:created ?created .
+}
+ORDER BY ASC(?created)
+LIMIT 5
+
+Q75. For which artworks the production ended after the year -0440? INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P12_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  FILTER(?endDate > -440)
+}
+ limit 500
+
+Q76. Which artworks have  no information about the influencer of its artist? INCORRECT
+SELECT ?artwork WHERE {
+    ?artwork a crm:E22_Man-Made_Object .
+    ?artist a crm:E21_Person .
+    ?artwork crm:P14_carried_out_by ?artist .
+    FILTER NOT EXISTS {
+        ?artist crm:P15_was_influenced_by ?influencer .
+    }
+}
+ limit 500
+ 
+Q77. Give me a definition of the used technique of an artwork INCORRECT
+SELECT ?definition
+WHERE {
+  ?artwork crm:P32_used_general_technique ?technique .
+  ?technique skos:definition ?definition .
+}
+ limit 500 
+
+Q78. For which artworks the production began before the year -0500? INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:E52_Time-Span ?beginTime .
+  ?beginTime crm:P82a_begin_of_the_begin ?startDate .
+  FILTER(?startDate < -500)
+}
+ limit 500
+Q79. Count the artworks for each year (when their production started) CORRECT
+SELECT ?year (COUNT(?artwork) AS ?artworkCount) 
+WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?year .
+}
+GROUP BY ?year
+ORDER BY ?year
+ limit 500
+ 
+Q80. How many artworks have  no information about the year that their production started? INCORRECT
+SELECT (COUNT(?artwork) AS ?count) WHERE {
+  ?artwork rdf:type crm:E22_Man-Made_Object .
+  FILTER NOT EXISTS {
+    ?artwork crm:P82a_begin_of_the_begin ?startYear .
+  }
+}
+ limit 500
+
+
+Queries (R=4) Kerameikos KG
+
+Q81. Which are the coordinates of the place that an artwork produced
+
+SELECT ?S ?lat ?lon WHERE {
+?S crm:P108i_was_produced_by ?PROD 
+. ?PROD crm:P7_took_place_at ?PLACE 
+. ?PLACE crm:P168_place_is_defined_by ?X .
+ ?X geo:lat ?lat 
+. ?X geo:long ?lon
+}
+
+
+Q82. give me exact match links for the influencer of the artist of an artwork
+
+SELECT ?artist ?infl ?links WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?artist .
+?artist crm:P15_was_influenced_by ?infl    .
+?infl skos:exactMatch ?links
+}
+
+
+Q83. Count the number of artworks grouped by the latitude of their place of production
+
+SELECT  ?lat (count(?S) as ?cnt) WHERE {
+?S crm:P108i_was_produced_by ?PROD 
+. ?PROD crm:P7_took_place_at ?PLACE 
+. ?PLACE crm:P168_place_is_defined_by ?X .
+ ?X geo:lat ?lat 
+}
+GROUP BY (?lat)
+
+Q84. Give me the latitude and longitude of the artworks that their shape contains the word "amphoriskos"
+
+SELECT ?S ?lat ?lon WHERE {
+?S crm:P108i_was_produced_by ?PROD .
+?S kon:hasShape ?shape . filter(contains(str(?shape),"amphoriskos"))
+. ?PROD crm:P7_took_place_at ?PLACE 
+. ?PLACE crm:P168_place_is_defined_by ?X .
+ ?X geo:lat ?lat 
+. ?X geo:long ?lon
+}
+
+
+Q85. Give me exact match links for the influencer of the artist of an artwork including the word "wikidata"
+
+SELECT ?Artwork ?technique ?link WHERE {  
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P32_used_general_technique ?technique.
+?technique skos:broader ?broad .
+?broad skos:exactMatch ?link  
+. filter(contains(str(?link),"wikidata"))
+} 
+
+Q86. give me the number of artworks per membership of the influencer of the artist  
+
+SELECT ?membership (COUNT(DISTINCT ?artwork) AS ?numberOfArtworks)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer org:hasMembership ?membership .
+}
+GROUP BY ?membership
+
+Q87. give me the membership of the influencer of the artist of any artwork
+
+
+SELECT ?artwork ?infl ?member WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?artist .
+?artist crm:P15_was_influenced_by ?infl    .
+?inlf org:hasMembership ?member
+}
+
+Q88. give me the artworks that the latitude of their production place is not given 
+
+SELECT  ?S WHERE {
+?S crm:P108i_was_produced_by ?PROD 
+. ?PROD crm:P7_took_place_at ?PLACE 
+. ?PLACE crm:P168_place_is_defined_by ?X 
+.filter not exists{ ?X geo:lat ?lat }
+}
+
+Q89. count the artworks that we know the longitute of their production place 
+
+SELECT  (count(?S) as ?cnt) WHERE {
+?S crm:P108i_was_produced_by ?PROD 
+. ?PROD crm:P7_took_place_at ?PLACE 
+. ?PLACE crm:P168_place_is_defined_by ?X 
+. ?X geo:long ?long 
+}
+
+Q90. Give me the definition for the influencer of the artist of any artwork
+
+SELECT ?artwork ?infl ?member WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?artist .
+?artist crm:P15_was_influenced_by ?infl    .
+?inlf skos:definition ?definition}
+
+
+Queries (Multiple Paths Difficult) Kerameikos KG
+
+Q91. Give me all the pairs of artworks that were produced in the same place
+
+SELECT ?artwork1 ?artwork2 ?place WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P7_took_place_at ?place . 
+
+?artwork2 crm:P108i_was_produced_by ?prod2 .  
+?prod2 crm:P7_took_place_at ?place  
+
+.filter(?artwork1!=?artwork2)
+} 
+
+
+Q92. Give me the technique, shape and place where an artwork produced
+
+SELECT ?artwork ?place ?technique ?shape  WHERE {   
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P32_used_general_technique ?technique . 
+?prod crm:P7_took_place_at ?place . 
+?artwork kon:hasShape ?shape
+} 
+
+
+Q93. Give me the artists that created a specific artwork with more than one distinct techniques
+
+SELECT DISTINCT ?artist
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by ?artist .
+  ?artwork crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique1 .
+  ?artwork crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique2 .
+  FILTER (?technique1 != ?technique2)
+}
+
+
+Q94. Give me the start and the end date of the production of an artwork
+
+SELECT ?artwork ?start ?end WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P4_has_time-span ?tsp .  
+?tsp crm:P82a_begin_of_the_begin ?start .
+?tsp crm:P82b_end_of_the_end ?end 
+} 
+
+Q95.  Give me the production year of the artworks that were produced in "Athens"
+
+SELECT ?artwork ?start ?label WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P4_has_time-span ?tsp .  
+?tsp crm:P82a_begin_of_the_begin ?start .
+
+?prod  crm:P7_took_place_at ?place 
+.?place ?l ?label
+. filter(contains(?label,"Athens"))
+} 
+
+
+Q96. Give me the number of artworks for each shape, for the artworks ended after -0300
+
+SELECT ?shape  (count(?artwork) as ?cnt) WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P4_has_time-span ?tsp .  
+?tsp crm:P82b_end_of_the_end ?year .
+?artwork kon:hasShape ?shape 
+.filter(?year>xsd:gYear("-0300"))
+} 
+group by (?shape) 
+
+
+Q97. Give me the end date of the production of an artwork and the influencer of its artist
+
+SELECT ?artwork ?end ?inf WHERE {   
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?actor .   
+?actor crm:P15_was_influenced_by ?inf .
+
+?prod crm:P4_has_time-span ?tsp .  
+?tsp crm:P82b_end_of_the_end ?end 
+} 
+
+
+Q98. Give me the number of distinct artists that ended an artwork before -0500
+
+SELECT  (count(distinct ?actor) as ?cnt) WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P14_carried_out_by ?actor .
+?prod crm:P4_has_time-span ?tsp .
+?tsp crm:P82b_end_of_the_end ?year 
+.filter(?year<xsd:gYear("-0500"))
+} 
+
+Q99. Give me the number of artworks without the same  production start and end year
+
+SELECT count(?artwork) WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P4_has_time-span ?tsp .  
+?tsp crm:P82a_begin_of_the_begin ?start .
+?tsp crm:P82b_end_of_the_end ?end 
+.filter(?start!=?end)
+} 
+
+
+Q100. Give me the 5 oldest artworks that its shape contains the word "amphoriskos"
+
+SELECT ?artwork ?year WHERE { 
+?artwork crm:P108i_was_produced_by ?prod .  
+?prod crm:P4_has_time-span ?tsp .  
+?tsp crm:P82b_end_of_the_end ?year .
+?artwork kon:hasShape ?shape . filter(contains(str(?shape),"amphoriskos"))
+} 
+order by asc (?year)
+limit 5
+
+
+Q1-Enriched.  Give me artworks that were produced by artists born during
+the Napoleonic Wars in Toulouse
+
+Q2-Enriched. Give me the artists that were born in one of the three largest
+cities of Italy.
+
+Q3-Enriched Give me the artists born in any city of Greece apart from its
+capital
+
+Q4-Enriched. Give me artworks having in their title the name of one of the
+planets
+
+Q5-Enriched. Give me artists whose bio contain information about Picasso
+
+Q6-Enriched. Give me the number of artworks started after the Second
+World War and finished before the fall of Berlin Wall
+
+Q7-Enriched. Give me for each artist his artworks only if he was born after the
+olympic games in barcelona
+
+Q8-Enriched. I want artists born in a city that El Greco lived.
+
+Q9-Enriched. Give me the number of artists born  in Italy during the lifetime of Leonardo Da Vinci 
+
+Q10-Enriched. Give me the production date of  artworks including in their title one of the 12 Greek
+Gods
+
+Q11-Enriched. Give me artworks that were produced after the end year of
+the construction of Parthenon
+
+Q12-Enriched. Give me the production year of artworks during the lifetime
+of Aristotle 
+
+Q13-Enriched. Give me the artworks including in their title one of the 12 Greek
+Gods
+
+Q14-Enriched. Give me the artworks produced in Athens after the Battle of Marathon
+
+Q15-ENRICHED Give me the artworks produced during the years of Golden Age of Athens
+
+Q16-Enriched. Give me the artworks including in their title the Greek God of Fire
+
+Q17-Enriched. Give me artists including in their definition something related to the son of Peleus and Thetis
+
+Q18-Enriched. Give me the artworks whose pruducation started  after the Battle of Marathon and before the Battle of Thermopylae
+
+Q19-ENRICHED. GIVE ME ARTWORKS PRODUCED IN THE PLACE WHERE SOCRATES WAS BORN
+
+Q20-ENRICHED. I want artworks including in their title the name of the last king of Troy during the Trojan War.

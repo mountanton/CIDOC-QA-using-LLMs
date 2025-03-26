@@ -1,0 +1,566 @@
+Q1. Ποια είναι η αρχική ιστοσελίδα ενός έργου τέχνης CORRECT
+
+SELECT ?homepage WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           foaf:homepage ?homepage .
+}
+ 
+Q2. Δώσε μου τον κάτοχο ενός έργου τέχνης CORRECT
+
+SELECT ?owner
+WHERE {
+  ?object crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?actor .
+  ?object crm:P52_has_current_owner ?owner .
+}
+ limit 500
+ 
+Q3.  δώσε μου την εικόνα ενός έργου τέχνης INCORRECT
+SELECT ?image WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P1_is_identified_by/crm:P2_has_type/crm:P2_has_type* ?actor .
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P107i_is_current_or_former_member_of ?group .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?actor .
+  ?artwork foaf:depiction ?image .
+}
+ limit 500
+
+
+Q4.  Δώσε μου όλες τις μονάδες μέτρησης CORRECT
+SELECT DISTINCT ?measurementUnit WHERE {
+  ?measurementUnit rdf:type crm:E58_Measurement_Unit .
+}
+ limit 500
+ 
+Q5. Δώστε μου τον αριθμό των παραγωγών ανά καλλιτέχνη CORRECT
+
+SELECT ?artist (COUNT(?production) AS ?numProductions)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?artist
+ limit 500
+
+Q6. δώσε μου τον συνολικό αριθμό των καλλιτεχνών CORRECT
+
+SELECT (COUNT(DISTINCT ?artist) AS ?totalArtists)
+WHERE {
+  ?artist a crm:E39_Actor .
+}
+ limit 500
+
+q7.    δώσε μου τον συνολικό αριθμό των τοποθεσιών  CORRECT
+
+SELECT (COUNT(?place) AS ?total_locations)
+WHERE {
+  ?event crm:P7_took_place_at ?place .
+}
+ limit 500
+ 
+Q8. δώσε μου όλα τα έργα τέχνης που περιέχουν τη λέξη Evening INCORRECT
+
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P2_has_type/crm:P2_has_type/skos:prefLabel "Evening" .
+}
+ limit 500
+ 
+Q9. δώσε μου όλες τις αναφορές ενός έργου τέχνης CORRECT
+SELECT ?reference
+WHERE {
+  ?object crm:P67i_is_referred_to_by ?reference .
+  ?object a crm:E22_Man-Made_Object .
+}
+ limit 500
+ 
+Q10. Δώστε μου το προτιμώμενο αναγνωριστικό ενός καλλιτέχνη INCORRECT
+SELECT ?identifier
+WHERE {
+  ?artist crm:P2_has_type crm:E39_Actor .
+  ?artist crm:P131_is_identified_by ?identifier .
+  ?identifier crm:P2_has_type crm:E42_Identifier .
+  ?identifier rdf:value ?value .
+}
+ limit 500
+
+Q11. Ποιος είναι ο τόπος γέννησης ενός καλλιτέχνη; CORRECT
+SELECT ?birthPlace WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+}
+
+Q12.  Ποιος είναι ο τόπος θανάτου ενός καλλιτέχνη; CORRECT
+SELECT ?place_of_death WHERE {
+  ?artist crm:P93i_was_taken_out_of_existence_by ?end_of_existence .
+  ?end_of_existence crm:P7_took_place_at ?place_of_death .
+}
+
+Q13.  Ποιος είναι ο δημιουργός ενός έργου τέχνης CORRECT
+SELECT ?creator
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+}
+ limit 500
+ 
+Q14. Ποια είναι τα περιεχόμενα του ονόματος ενός καλλιτέχνη; CORRECT
+SELECT ?content
+WHERE {
+  ?artist crm:P131_is_identified_by/crm:P106_is_composed_of/rdf:value ?content .
+}
+ limit 500
+ 
+Q15. Ποιες είναι οι διαστάσεις των στοιχείων ενός έργου τέχνης; INCORRECT
+
+SELECT DISTINCT ?dimension
+WHERE {
+  ?artwork crm:P46_is_composed_of/crm:P43_has_dimension/crm:E54_Dimension ?dimension .
+}
+ limit 500
+
+Q16. ποιος είναι ο τόπος γέννησης των περισσοτέρων καλλιτεχνών CORRECT
+SELECT ?birthPlace (COUNT(?artist) AS ?count)
+WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?count)
+LIMIT 1
+
+Q17.  δώστε μου όλους τους τύπους των είδη αναφορών των έργων τέχνης CORRECT
+SELECT DISTINCT ?type
+WHERE {
+  ?s crm:P67i_is_referred_to_by ?o .
+  ?o rdf:type ?type .
+}
+ limit 500
+
+Q18.  Δώσε μου τους τόπους θανάτου ομαδοποιημένα με βάση τον αριθμό των καλλιτεχνών. correct
+SELECT ?place (COUNT(?actor) AS ?numActors)
+WHERE {
+  ?actor crm:P93i_was_taken_out_of_existence_by/crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ORDER BY DESC(?numActors)
+
+Q19. Δώσε μου τον τόπο γέννησης του κάθε καλλιτέχνη που περιέχει τον όρο greece INCORRECT
+
+SELECT ?birthPlace
+WHERE {
+  ?actor crm:P131_is_identified_by/crm:P106_is_composed_of/rdf:value "greece" .
+  ?actor crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at/rdfs:label ?birthPlace .
+}
+ limit 500
+
+Q20. Δώστε μου τον αριθμό των καλλιτεχνών που πέθαναν σε ένα μέρος που περιέχει τη λέξη athens αλλά όχι τη λέξη greece INCORRECT
+SELECT (COUNT(?actor) as ?count)
+WHERE {
+  ?actor crm:P93i_was_taken_out_of_existence_by/crm:E64_End_of_Existence/crm:P7_took_place_at ?place .
+  ?place rdfs:label ?label .
+  FILTER(CONTAINS(LCASE(?label), "athens") && !CONTAINS(LCASE(?label), "greece"))
+}
+
+Q21.  Πότε τελείωσε η παραγωγή ενός έργου τέχνης CORRECT
+SELECT ?endOfProduction
+WHERE {
+  ?object crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endOfProduction .
+}
+ limit 500
+ 
+Q22. Πότε ξεκίνησε η παραγωγή ενός έργου τέχνης INCORRECT
+SELECT ?begin WHERE {
+   ?production crm:P108i_was_produced_by ?object .
+   ?object crm:P14_carried_out_by ?actor .
+   ?actor crm:P92i_was_brought_into_existence_by ?beginning .
+   ?beginning crm:P4_has_time-span ?timespan .
+   ?timespan crm:P82a_begin_of_the_begin ?begin .
+}
+ limit 500
+ 
+Q23. δώσε μου την ημερομηνία γέννησης ενός καλλιτέχνη CORRECT
+SELECT ?birthDate WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?birthDate .
+}
+ limit 500
+ 
+Q24. δώσε μου την ημερομηνία Θανάτου ενός καλλιτέχνη CORRECT
+
+SELECT ?deathDate WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P93i_was_taken_out_of_existence_by ?end .
+  ?end crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?deathDate .
+}
+ limit 500 
+ 
+Q25. Ποιοι είναι οι τύποι των διαστάσεων των στοιχείων ενός έργου τέχνης; correct
+SELECT DISTINCT ?dimensionType
+WHERE {
+  ?object crm:P46_is_composed_of/crm:P43_has_dimension/crm:P2_has_type ?dimensionType .
+}
+
+Q26. Για ποια έργα τέχνης η παραγωγή τους άρχισε μετα την ημερομηνία 1934-01-01 CORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?beginDate .
+  FILTER (?beginDate > "1934-01-01"^^xsd:date)
+}
+ limit 500
+ 
+Q27.  Ποια έργα τέχνης έχουν δημιουργό όπου δεν δίνονται πληροφορίες για τη γέννησή του; CORRECT
+
+SELECT DISTINCT ?artwork WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  FILTER NOT EXISTS {
+    ?creator crm:P92i_was_brought_into_existence_by ?beginning .
+  }
+} 
+
+Q28. θέλω δημιουργούς για τους οποίους δεν έχουμε πληροφορία για το που γεννήθηκαν INCORRECT
+SELECT ?actor
+WHERE {
+  ?actor a crm:E39_Actor .
+  FILTER NOT EXISTS {
+    ?actor crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at ?place .
+  }
+}
+
+Q29. Δώστε μου το αναγνωριστικό του καλλιτέχνη ενός έργου τέχνης INCORRECT
+SELECT ?artistIdentifier
+WHERE {
+  ?object crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P1_is_identified_by/crm:P2_has_type/crm:P2_has_type ?artistIdentifier .
+  ?object a crm:E22_Man-Made_Object .
+}
+ limit 500
+ 
+Q30. Ποια είναι η εθνικότητα του καλλιτέχνη ενός έργου τέχνης; INCORRECT
+SELECT ?nationality WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P107i_is_current_or_former_member_of ?group .
+  ?group crm:P2_has_type/crm:P2_has_type ?nationality .
+}
+ limit 500
+ 
+Q31. Ποιος ειναι ο τόπος γέννησης του δημιουργού ενός έργου τέχνης CORRECT
+ SELECT ?birthPlace WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P92i_was_brought_into_existence_by ?birth .
+  ?birth crm:P7_took_place_at ?birthPlace .
+}
+ limit 500
+ 
+Q32. Ποιος ειναι ο τόπος θανάτου του δημιουργού ενός έργου τέχνης CORRECT
+
+SELECT ?place WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P93i_was_taken_out_of_existence_by ?death .
+  ?death crm:P7_took_place_at ?place .
+}
+ limit 500
+ 
+Q33. θέλω τον αριθμό των έργων τέχνης ανά τόπο γέννησης καλλιτεχνών correct
+SELECT ?birthPlace (COUNT(?artwork) AS ?numArtworks)
+WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by ?artist .
+}
+GROUP BY ?birthPlace
+ limit 500
+ 
+q34. Ποιος είναι ό τόπος γέννησης καλλιτεχνών με τα περισσότερα έργα τέχνης incorrect
+SELECT ?birthPlace (COUNT(?artwork) AS ?numArtworks)
+WHERE {
+  ?artist a crm:E39_Actor .
+  ?artist crm:P14_carried_out_by ?production .
+  ?production crm:P108i_was_produced_by ?artwork .
+  ?artist crm:P92i_was_brought_into_existence_by ?beginning .
+  ?beginning crm:P7_took_place_at ?birthPlace .
+}
+GROUP BY ?birthPlace
+ORDER BY DESC(?numArtworks)
+LIMIT 1
+
+Q35. Δώστε μου τα έργα τέχνης που έχουν δημιουργό όπου δεν δίνονται πληροφορίες για τον τόπο γέννησής τους INCORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P63_has_birth_place ?birthPlace .
+  FILTER NOT EXISTS { ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P63_has_birth_place [] } 
+}
+ limit 500
+ 
+Q36. Πόσα έργα τέχνης έχουν έναν δημιουργό όπου δίνονται πληροφορίες για τον τόπο του θανάτου του INCORRECT
+SELECT (COUNT(DISTINCT ?object) AS ?count)
+WHERE {
+  ?object crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P93i_was_taken_out_of_existence_by/crm:E64_End_of_Existence/crm:P7_took_place_at ?place.
+}
+ limit 500
+ 
+Q37. δώστε μου τον αριθμό των έργων τέχνης των οποίων ο καλλιτέχνης γεννήθηκε σε ένα μέρος που περιέχει τη λέξη California correct
+SELECT (COUNT(DISTINCT ?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?place .
+  ?place rdfs:label ?label .
+  FILTER(CONTAINS(LCASE(?label), "california"))
+}
+ limit 500
+ 
+q38. πότε γεννήθηκε ο δημιουργός μίας παραγωγής  correct
+
+SELECT ?birthDate WHERE {
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator crm:P92i_was_brought_into_existence_by ?beginning .
+  ?beginning crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?birthDate .
+}
+ limit 500
+ 
+q39 πότε πέθανε ο δημιουργός μίας παραγωγής incorrect
+SELECT ?end WHERE {
+  ?production crm:P14_carried_out_by ?actor .
+  ?actor crm:P93i_was_taken_out_of_existence_by ?end .
+}
+
+q40. Δώστε μου τον αριθμό των έργων τέχνης όπου ο τόπος θανάτου των καλλιτεχνών δεν περιλαμβάνει τη λέξη berlin correct
+SELECT (COUNT(DISTINCT ?artwork) AS ?numArtworks)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P93i_was_taken_out_of_existence_by/crm:P7_took_place_at ?place .
+  ?place rdfs:label ?placeLabel .
+  FILTER(CONTAINS(LCASE(?placeLabel), "berlin") = false)
+  ?artwork a crm:E22_Man-Made_Object .
+}
+
+q41, Θέλω όλα τα ζευγάρια καλλιτεχνών που γεννήθηκαν στον ίδιο τόπο correct
+SELECT ?artist1 ?artist2 WHERE {
+  ?artist1 crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?place .
+  ?artist2 crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?place .
+  FILTER (?artist1 != ?artist2)
+}
+
+q42. Δώστε μου όλα τα ζευγάρια καλλιτεχνών που πέθαναν την ίδια ημερομηνία correct
+
+SELECT ?artist1 ?artist2
+WHERE {
+  ?artist1 crm:P93i_was_taken_out_of_existence_by ?end1 .
+  ?end1 crm:P4_has_time-span ?timespan1 .
+  ?timespan1 crm:P82a_begin_of_the_begin ?date .
+  ?artist2 crm:P93i_was_taken_out_of_existence_by ?end2 .
+  ?end2 crm:P4_has_time-span ?timespan2 .
+  ?timespan2 crm:P82a_begin_of_the_begin ?date .
+  FILTER(?artist1 != ?artist2)
+}
+ limit 500
+
+q43.  Δώστε μου όλα τα ζευγάρια καλλιτεχνών με τον ίδιο τόπο γέννησης και θανάτου correct
+SELECT ?actor1 ?actor2 ?birthPlace ?deathPlace
+WHERE {
+  ?actor1 crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?actor1 crm:P93i_was_taken_out_of_existence_by/crm:P7_took_place_at ?deathPlace .
+  ?actor2 crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?actor2 crm:P93i_was_taken_out_of_existence_by/crm:P7_took_place_at ?deathPlace .
+  FILTER (?actor1 != ?actor2)
+}
+
+
+q44. Θέλω τα ζευγάρια των καλλιτεχνών με την ίδια εθνικότητα και τόπο γέννησης incorrect
+SELECT ?actor1 ?actor2
+WHERE {
+  ?actor1 crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at ?birthPlace ;
+          crm:P1_is_identified_by/crm:E42_Identifier/crm:P2_has_type ?nationality .
+  ?actor2 crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence/crm:P7_took_place_at ?birthPlace ;
+          crm:P1_is_identified_by/crm:E42_Identifier/crm:P2_has_type ?nationality .
+  FILTER (?actor1 != ?actor2)
+}
+ limit 500
+ 
+q45. Δώστε μου την ημερομηνία έναρξης και λήξης της παραγωγής ενός έργου τέχνης incorrect
+SELECT ?begin ?end WHERE {
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?begin .
+  ?timeSpan crm:P82b_end_of_the_end ?end .
+}
+ limit 500
+ 
+q46. Θέλω όλα τα έργα τέχνης να ξεκινήσουν μετά το έτος 1934 και ο τόπος γέννησης των καλλιτεχνών περιλαμβάνει τη λέξη ireland correct
+
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at/rdfs:label ?placeOfBirth .
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?beginYear .
+  FILTER(CONTAINS(LCASE(?placeOfBirth), "ireland") && ?beginYear > 1934)
+}
+ limit 500
+ 
+q47. Δώστε μου όλα τα έργα τέχνης των οποίων η ετικέτα περιέχει τη λέξη evening και η παραγωγή τους τελείωσε μετά το 1950 correct
+
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?endTime .
+  ?artwork rdfs:label ?label .
+  FILTER(CONTAINS(?label, "Evening") && ?endTime > "1950-01-01"^^xsd:date)
+}
+ limit 500
+ 
+Q48. Δώστε μου έργα τέχνης των οποίων η ετικέτα περιέχει τη λέξη Evening και ο τόπος γέννησης του καλλιτέχνη περιέχει τη λέξη France incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           rdfs:label ?label ;
+           crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P131_is_identified_by/crm:P2_has_type/crm:P106_is_composed_of/crm:P7_took_place_at/rdfs:label ?birthPlace .
+  FILTER (regex(?label, "Evening", "i") && regex(?birthPlace, "France", "i"))
+}
+ limit 500
+ 
+Q49. Δώστε μου την ημερομηνία έναρξης παραγωγής ενός έργου τέχνης και την ημερομηνία γέννησης του καλλιτέχνη του έργου τέχνης INCORRECT
+SELECT ?start_date ?birth_date WHERE {
+  ?production crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence ?start_date .
+  ?production crm:P14_carried_out_by/crm:E39_Actor/crm:P92i_was_brought_into_existence_by/crm:E63_Beginning_of_Existence ?birth_date .
+}
+ limit 500
+ 
+q50. Θέλω την ημερομηνία λήξης της παραγωγής ενός έργου τέχνης και τον τόπο θανάτου του καλλιτέχνη INCORRECT
+SELECT ?end_date ?death_place_label
+WHERE {
+  ?production crm:P14_carried_out_by/crm:P92i_was_brought_into_existence_by/(crm:P4_has_time-span/crm:P82b_end_of_the_end|rdfs:label) ?end_date .
+  ?production crm:P14_carried_out_by/crm:P93i_was_taken_out_of_existence_by/crm:P7_took_place_at/(crm:E53_Place|rdfs:label) ?death_place .
+  ?death_place rdfs:label ?death_place_label .
+}
+ limit 500
+
+
+
+Q1 ENRICHED - Δώστε μου έργα τέχνης που δημιουργήθηκαν από καλλιτέχνες που γεννήθηκαν κατά τη διάρκεια των  Ναπολεόντειων πολέμων στην Toulouse CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P92i_was_brought_into_existence_by ?beginning .
+  ?beginning crm:P7_took_place_at ?birthplace .
+  ?birthplace rdfs:label "Toulouse, France" .
+  ?beginning crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?beginDate .
+  ?timespan crm:P82b_end_of_the_end ?endDate .
+  FILTER(?beginDate >= "1803-01-01"^^xsd:date && ?endDate <= "1815-12-31"^^xsd:date)
+}
+ limit 500
+ 
+ 
+Q2-ENRICHED Δώστε μου τους καλλιτέχνες που γεννήθηκαν σε μία από τις τρεις μεγαλύτερες πόλεις της Ιταλίας. - INCORRECT
+SELECT ?artist WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace.
+  ?birthPlace rdfs:label ?birthPlaceLabel.
+  FILTER(langMatches(lang(?birthPlaceLabel), "en"))
+  FILTER((?birthPlaceLabel = "Rome" || ?birthPlaceLabel = "Milan" || ?birthPlaceLabel = "Naples") && (?birthPlaceLabel != "Italy"))
+}
+ limit 500
+ 
+q3-enriched δώστε μου τους καλλιτέχνες που γεννήθηκαν σε οποιαδήποτε πόλη της Ελλάδας εκτός από την πρωτεύουσα - CORRECT
+SELECT ?artist
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?birthPlaceLabel .
+  FILTER(LANG(?birthPlaceLabel) = "" || LANGMATCHES(LANG(?birthPlaceLabel), "en"))
+  FILTER(REGEX(?birthPlaceLabel, "Greece", "i"))
+  FILTER NOT EXISTS {
+    ?birthPlace rdfs:label ?capitalLabel .
+    FILTER(LANG(?capitalLabel) = "" || LANGMATCHES(LANG(?capitalLabel), "en"))
+    FILTER(REGEX(?capitalLabel, "Athens", "i"))
+  }
+}
+ limit 500
+
+Q4-ENRICHED Δώστε μου έργα τέχνης που έχουν στον τίτλο τους το όνομα ενός από τους πλανήτες - INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P102_has_title ?title .
+  ?title rdf:value "Mercury" .
+}
+ limit 500
+
+
+Q5-ENRICHED Δώσε μου καλλιτέχνες που συμπεριλαμβάνουν στο όνομά τους το μικρό όνομα του Βαν Γκογκ ή του Πικάσο - INCORRECT
+SELECT ?artist
+WHERE {
+    ?artist crm:P131_is_identified_by/crm:E82_Actor_Appellation ?appellation .
+    FILTER (regex(?appellation, "Van Gogh") || regex(?appellation, "Picasso"))
+}
+ limit 500
+ 
+Q6-ENRICHED Δώστε μου τον αριθμό των έργων τέχνης που ξεκίνησαν μετά το Δεύτερο
+Παγκόσμιο Πόλεμο και τελείωσαν πριν από την πτώση του Τείχους του Βερολίνου - correct
+SELECT (COUNT(?object) AS ?count)
+WHERE {
+  ?object crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?beginDate .
+  ?object crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?endDate .
+  FILTER (?beginDate > "1945-01-01"^^xsd:date && ?endDate < "1989-11-09"^^xsd:date)
+}
+ limit 500
+
+
+Q7 ENRICHED  Δώστε μου για κάθε καλλιτέχνη τα έργα του μόνο αν γεννήθηκε μετά τους
+Ολυμπιακούς αγώνες στη Βαρκελώνη - INCORRECT
+SELECT ?artist ?artwork
+WHERE {
+  ?artist crm:P14_carried_out_by ?production .
+  ?production crm:P92i_was_brought_into_existence_by ?beginning .
+  ?beginning crm:P7_took_place_at ?place .
+  ?place rdfs:label "Barcelona" .
+  ?place rdfs:label ?placeLabel .
+  FILTER(regex(?placeLabel, "Barcelona", "i"))
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginDate .
+  FILTER(?beginDate > "1992-07-25"^^xsd:date)
+  ?production crm:P108i_was_produced_by ?artwork .
+}
+ORDER BY ?artist ?artwork
+ limit 500 
+
+Q8 ENRICHED - Θέλω καλλιτέχνες που γεννήθηκαν σε μια πόλη που έζησε ο Ελ Γκρέκο. - INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist crm:P131_is_identified_by/crm:P7_took_place_at ?place .
+  ?place rdfs:label "Toledo, Spain"@en .
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?birthPlaceLabel .
+  FILTER(langMatches(lang(?birthPlaceLabel), "el"))
+}
+ limit 500
+ 
+Q9 ENRICHED Δώστε μου τον αριθμό των καλλιτεχνών που γεννήθηκαν στην Ιταλία κατά τη διάρκεια της ζωής του Leonardo Da Vinci - INCORRECT
+SELECT (COUNT(?artist) AS ?count)
+WHERE {
+  ?artist crm:P131_is_identified_by/crm:P106_is_composed_of/crm:P2_has_type ?type .
+  ?type rdfs:label "Artist"@en .
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?birthDate .
+  ?artist crm:P93i_was_taken_out_of_existence_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?deathDate .
+  FILTER (?birthDate >= "1452-04-15"^^xsd:date && ?deathDate <= "1519-05-02"^^xsd:date)
+  ?artist crm:P131_is_identified_by/crm:P106_is_composed_of/crm:P2_has_type ?nationality .
+  ?nationality rdfs:label "Italy"@en
+}
+ limit 500 
+ 
+Q10 - ENRICHED Δώστε μου την ημερομηνία παραγωγής των έργων τέχνης που έχουν στον τίτλο τους ένα από τα ονόματα των 12 θεών του Ολύμπου CORRECT
+SELECT ?manMadeObject ?title ?productionDate
+WHERE {
+  ?manMadeObject a crm:E22_Man-Made_Object ;
+                 crm:P102_has_title ?titleObj .
+  ?titleObj rdf:value ?title .
+  FILTER (regex(?title, "Zeus|Hera|Poseidon|Demeter|Athena|Apollo|Artemis|Ares|Aphrodite|Hephaestus|Hermes|Hestia", "i"))
+
+  ?manMadeObject crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionDate .
+}
+ limit 500 
+
+
+
+
+
+
+
+

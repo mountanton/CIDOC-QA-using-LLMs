@@ -1,0 +1,642 @@
+Q51. ποιο είναι το σχήμα ενός έργου τέχνης CORRECT
+SELECT ?shape WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork kon:hasShape ?shape .
+}
+ limit 500
+ 
+Q52. ποιος είναι ο ιδιοκτήτης ενός έργου τέχνης CORRECT
+SELECT ?owner ?homepage ?thumbnail
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P50_has_current_keeper ?owner .
+  ?owner a crm:E40_Legal_Body .
+  OPTIONAL { ?owner foaf:homepage ?homepage }
+  OPTIONAL { ?owner foaf:thumbnail ?thumbnail }
+}
+ limit 500
+
+
+q53. Από τι αποτελείται κάθε έργο τέχνης CORRECT
+SELECT ?artwork ?material
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P45_consists_of ?material .
+}
+ limit 500
+ 
+q54. δώσε μου όλες τις μοναδικές τεχνικές CORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?production crm:P32_used_general_technique ?technique .
+}
+ limit 500
+
+Q55. δώσε τον αριθμό των παραγωγών ανα καλλιτέχνη INCORRECT
+SELECT ?artist (COUNT(DISTINCT ?producer) AS ?numberOfProducers) 
+WHERE {
+  ?production crm:P14_carried_out_by ?producer .
+  ?producer crm:P15_was_influenced_by ?artist .
+  ?production a crm:E12_Production .
+  ?artist a crm:E21_Person .
+}
+GROUP BY ?artist
+ limit 500
+ 
+Q56. δώσε τον συνολικό αριθμό των καλλιτεχνών CORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?totalArtists) WHERE {
+  ?artist a crm:E21_Person .
+}
+ limit 500
+
+q57. θέλω όλες τις μοναδικές τοποθεσίες CORRECT
+SELECT DISTINCT ?place
+WHERE {
+  ?place a crm:E53_Place .
+}
+ limit 500
+
+ 
+Q58. θέλω όλες τις τοποθεσίες που περιέχουν την λέξη Thebes correct
+SELECT ?place
+WHERE {
+  ?place a crm:E53_Place .
+  {
+    ?place skos:prefLabel ?label .
+    FILTER(CONTAINS(?label, "Thebes"))
+  }
+  UNION
+  {
+    ?place skos:exactMatch ?label .
+    FILTER(CONTAINS(?label, "Thebes"))
+  }
+  UNION
+  {
+    ?place skos:definition ?label .
+    FILTER(CONTAINS(?label, "Thebes"))
+  }
+  UNION
+  {
+    ?place skos:broader ?label .
+    FILTER(CONTAINS(?label, "Thebes"))
+  }
+  UNION
+  {
+    ?place rdfs:label ?label .
+    FILTER(CONTAINS(?label, "Thebes"))
+  }
+}
+ limit 500
+
+q59. πες μου ποιος επηρέασε κάθε καλλιτέχνη INCORRECT
+SELECT ?artist ?influencer WHERE {
+  ?artist crm:P15_was_influenced_by ?influencer .
+  FILTER( ?artist = crm:E21_Person )
+}
+ limit 500
+
+ 
+q60. δώσε μου τον αριθμό των έργων τέχνης ανα σχήμα CORRECT
+ SELECT ?shape (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork kon:hasShape ?shape .
+}
+GROUP BY ?shape
+ limit 500
+ 
+q61. Ποιο είναι το μέρος όπου δημιουργήθηκε ένα έργο τέχνης INCORRECT
+SELECT ?place
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  FILTER(?artwork a crm:E22_Man-Made_Object)
+}
+ limit 500
+
+Q62. ποια ήταν η τεχνική για τη δημιουργία ενός έργου τέχνης CORRECT
+ SELECT ?technique
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+ limit 500
+
+Q63.Ποιος είναι ο δημιουργός ενός έργου τέχνης;  INCORRECT
+SELECT ?creator 
+WHERE {
+    ?artwork crm:P14_carried_out_by ?creator .
+    ?artwork a crm:E12_Production .
+}
+ limit 500
+
+Q64. Ποια είναι η ιστοσελίδα του ιδιοκτήτη του έργου τέχνης; CORRECT
+SELECT ?homepage WHERE {
+    ?artwork a crm:E22_Man-Made_Object .
+    ?artwork crm:P50_has_current_keeper ?owner .
+    ?owner foaf:homepage ?homepage .
+}
+ limit 500
+ 
+q65. που ανακαλύφθηκε το κάθε έργο τέχνης INCORRECT
+SELECT ?manMadeObject ?place
+WHERE {
+  ?manMadeObject crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+ limit 500
+
+Q66. ποια η τεχνική με τα περισσότερα έργα τέχνης CORRECT
+SELECT ?technique (COUNT(?artwork) AS ?artworkCount) 
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+GROUP BY ?technique 
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+q67. Δώστε μου τον αριθμό των έργων τέχνης που παράχθηκαν σε ένα μέρος που περιέχει τη λέξη Athens INCORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place rdfs:label ?placeLabel .
+  FILTER CONTAINS(LCASE(?placeLabel), "athens")
+}
+ limit 500
+
+Q68. θέλω τα μοναδικά μέρη ομαδοποιημένα με βάση τον αριθμό των έργων τέχνης που παρήχθηκαν εκεί. CORRECT
+ SELECT ?place (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ORDER BY DESC(?artworkCount)
+ limit 500
+ 
+Q69. Δώστε μου τα έργα τέχνης που δημιουργήθηκαν από μια ομάδα ανθρώπων CORRECT
+SELECT ?artwork 
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?group .
+  ?group a crm:E74_Group .
+}
+ limit 500
+ 
+Q70. Δώστε μου την περίοδο που ανήκει ένα έργο τέχνης CORRECT
+SELECT ?period 
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within ?period .
+}
+ limit 500
+
+Q71. πότε τελείωσε η παραγωγή κάθε έργου τέχνης ΙΝCORRECT
+SELECT ?artwork ?endDate
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within ?period .
+  ?period crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_end_time ?endDate .
+}
+ limit 500
+ 
+Q72. πότε ξεκίνησε η παραγωγή κάθε έργου τέχνης INCORRECT
+SELECT ?artwork ?startDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within ?period .
+  ?period crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_time ?startDate .
+}
+ limit 500
+ 
+Q73. Δώσε μου ποιος επηρέασε τον καλλιτέχνη κάθε έργου τέχνης CORRECT
+SELECT ?artwork ?influencer
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  {
+    ?artist crm:P15_was_influenced_by ?influencer .
+  } UNION {
+    ?artist crm:P15_was_influenced_by ?influencerLiteral .
+    BIND(?influencerLiteral AS ?influencer)
+  }
+}
+ limit 500
+ 
+Q74. θέλω τα 5 αρχαιότερα έργα τέχνης INCORRECT
+SELECT ?manMadeObject ?productionDate
+WHERE {
+  ?manMadeObject crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_time ?date .
+  FILTER (xsd:gYear(?date) < 0)  # Filter for Before Christ years
+}
+ORDER BY ?date
+LIMIT 5
+
+Q75. Για ποια έργα τέχνης η παραγωγή τελείωσε μετά το έτος -0440; CORRECT
+SELECT ?artwork
+WHERE {
+    ?artwork crm:P108i_was_produced_by ?production .
+    ?production crm:P4_has_time-span ?timeSpan .
+    ?timeSpan crm:P82b_end_of_the_end ?endYear .
+    FILTER (?endYear > "-0440"^^xsd:gYear)
+}
+ limit 500
+
+Q76. Ποια έργα τέχνης δεν έχουν πληροφορίες για αυτόν που επηρέασε τον καλλιτέχνη τους; CORRECT
+SELECT ?artwork 
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  OPTIONAL {
+    ?creator crm:P15_was_influenced_by ?influencer .
+  }
+  FILTER(!BOUND(?influencer))
+}
+ limit 500
+
+Q77. Δώστε μου έναν ορισμό για την τεχνική που χρησιμοποιήθηκε σε  κάθε έργο τέχνης INCORRECT
+SELECT ?technique ?definition WHERE {
+  ?object crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+  ?technique rdfs:label ?definition .
+}
+ limit 500
+ 
+q78. Για ποια έργα τέχνης ξεκίνησε η παραγωγή πριν από το έτος -0500; CORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+    ?artwork crm:P108i_was_produced_by ?production .
+    ?production crm:P4_has_time-span ?time_span .
+    ?time_span crm:P82a_begin_of_the_begin ?begin_year .
+    FILTER(?begin_year < "-0500"^^xsd:gYear)
+}
+ limit 500
+
+q79. Μετρήστε τα έργα τέχνης για κάθε χρόνο (όταν ξεκίνησε η παραγωγή τους) INCORRECT
+SELECT ?year (COUNT(?artwork) AS ?artworkCount) WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within ?period .
+  ?period crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+  BIND(YEAR(?startDate) AS ?year) .
+} 
+GROUP BY ?year
+ORDER BY ?year
+ limit 500
+
+q80 Πόσα έργα τέχνης δεν έχουν πληροφορίες για τη χρονιά που ξεκίνησε η παραγωγή τους; CORRECT
+SELECT (COUNT(?object) AS ?count)
+WHERE {
+  ?object crm:P108i_was_produced_by ?production .
+  FILTER NOT EXISTS{
+    ?production crm:P4_has_time-span ?timeSpan .
+    ?timeSpan crm:P82a_begin_of_the_begin ?startYear .
+  }
+}
+ limit 500
+
+
+q81 Ποιες είναι οι συντεταγμένες του τόπου που παράχθηκε ένα έργο τέχνης  CORRECT
+SELECT ?latitude ?longitude WHERE {
+    ?artwork crm:P108i_was_produced_by ?production.
+    ?production crm:P7_took_place_at ?place.
+    ?place crm:P168_place_is_defined_by ?spatialThing.
+    ?spatialThing geo:lat ?latitude.
+    ?spatialThing geo:long ?longitude.
+}
+ limit 500
+ 
+Q82. θέλω τα exact match links για αυτόν που επηρέασε τον καλλιτέχνη κάθε έργου τέχνης  INCORRECT
+
+SELECT ?artwork ?influencer WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?group .
+  ?group crm:P15_was_influenced_by ?influencer .
+}
+ limit 500
+ 
+Q83. θέλω τον αριθμό των έργων τέχνης ομαδοποιημένα με βάση το γεωγραφικό πλάτος του τόπου παραγωγής τους CORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?artworkCount) ?latitude
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:lat ?latitude .
+}
+GROUP BY ?latitude
+ limit 500
+ 
+q84. Δώστε μου το γεωγραφικό πλάτος και το γεωγραφικό  μήκος των έργων τέχνης που το σχήμα τους περιέχει τη λέξη amphoriskos correct
+SELECT ?lat ?long
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork kon:hasShape ?shape .
+  FILTER(CONTAINS(STR(?shape), "amphoriskos")) .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:lat ?lat .
+  ?spatialThing geo:long ?long .
+}
+ limit 500
+ 
+q85. Δώσε μου τα exact match links που περιέχουν τη λέξη wikidata, που αφορούν αυτόν που επηρέασε τον καλλιτέχνη ενός έργου τέχνης INCORRECT
+SELECT ?link WHERE {
+  ?object crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer skos:related ?relatedArtist .
+  ?relatedArtist rdfs:seeAlso ?link .
+  FILTER(CONTAINS(STR(?link), "wikidata"))
+}
+ limit 500
+
+ 
+q86. δώστε μου τον αριθμό των έργων τέχνης ομαδοποιημένο σύμφωνα με την ιδιότητα του μέλους  για κάποιον που επηρέασε ένα καλλιτέχνη incorrect
+SELECT (COUNT(DISTINCT ?production) AS ?artworkCount) ?membership
+WHERE {
+  ?production crm:P14_carried_out_by ?group .
+  ?group crm:P15_was_influenced_by ?person .
+  ?person org:hasMembership ?membership .
+}
+GROUP BY ?membership
+ limit 500
+ 
+Q87. δώσε μου την ιδιότητα του μέλους (membership) του επηρεαστή του καλλιτέχνη για κάθε έργο τέχνης  INcorrect
+SELECT ?artwork ?membership
+WHERE {
+  ?artwork crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer org:hasMembership ?membership .
+}
+ limit 500
+
+q88. δώστε μου τα έργα τέχνης που δεν δίνεται το γεωγραφικό πλάτος του τόπου παραγωγής τους correct
+SELECT ?artwork WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  FILTER NOT EXISTS {
+    ?place crm:P168_place_is_defined_by ?spatialThing .
+    ?spatialThing geo:lat ?latitude .
+  }
+}
+ limit 500
+
+q89.θέλω τον αριθμό των έργων τέχνης που γνωρίζουμε το γεωγραφικό μήκος του τόπου παραγωγής τους correct
+SELECT (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:long ?longitude .
+}
+ limit 500
+ 
+q90. Δώστε μου τον ορισμό για τον επηρεαστή του καλλιτέχνη για κάθε έργο τέχνης incorrect
+SELECT ?artwork ?influencer WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?group .
+  ?group crm:P15_was_influenced_by ?influencer .
+}
+ limit 500 
+ 
+q91.  Δώστε μου όλα τα ζεύγη έργων τέχνης που δημιουργήθηκαν στο ίδιο μέρος correct
+SELECT ?artwork1 ?artwork2
+WHERE {
+  ?artwork1 crm:P108i_was_produced_by ?production1 .
+  ?production1 crm:P7_took_place_at ?place .
+  ?artwork2 crm:P108i_was_produced_by ?production2 .
+  ?production2 crm:P7_took_place_at ?place .
+  FILTER(?artwork1 != ?artwork2)
+}
+ limit 500
+
+Q92. Δώστε μου την τεχνική, το σχήμα και το μέρος όπου παρήχθη ένα έργο τέχνης CORRECT
+SELECT ?technique ?shape ?place
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+  ?artwork kon:hasShape ?shape .
+  ?production crm:P7_took_place_at ?place .
+}
+ limit 500
+ 
+Q93. Δώστε μου τους καλλιτέχνες που δημιούργησαν ένα έργο τέχνης με περισσότερες από μία τεχνικές CORRECT
+SELECT DISTINCT ?artist
+WHERE {
+  ?object a crm:E22_Man-Made_Object .
+  ?object crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique1 .
+  ?production crm:P32_used_general_technique ?technique2 .
+  FILTER(?technique1 != ?technique2)
+  ?production crm:P14_carried_out_by ?artist .
+}
+ limit 500
+ 
+Q94. Δώστε μου την ημερομηνία έναρξης και λήξης της παραγωγής ενός έργου τέχνης CORRECT
+SELECT ?startDate ?endDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+}
+ limit 500
+ 
+Q95. Θέλω το έτος παραγωγής των έργων τέχνης που παρήχθηκαν στην Athens incorrect
+SELECT ?productionYear
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:location "Athens" .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_time ?productionYear .
+}
+ limit 500
+
+q96. Δώστε μου τον αριθμό των έργων τέχνης για κάθε σχήμα, για τα έργα τέχνης που τελείωσαν μετά το -0300 INCORRECT
+SELECT ?shape (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within ?period .
+  ?period crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  ?artwork kon:hasShape ?shape .
+  
+  FILTER(?endDate > "-0300"^^xsd:gYear)
+}
+GROUP BY ?shape
+ limit 500
+ 
+q97. Δώστε μου την ημερομηνία λήξης της παραγωγής ενός έργου τέχνης και ποιος επηρέασε τον καλλιτέχνη του incorrect
+SELECT ?endDate ?influencer
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?production crm:P15_was_influenced_by ?influencer .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  FILTER(?endDate < "0"^^xsd:gYear)
+}
+ limit 500
+
+q98. Δώστε μου τον αριθμό των διακριτών καλλιτεχνών που τελείωσαν ένα έργο τέχνης πριν από -0500 incorrect
+SELECT (COUNT(DISTINCT ?artist) AS ?distinctArtistsCount) 
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?production crm:P9_consists_of ?artwork .
+  ?artwork crm:P108i_was_produced_by ?production .
+  FILTER(?production < "-0500"^^xsd:gYear)
+}
+ limit 500
+
+q99. Δώσε μου τον συνολικό αριθμό των έργων τέχνης που έχουν διαφορετική χρονιά έναρξης και λήξης παραγωγής correct
+SELECT (COUNT(DISTINCT ?artwork) AS ?totalArtworks)
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?startYear .
+  ?timeSpan crm:P82b_end_of_the_end ?endYear .
+  FILTER(?startYear != ?endYear)
+}
+ limit 500
+
+Q100. δώσε μου τα 5 παλαιότερα έργα τέχνης που το σχήμα του περιέχει τη λέξη amphoriskos incorrect
+SELECT ?artwork WHERE {
+  ?artwork crm:P108i_was_produced_by ?production.
+  ?production kon:hasShape ?shape.
+  ?shape ?label "amphoriskos" .
+  ?production crm:P4_has_time-span ?timeSpan.
+  ?timeSpan crm:P82a_begin_of_the_begin ?begin .
+}
+ORDER BY ASC(?begin)
+LIMIT 5
+
+
+Q11- ENRICHED δώσε μου τα  έργα τέχνης που παρήχθηκαν μετά το τέλος κατασκευής του Παρθενώνα CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?time_span .
+  ?time_span crm:P82b_end_of_the_end ?end_time .
+  FILTER (?end_time > "-0432"^^xsd:gYear)  # End of Parthenon construction
+}
+ limit 500
+
+Q12 - ENRICHED Δώστε μου το έτος παραγωγής των έργων τέχνης που έγιναν κατά τη διάρκεια της ζωής του Αριστοτέλη incorrect
+SELECT DISTINCT ?productionYear
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?aristotle .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginYear .
+  FILTER(?beginYear >= '-0384'^^xsd:gYear && ?beginYear <= '-0322'^^xsd:gYear)
+}
+ limit 500
+
+
+Q13 - ENRICHED Δώστε μου τα έργα τέχνης που έχουν στον τίτλο τους ένα από τα ονόματα των 12 θεών του Ολύμπου incorrect
+SELECT ?artwork WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P1_is_identified_by ?title .
+  FILTER(CONTAINS(LCASE(?title), "ζευς") || 
+         CONTAINS(LCASE(?title), "αθηνα") || 
+         CONTAINS(LCASE(?title), "ποσειδων") || 
+         CONTAINS(LCASE(?title), "απολλωνας") || 
+         CONTAINS(LCASE(?title), "αρτεμις") || 
+         CONTAINS(LCASE(?title), "ηρα") || 
+         CONTAINS(LCASE(?title), "αφροδιτη") || 
+         CONTAINS(LCASE(?title), "ερμης") || 
+         CONTAINS(LCASE(?title), "δημητρα") || 
+         CONTAINS(LCASE(?title), "hades") || 
+         CONTAINS(LCASE(?title), "hestia"))
+}
+ limit 500
+ 
+Q14 ENRICHED Δώστε μου τα έργα τέχνης που παράχθηκαν στην πόλη Athens μετά τη Μάχη του Μαραθώνα incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by geo:Athens .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginDate .
+  FILTER(?beginDate > "-0490"^^xsd:gYear)
+}
+ limit 500
+
+Q15 ENRICHED Δώστε μου τα έργα τέχνης που δημιουργήθηκαν στα χρόνια του Χρυσού Αιώνα της Αθήνας incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin "-0430"^^xsd:gYear .
+  ?timeSpan crm:P82b_end_of_the_end "-0400"^^xsd:gYear .
+}
+ limit 500
+ 
+Q16. ENRICHED Δώστε μου τα έργα τέχνης που περιλαμβάνουν στον τίτλο τους τον Θεό της φωτιάς incorrect
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P1_is_identified_by ?title .
+  FILTER(CONTAINS(?title, "Θεός της φωτιάς"))
+}
+ limit 500
+ 
+Q17. ENRICHED Δώστε μου καλλιτέχνες να συμπεριλάβουν στον ορισμό τους κάτι σχετικό με τον γιο του Πηλέα και της Θέτιδας INCORRECT
+ SELECT ?artist
+WHERE {
+  ?artist crm:P15_was_influenced_by ?hero .
+  ?hero crm:E21_Person .
+  ?hero skos:related ?peleus .
+  ?peleus crm:E21_Person .
+  ?peleus crm:P15_was_influenced_by ?thetis .
+  ?thetis crm:E21_Person .
+}
+ limit 500
+ 
+ 
+Q18 ENRICHED Δώστε μου τα έργα τέχνης των οποίων η παραγωγή ξεκίνησε μετά τη Μάχη του Μαραθώνα και πριν από τη Μάχη των Θερμοπυλών CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?time_span .
+  ?time_span crm:P82a_begin_of_the_begin ?start_date .
+  ?time_span crm:P82b_end_of_the_end ?end_date .
+
+  FILTER(?start_date > "-0490"^^xsd:gYear && ?end_date < "-0480"^^xsd:gYear)
+}
+ limit 500
+
+Q19 ENRICHED Δώστε μου εργα τέχνης που παράχθηκαν στο μέρος που γεννήθηκε ο Σωκράτης INCORRECT
+SELECT ?artwork
+WHERE {
+  ?socrates crm:P1_is_identified_by ?socrates_identifier .
+  ?socrates crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?birth_place .
+  ?birth_place crm:P89_falls_within ?artwork_location .
+  ?artwork crm:P108i_was_produced_by ?artwork_production .
+  ?artwork_production crm:P7_took_place_at ?artwork_location .
+  ?artwork a crm:E22_Man-Made_Object .
+  FILTER(?socrates_identifier = "ΣΩΚΡΑΤΗΣ")
+}
+ limit 500
+ 
+
+Q20 ENRICHED Θέλω έργα τέχνης να περιλαμβάνουν στον τίτλο τους το όνομα του τελευταίου βασιλιά της Τροίας κατά τη διάρκεια του Τρωικού Πολέμου. INCORRECT
+SELECT ?artwork
+WHERE {
+    ?artwork crm:P1_is_identified_by ?title .
+    ?title skos:prefLabel ?label .
+    FILTER(CONTAINS(LCASE(?label), "hector"))
+}
+ limit 500

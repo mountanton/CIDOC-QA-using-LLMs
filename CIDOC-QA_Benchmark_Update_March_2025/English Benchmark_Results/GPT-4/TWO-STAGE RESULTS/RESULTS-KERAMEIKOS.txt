@@ -1,0 +1,674 @@
+Q51. CORRECT
+SELECT ?artwork ?shape
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           kon:hasShape ?shape .
+}
+ limit 500
+ 
+Q52. CORRECT
+SELECT ?artwork ?owner
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P50_has_current_keeper ?owner .
+  ?owner a crm:E40_Legal_Body .
+}
+ limit 500
+ 
+Q53. CORRECT
+SELECT ?artwork ?material
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P45_consists_of ?material .
+}
+ limit 500
+ 
+Q54. CORRECT
+SELECT DISTINCT ?technique
+WHERE {
+  ?production a crm:E12_Production ;
+              crm:P32_used_general_technique ?technique .
+  
+  OPTIONAL {
+    ?object a crm:E22_Man-Made_Object ;
+            crm:P108i_was_produced_by ?production .
+  }
+}
+ limit 500
+ 
+Q55. CORRECT
+SELECT ?artist (COUNT(?production) AS ?numberOfProductions)
+WHERE {
+  ?production a crm:E12_Production ;
+              crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person .
+}
+GROUP BY ?artist
+ limit 500
+ 
+Q56. CORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?numberOfArtists)
+WHERE {
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person .
+}
+ limit 500
+ 
+Q57. CORRECT
+SELECT DISTINCT ?place
+WHERE {
+  ?place a crm:E53_Place .
+}
+ limit 500
+ 
+Q58. CORRECT
+SELECT DISTINCT ?place ?label
+WHERE {
+  ?place a crm:E53_Place ;
+         rdfs:label ?label .
+  FILTER CONTAINS(LCASE(?label), "thebes")
+}
+ limit 500
+ 
+Q59. CORRECT
+SELECT ?artist ?influencer
+WHERE {
+  ?artist a crm:E21_Person .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer a crm:E21_Person .
+}
+ limit 500
+ 
+Q60. CORRECT
+SELECT ?shape (COUNT(?artwork) AS ?numberOfArtworks)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object.
+  ?artwork kon:hasShape ?shape.
+}
+GROUP BY ?shape
+limit 500
+
+Q61. CORRECT
+SELECT ?place
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P7_took_place_at ?place .
+}
+ limit 500
+
+Q62. CORRECT
+SELECT ?technique WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+ limit 500
+
+Q63 CORRECT
+SELECT ?creator
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?creator .
+  ?creator a crm:E21_Person .
+}
+ limit 500
+
+Q64 CORRECT
+SELECT ?homepage WHERE {
+  ?artwork crm:P50_has_current_keeper ?legal_body .
+  ?legal_body foaf:homepage ?homepage .
+}
+ limit 500
+
+Q65. CORRECT
+SELECT ?artwork ?place WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crmsci:O19i_was_object_found_by ?encounterEvent .
+  ?encounterEvent crm:P7_took_place_at ?place .
+}
+ limit 500
+
+Q66. CORRECT
+SELECT ?technique (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+GROUP BY ?technique
+ORDER BY DESC(?artworkCount)
+LIMIT 1
+
+Q67. INCORRECT
+SELECT (COUNT(?artwork) AS ?numberOfArtworks)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place a crm:E53_Place ;
+         rdfs:label ?placeLabel .
+  FILTER(CONTAINS(LCASE(?placeLabel), "athens"))
+}
+ limit 500
+ 
+Q68. CORRECT
+SELECT ?place (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+}
+GROUP BY ?place
+ limit 500
+ 
+Q69. CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P14_carried_out_by ?group .
+  ?group a crm:E74_Group .
+}
+ limit 500
+
+Q70. CORRECT
+SELECT ?artwork ?period
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within ?period .
+  ?period a crm:E4_Period .
+}
+ limit 500
+ 
+Q71. CORRECT
+SELECT ?endYear
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endYear .
+}
+ limit 500
+ 
+Q72. CORRECT
+SELECT ?productionStartYear
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P4_has_time-span ?timeSpan .
+  ?timeSpan a crm:E52_Time-Span ;
+            crm:P82a_begin_of_the_begin ?productionStartYear .
+}
+ limit 500
+ 
+Q73. CORRECT
+SELECT ?influencer
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person ;
+          crm:P15_was_influenced_by ?influencer .
+}
+ limit 500
+ 
+Q74. CORRECT
+SELECT ?artwork ?productionYear
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan a crm:E52_Time-Span .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionYear .
+}
+ORDER BY ?productionYear
+LIMIT 5
+
+Q75. CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82b_end_of_the_end ?endYear .
+  FILTER (?endYear > "-0440"^^xsd:gYear)
+}
+ limit 500
+ 
+Q76. CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production .
+  ?production crm:P14_carried_out_by ?artist .
+  FILTER NOT EXISTS {
+    ?artist crm:P15_was_influenced_by ?influencer .
+  }
+}
+ limit 500
+ 
+Q77. INCORRECT
+SELECT ?artwork ?technique
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+}
+ limit 500
+
+Q78. CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?begin .
+  FILTER(?begin < "-0500"^^xsd:gYear)
+}
+ limit 500
+ 
+Q79. CORRECT
+SELECT ?year (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?year .
+}
+GROUP BY ?year
+ limit 500
+ 
+Q80. INCORRECT
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  OPTIONAL {
+    ?artwork crm:P108i_was_produced_by ?production .
+    ?production crm:P4_has_time-span ?timespan .
+    ?timespan crm:P82a_begin_of_the_begin ?beginYear .
+  }
+  FILTER(!BOUND(?beginYear))
+}
+ limit 500
+ 
+Q81. CORRECT
+SELECT ?lat ?long
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:lat ?lat ;
+                geo:long ?long .
+}
+ limit 500
+ 
+Q82. CORRECT
+SELECT ?exactMatch
+WHERE {
+  ?manMadeObject a crm:E22_Man-Made_Object .
+  ?manMadeObject crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P15_was_influenced_by ?influencer .
+  ?influencer skos:exactMatch ?exactMatch .
+}
+ limit 500
+ 
+Q83. CORRECT
+SELECT ?latitude (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:lat ?latitude .
+}
+GROUP BY ?latitude
+ limit 500
+ 
+Q84. INCORRECT
+SELECT ?artwork ?latitude ?longitude
+WHERE {
+  ?artwork crm:P45_consists_of ?material .
+  ?artwork kon:hasShape ?shape .
+  ?shape rdfs:label ?shapeLabel .
+  FILTER(CONTAINS(LCASE(?shapeLabel), "amphoriskos"))
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:lat ?latitude .
+  ?spatialThing geo:long ?longitude .
+}
+ limit 500
+ 
+q85. CORRECT
+SELECT ?influencer ?influencerLink
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person ;
+          crm:P15_was_influenced_by ?influencer .
+  ?influencer a crm:E21_Person ;
+              ?property ?influencerLink .
+  FILTER(CONTAINS(STR(?influencerLink), "wikidata"))
+}
+ limit 500
+
+Q86. CORRECT
+SELECT ?membership (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by/org:hasMembership ?membership .
+}
+GROUP BY ?membership
+ limit 500
+ 
+Q87. INCORRECT
+SELECT ?membership
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist org:hasMembership ?membership .
+}
+ limit 500
+ 
+Q88. CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  FILTER NOT EXISTS {
+    ?place crm:P168_place_is_defined_by ?spatialThing .
+    ?spatialThing geo:lat ?latitude .
+  }
+}
+ limit 500
+ 
+Q89. CORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place crm:P168_place_is_defined_by ?spatialThing .
+  ?spatialThing geo:long ?longitude .
+}
+ limit 500
+ 
+Q90. INCORRECT
+SELECT ?artwork ?artist ?influencer ?definition
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person ;
+          crm:P15_was_influenced_by ?influencer .
+  ?influencer a crm:E74_Group ;
+              crm:P1_is_identified_by ?definition .
+}
+ limit 500
+ 
+Q91. CORRECT
+SELECT DISTINCT ?artwork1 ?artwork2
+WHERE {
+  ?artwork1 a crm:E22_Man-Made_Object ;
+            crm:P108i_was_produced_by ?production1 .
+  ?production1 crm:P7_took_place_at ?place .
+  
+  ?artwork2 a crm:E22_Man-Made_Object ;
+            crm:P108i_was_produced_by ?production2 .
+  ?production2 crm:P7_took_place_at ?place .
+  
+  FILTER(?artwork1 != ?artwork2)
+}
+ limit 500
+ 
+Q92. CORRECT
+SELECT ?technique ?shape ?place
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P32_used_general_technique ?technique .
+  ?artwork kon:hasShape ?shape .
+  ?production crm:P7_took_place_at ?place .
+}
+ limit 500
+ 
+Q93. CORRECT
+SELECT DISTINCT ?artist
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?production crm:P32_used_general_technique ?technique1 .
+  ?production crm:P32_used_general_technique ?technique2 .
+  FILTER (?technique1 != ?technique2)
+}
+ limit 500
+ 
+Q94. CORRECT
+SELECT ?artwork ?startDate ?endDate
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  OPTIONAL {
+    ?timeSpan crm:P82a_begin_of_the_begin ?startDate .
+  }
+  OPTIONAL {
+    ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  }
+}
+ limit 500
+
+Q95 CORRECT
+SELECT ?artwork ?productionYear
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place skos:prefLabel "Athens"@en .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?productionYear .
+}
+ limit 500
+ 
+Q96. CORRECT
+SELECT ?shape (COUNT(?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           kon:hasShape ?shape ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82b_end_of_the_end ?endYear .
+  FILTER (xsd:gYear(?endYear) > "-0300"^^xsd:gYear)
+}
+GROUP BY ?shape
+ limit 500
+ 
+Q97. CORRECT
+SELECT ?endDate ?influencer
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production a crm:E12_Production ;
+              crm:P4_has_time-span ?timeSpan ;
+              crm:P14_carried_out_by ?artist .
+  ?timeSpan crm:P82b_end_of_the_end ?endDate .
+  ?artist crm:P15_was_influenced_by ?influencer .
+}
+ limit 500
+ 
+Q98 CORRECT
+SELECT (COUNT(DISTINCT ?artist) AS ?numArtists)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82b_end_of_the_end ?end .
+  FILTER (?end < "-0500"^^xsd:gYear)
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist a crm:E21_Person .
+}
+ limit 500
+ 
+Q99 CORRECT
+SELECT (COUNT(DISTINCT ?artwork) AS ?artworkCount)
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?startYear ;
+            crm:P82b_end_of_the_end ?endYear .
+  FILTER (?startYear != ?endYear)
+}
+ limit 500
+ 
+Q100 INCORRECT
+SELECT ?artwork ?productionYear WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           kon:hasShape ?shape ;
+           crm:P108i_was_produced_by ?production .
+  ?shape rdfs:label ?shapeLabel .
+  FILTER(CONTAINS(LCASE(?shapeLabel), "amphoriskos"))
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionYear .
+}
+ORDER BY ASC(?productionYear)
+LIMIT 5
+
+Q11-ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?parthenon crm:P108i_was_produced_by ?construction .
+  ?construction crm:P4_has_time-span ?construction_time .
+  ?construction_time crm:P82b_end_of_the_end ?end_year .
+  FILTER (?parthenon = <http://example.org/resource/Parthenon>)
+
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?production_time .
+  ?production_time crm:P82b_end_of_the_end ?artwork_end_year .
+  FILTER (?artwork_end_year > ?end_year)
+}
+ limit 500
+
+Q12 ENRICHED CORRECT
+SELECT ?artwork ?productionYear
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginYear ;
+            crm:P82b_end_of_the_end ?endYear .
+  
+  FILTER (xsd:gYear(?beginYear) >= '-0384'^^xsd:gYear && xsd:gYear(?endYear) <= '-0322'^^xsd:gYear)
+}
+ limit 500
+ 
+Q13. ENRICHED CORRECT
+SELECT ?artwork ?title
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P1_is_identified_by ?appellation .
+  ?appellation a crm:E33_E41_Linguistic_Appellation ;
+               crm:P190_has_symbolic_content ?title .
+  FILTER (regex(?title, "Zeus|Hera|Poseidon|Demeter|Athena|Apollo|Artemis|Ares|Aphrodite|Hephaestus|Hermes|Hestia", "i"))
+}
+ limit 500
+ 
+Q14. ENRICHED CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P7_took_place_at ?place .
+  ?place skos:prefLabel "Athens"@en .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?begin .
+  FILTER (?begin > "-0490"^^xsd:gYear)
+}
+limit 500
+
+Q15.ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P10_falls_within|crm:P14_carried_out_by ?period .
+  ?period crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?startYear ;
+            crm:P82b_end_of_the_end ?endYear .
+  FILTER (xsd:gYear(?startYear) >= '-0478'^^xsd:gYear && xsd:gYear(?endYear) <= '-0431'^^xsd:gYear)
+}
+ limit 500
+
+Q16. enriched correct
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P1_is_identified_by ?appellation .
+  ?appellation a crm:E33_E41_Linguistic_Appellation ;
+               crm:P190_has_symbolic_content ?title .
+  FILTER(CONTAINS(LCASE(?title), "hephaestus"))
+}
+ limit 500
+
+Q17. enriched incorrect
+SELECT ?artist ?definition
+WHERE {
+  ?artist a crm:E21_Person ;
+          skos:definition ?definition .
+  FILTER(CONTAINS(LCASE(?definition), "son of peleus and thetis"))
+}
+ limit 500
+
+Q18. enriched correct
+SELECT ?artwork
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P108i_was_produced_by ?production .
+  ?production crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?start .
+
+  FILTER (?start > "-0490"^^xsd:gYear && ?start < "-0480"^^xsd:gYear)
+}
+ limit 500
+ 
+Q19. enriched incorrect
+SELECT DISTINCT ?artwork
+WHERE {
+  ?person a crm:E21_Person ;
+          skos:prefLabel "Socrates" .
+  ?production crm:P14_carried_out_by ?person ;
+              crm:P7_took_place_at ?birthPlace .
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?birthPlace a crm:E53_Place .
+}
+ limit 500
+ 
+Q20. ENRICHED CORRECT
+SELECT ?artwork ?title
+WHERE {
+  ?artwork a crm:E22_Man-Made_Object ;
+           crm:P1_is_identified_by ?appellation .
+  ?appellation a crm:E33_E41_Linguistic_Appellation ;
+               crm:P190_has_symbolic_content ?title .
+  FILTER(CONTAINS(LCASE(?title), "priam"))
+}
+ limit 500
+ 
+
+

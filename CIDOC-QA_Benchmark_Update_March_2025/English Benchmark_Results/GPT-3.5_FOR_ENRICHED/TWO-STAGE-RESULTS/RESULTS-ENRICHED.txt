@@ -1,0 +1,225 @@
+Q1-ENRICHED CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?artist .
+  ?artist crm:P92i_was_brought_into_existence_by ?beginning .
+  ?beginning crm:P7_took_place_at ?birthplace .
+  ?birthplace rdfs:label "Toulouse, France" .
+  ?beginning crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?beginDate .
+  ?timespan crm:P82b_end_of_the_end ?endDate .
+  FILTER(?beginDate >= "1803-01-01"^^xsd:date && ?endDate <= "1815-12-31"^^xsd:date)
+}
+ limit 500
+ 
+Q2-ENRICHED INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?birthPlaceLabel .
+  FILTER (lang(?birthPlaceLabel) = "en" && regex(?birthPlaceLabel, "Italy"))
+}
+ORDER BY DESC(?birthPlace)
+LIMIT 3
+
+Q3. ENRICHD CORRECT
+SELECT ?artist
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?birthPlaceLabel .
+  FILTER(LANG(?birthPlaceLabel) = "" || LANGMATCHES(LANG(?birthPlaceLabel), "en"))
+  FILTER(REGEX(?birthPlaceLabel, "Greece", "i"))
+  FILTER NOT EXISTS {
+    ?birthPlace rdfs:label ?capitalLabel .
+    FILTER(LANG(?capitalLabel) = "" || LANGMATCHES(LANG(?capitalLabel), "en"))
+    FILTER(REGEX(?capitalLabel, "Athens", "i"))
+  }
+  
+Q4-ENRICHED CORRECT
+SELECT DISTINCT ?artwork
+WHERE {
+  ?artwork crm:P102_has_title ?title .
+  ?title rdf:value ?value .
+  FILTER(REGEX(?value, "Mercury|Venus|Earth|Mars|Jupiter|Saturn|Uranus|Neptune", "i"))
+}
+ limit 500
+ 
+Q5-ENRICHED INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist crm:P131_is_identified_by ?appellation .
+  ?appellation crm:P106_is_composed_of ?part .
+  ?part crm:E82_Actor_Appellation ?name .
+  FILTER(REGEX(?name, "Van Gogh", "i") || REGEX(?name, "Picasso", "i"))
+}
+ limit 500
+ 
+Q6-ENRICHED CORRECT
+SELECT (COUNT(?artwork) AS ?count)
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?start_date .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?end_date .
+  FILTER(?start_date > "1945-09-02"^^xsd:date && ?end_date < "1989-11-09"^^xsd:date)
+}
+ limit 500
+
+Q7-ENRICHED INCORRECT
+SELECT ?artist ?artwork
+WHERE {
+  ?artist a crm:E39_Actor ;
+          crm:P92i_was_brought_into_existence_by ?birth ;
+          crm:P14_carried_out_by/crm:P108i_was_produced_by/crm:P41i_was_classified_by ?artwork ;
+          crm:P131_is_identified_by/crm:P82a_begin_of_the_begin ?birthDate .
+  FILTER(xsd:date(?birthDate) > "1992-07-25"^^xsd:date)
+}
+GROUP BY ?artist ?artwork
+ limit 500
+
+Q8-ENRICHED INCORRECT
+SELECT ?artist
+WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by/crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label ?city .
+  FILTER(?city = "Toledo")
+  FILTER(?artist != <http://example.org/elgreco>)
+}
+ limit 500
+ 
+Q9-ENRICHED INCORRECT
+SELECT (COUNT(?artist) AS ?count)
+WHERE {
+  ?artist crm:P92i_was_brought_into_existence_by ?beginExistence .
+  ?beginExistence crm:P7_took_place_at ?birthPlace .
+  ?birthPlace rdfs:label "Italy"@en .
+  ?beginExistence crm:P4_has_time-span ?birthTimeSpan .
+  ?birthTimeSpan crm:P82a_begin_of_the_begin ?beginDate .
+  ?birthTimeSpan crm:P82b_end_of_the_end ?endDate .
+  FILTER(?beginDate >= "1452-04-15"^^xsd:date && ?endDate <= "1519-05-02"^^xsd:date)
+}
+ limit 500
+
+
+Q10-ENRICHED CORRECT
+SELECT ?productionDate
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?actor .
+  ?actor crm:P131_is_identified_by ?appellation .
+  ?appellation rdf:value ?title .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?productionDate .
+  FILTER regex(?title, "Zeus|Hera|Poseidon|Demeter|Athena|Apollo|Artemis|Ares|Aphrodite|Hermes|Hephaestus|Hestia", "i")
+}
+ limit 500
+
+
+Q11-ENRICHED CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82b_end_of_the_end ?endYear .
+  FILTER(?endYear > "-0430"^^xsd:gYear)
+  ?artwork a crm:E22_Man-Made_Object .
+}
+ limit 500
+ 
+Q12-ENRICHED INCORRECT
+SELECT ?productionYear
+WHERE {
+  ?artwork crm:P108i_was_produced_by ?production .
+  ?production crm:P14_carried_out_by ?person .
+  ?person crm:P15_was_influenced_by ?aristotle .
+  ?production crm:P4_has_time-span ?timeSpan .
+  ?timeSpan crm:P82a_begin_of_the_begin ?beginYear .
+  BIND(xsd:gYear(?beginYear) AS ?productionYear)
+}
+ limit 500
+ 
+Q13-ENRICHED CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P1_is_identified_by/crm:P190_has_symbolic_content ?title.
+  FILTER (
+    CONTAINS(?title, "Zeus") ||
+    CONTAINS(?title, "Poseidon") ||
+    CONTAINS(?title, "Hades") ||
+    CONTAINS(?title, "Hermes") ||
+    CONTAINS(?title, "Apollo") ||
+    CONTAINS(?title, "Ares") ||
+    CONTAINS(?title, "Athena") ||
+    CONTAINS(?title, "Hera") ||
+    CONTAINS(?title, "Demeter") ||
+    CONTAINS(?title, "Dionysus") ||
+    CONTAINS(?title, "Hephaestus") ||
+    CONTAINS(?title, "Hestia")
+  )
+}
+ limit 500
+ 
+Q14-ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at/crm:P168_place_is_defined_by/geo:location ?location .
+  ?location rdfs:label "Athens"@en .
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?begin .
+  FILTER(?begin > "-0499"^^xsd:gYear)
+}
+ limit 500
+ 
+Q15 ENRICHED CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?start .
+  ?timespan crm:P82b_end_of_the_end ?end .
+  FILTER(?start >= "-0499"^^xsd:gYear && ?end <= "-0401"^^xsd:gYear)
+}
+ limit 500
+ 
+Q16-ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P1_is_identified_by/crm:P190_has_symbolic_content ?title .
+  FILTER(contains(?title, "Greek God of Fire"))
+}
+ limit 500
+ 
+Q17 ENRICHED INCORRECT
+SELECT DISTINCT ?artist
+WHERE {
+  ?artist a crm:E21_Person ;
+          skos:definition ?definition .
+  FILTER regex(?definition, "son of Peleus and Thetis", "i")
+}
+ limit 500
+ 
+Q18 ENRICHED CORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P4_has_time-span ?timespan .
+  ?timespan crm:P82a_begin_of_the_begin ?start .
+  FILTER(?start > "-0499-01-01"^^xsd:gYear)
+  FILTER(?start < "-0480-01-01"^^xsd:gYear)
+}
+ limit 500
+ 
+Q19 ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P108i_was_produced_by/crm:P14_carried_out_by/crm:P15_was_influenced_by/crm:E21_Person rdfs:label "Socrates" .
+  ?artwork crm:P108i_was_produced_by/crm:P7_took_place_at ?place .
+  ?place crm:P89_falls_within/(crm:P89_falls_within/(crm:P168_place_is_defined_by/geo:location/geo:SpatialThing)) ?birthPlace .
+  ?birthPlace skos:prefLabel ?birthPlaceLabel .
+  FILTER(LANG(?birthPlaceLabel) = "")
+}
+ limit 500
+ 
+Q20 ENRICHED INCORRECT
+SELECT ?artwork
+WHERE {
+  ?artwork crm:P1_is_identified_by/crm:P190_has_symbolic_content ?title .
+  ?artwork crm:P1_is_identified_by/crm:P2_has_type ?titleType .
+  FILTER(CONTAINS(STR(?title), "last king of Troy"))
+}
+ limit 500
