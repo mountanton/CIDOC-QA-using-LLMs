@@ -1,0 +1,558 @@
+/* Popup container - can be anything you want */
+* {
+    box-sizing: border-box;
+}
+
+.loader1 {
+    border: 5px solid #f3f3f3;
+    border-radius: 10%;
+    border-top: 5px solid #3498db;
+    width: 10px;
+    height: 10px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 10%;
+    border-top: 5px solid #3498db;
+    width: 10px;
+    height: 10px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+#nav {
+    width:850px;
+    margin:0 auto;
+    padding:5px 10px;
+    text-align:center;
+    border-bottom-width:2px;
+    border:2px solid;
+    border-radius:25px;
+    border-bottom-color:gray;
+    background-color:#FFFFF0;
+
+    /* Border at the bottom missing (gray, 2px), bg color #FFFFE0; OK*/
+}
+
+#nav ul {
+
+    padding-left:0px;
+    display:block;
+}
+
+/* Rule missing! The unordered list must have items that have no bullets! OK */
+#nav ul{
+    list-style-type:none;
+}
+
+/* Rule missing! List items of the #nav element must be displayed horizontally, padding also missing OK*/
+
+#nav li {
+
+    display:inline;
+    padding-right:20px;
+}           
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    outline: 0 none;
+    border: 0 none;
+    height: 100%;
+    width: 100%;
+    background-color:#E7EBF2;
+    font: 14px sans-serif;
+}
+
+.contentContainer a {
+    color: green;
+    text-decoration: none;
+}
+
+.contentContainer a:hover {
+    text-decoration: underline;
+}
+
+/**** HEADER ****/
+
+.headerContainer {
+    width:900px;
+
+    text-align:center;
+    border-bottom-color:gray;
+    display: center;
+    clear: both;
+    margin-left: auto ;
+    margin-right: auto ;
+    background-color: #33CC66;
+    border-bottom-width:2px;
+    border:2px solid;
+    border-radius:25px;
+    border-bottom-color:gray;
+}
+
+.header {
+    width: 860px;
+    margin: 0 auto;
+    position:relative;
+    clear:both;
+}
+
+.logo {
+    position: relative;
+    float: left;
+    margin-top: 30px;
+    margin-bottom: 8px;
+    clear:both;
+}
+
+.logo a {
+    float:left;
+    text-decoration: none;
+}
+
+.logo_right {
+    position: relative;
+    float:left;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+}
+
+.logotext{
+    font-size:35px;
+    color: #E7EBF2;
+    font-family: arial;
+    color: white; 
+    clear:both;
+}
+.menu {
+    margin-top:0px;
+    position: relative;
+    float:center;
+    clear: both;
+    font: 18px sans-serif;
+    line-height: 24px;
+    padding-top: 0px;
+    margin-left: 0px;
+}
+
+.menuitems {
+    position: relative;
+    margin:0px;
+    padding: 0px;
+}
+
+.menuitem {
+    margin-left:10px;
+    margin-right:10px;
+    clear:both;
+}
+
+.menuitem a {
+    color: white;
+    font-family: Calibri;
+    text-decoration: none;
+}
+
+.menuitem a:hover {
+    color: yellow;
+}
+
+.menuitemNomargin {
+    float:left; 
+    width: auto;
+    margin-left:0px;
+    margin-right:00px;
+}
+
+.menuitemNomargin a {
+    color: white;
+    font-family: Calibri;
+    text-decoration: none;
+}
+
+.menuitemNomargin a:hover {
+    color: yellow;
+}
+
+
+/*****************/
+
+
+/**** CONTENT ****/
+
+.contentContainer {
+    position:relative;
+    vertical-align: baseline;
+    height: auto;
+    width: 100%;
+    clear: both;
+    float:left;
+    border-bottom: 1px solid whit;
+    font-family: Arial;
+    background-color: #E7EBF2;
+}
+
+.contentContainer p {
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.content {
+    width: 900px;
+    margin: 0 auto;
+    position:relative;
+    background-color: #E7EBF2;
+}
+
+.bgcontent {
+    background-color: white;
+    margin-top: 20px;
+    border: 1px solid darkgreen;
+    width: 860px;
+    border:2px solid;
+    border-radius:25px;
+    height: auto;
+    float: left;
+    padding-top: 0px;
+    padding-left: 20px;
+    padding-right: 15px;
+    margin-bottom: 30px;
+}
+
+.myphoto {
+    margin-right: 8px;
+    margin-bottom: 5px;
+    float: left;
+    border: 1px solid gray;
+}
+
+.imageuoc {
+    margin-right: 8px;
+    float: left;
+    border: 0px solid gray;
+    margin-left: -178px;
+    margin-top: -65px;
+}
+.subContent {
+    position: relative;
+    float: left;
+    clear: both;
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.emptyContent {
+    position: relative;
+    float: left;
+    clear: both;
+    width: auto;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.subContentTitle {
+    float: left;
+    clear: both;
+    color: #222222;
+    font: 26px calibri;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    letter-spacing: -0.02em;
+}
+
+.subContentText {
+    float: left;
+    clear: both;
+    width: auto;
+    text-align: justify;
+    padding-left:7px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    padding-top: 7px;
+    border-left: 3px solid darkgreen;
+    margin-left: 2px;
+    margin-right: 3px;
+    z-index: 999;
+}
+
+.subContentTextTitle {
+    font-size: 15px;
+    font-style: italic;
+}
+
+.myname{
+    color: #222222;
+    font-weight: bold;
+}
+
+.contentList {
+    padding-left:20px;
+    margin:0;
+    clear:both;
+}
+
+.left{
+    float:left;
+    width: 480px;
+    clear:left;
+    padding-right:20px;
+}
+.img1{
+    padding-right:10px;
+    padding-left:60px;
+    margin: auto;
+}
+.img2{
+    padding-right:10px;
+    padding-left:10px;
+    margin: auto;
+    float:right;
+}
+.img3{
+    padding-right:25px;
+    padding-left:40px;
+    margin: auto;
+}
+.img4{
+    padding-right:25px;
+    padding-left:0px;
+    margin: auto;
+}
+.right{
+    float:right;
+    width: 300px;
+    margin:auto;
+}
+
+.left1{
+    width: 720px;
+    float:left;
+    padding-right:50px;
+    clear:both;
+}
+
+.right1{
+    width: 100px;
+    margin-top:0px;
+    position: relative;
+    float:center;
+    clear: both;
+    font: 17px sans-serif;
+    line-height: 24px;
+    padding-top: 10px;
+    padding-right: 10px;
+    margin-left: 0px;
+}
+.welcome {
+    font-family: "Times New Roman";
+
+    font-size: 26px;
+}
+/*****************/
+
+/**** PUBLICATIONS ****/
+.pubitem {
+    position: relative;
+    clear: both;
+    margin: 15px 10px 2px auto;
+    width: 100%;
+    height: auto;
+}
+
+.pubyear {
+    position: relative;
+    clear: both;
+    float:left;
+    margin: 0 auto;
+    height: auto;
+    padding-bottom: 5px;
+    font: 22px calibri;
+}
+
+.subcontenttitle {
+    position: relative;
+    clear: both;
+    float:left;
+    margin: 0 auto;
+    height: auto;
+    padding-bottom: 5px;
+    font: 22px calibri;
+}
+
+.pubspace {
+    position: relative;
+    clear: both;
+    margin: 0 auto;
+    height: 15px;
+}
+
+.pubauthors {
+    position: relative;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+}
+
+.pubtitle {
+    position: relative;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    font-style: italic;
+}
+
+.pubconf {
+    position: relative;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+}
+
+.incollab {
+    font-size:14px;
+}
+
+.pubfiles {
+    position: relative;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    font-family: monospace;
+}
+
+
+/**** FOOTER ****/
+.footerContainer {
+    position:relative;
+    float:left;
+    clear: both;
+    height: auto;
+    width: 100%;
+    border-bottom: 1px solid darkgreen;
+    background-color: black;
+    background-image: url("files/images/vertical_strip.png");
+}
+
+.footer {
+    width: 900px;
+    min-height:130px;
+    position:relative;
+    margin: 10px auto;
+    clear: both;
+    color: gray;
+    font-size: 12px;
+
+}
+
+.footerLeft {
+    position: relative;
+    float: left;
+    font-size: 13px;
+    width:300px;
+}
+
+.footerCenter {
+    position: relative;
+    float: left;
+    font-size: 13px;
+    width:300px;
+    text-align: center;
+}
+
+.footerRight {
+    position: relative;
+    float: right;
+    font-size: 13px;
+}
+
+.affiliationLogos {
+    position: relative;
+    margin:0 auto;
+    text-align: center;
+}
+
+.slogan:hover {
+    color: white;
+}
+
+.createdBy {
+
+    float: right;
+}
+
+.footer a {
+    color: gray;
+    text-decoration: none;
+}
+
+.footer a:hover {
+
+    color: whitesmoke;
+}
+
+.cssValid{
+    float:right;
+}
+
+/* *************** */
+
+.gotoptext {
+    font-size:12px;
+}

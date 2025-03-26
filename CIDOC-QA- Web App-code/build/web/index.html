@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <title>Text-2-CIDOC-CRM Query</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="Keywords" content="warehouse, linked data, semantic, sparql" />
+        <script src="js/allFunctions.js" defer></script>
+    </head>
+    <body class="subpage">
+
+        <!-- Header -->
+        <header id="header">
+            <div class="logo"><a href="https://demos.isl.ics.forth.gr/Text2CIDOC">Text-2-CIDOC-CRM Query (TCRMQ)<span> SAR group ISL-FORTH</span></a></div>
+            <a href="#menu">Menu</a>
+        </header>
+
+
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="https://demos.isl.ics.forth.gr/Text2CIDOC">Home Page</a></li>
+                <li><a href="http://83.212.101.193:4200/CIDOC-CRM_Portal">CIDOC-CRM Portal</a></li>
+                <li><a href="https://github.com/mountanton/CIDOC-QA-using-LLMs">CIDOC-CRM QA LLMs Github</a></li>
+            </ul>
+        </nav>
+
+
+        <!-- One -->
+        <section id="One" class="wrapper style3">
+            <div class="inner">
+                <header class="align-center">
+                    <p style="font-size:1.3rem">Text to SPARQL Service</p><!--<img src="images/gptlods_logo2.png" width="120" /> --->
+                    <h2>Generating CIDOC-CRM SPARQL Queries from Text</h2>
+                </header>
+            </div>
+        </section>
+
+        <!-- Two -->
+        <section id="two" class="style2" >
+            <div class="inner">
+                <div id="main" class="box">
+                    <div class="content" >
+
+                        <div style="width: 53%; float:left;">
+                            <h4 align="center">Ask a Natural Question to CIDOC-CRM Knowledge Graphs</h4>        
+                            <textarea rows="2" cols="20" id="question" style="font-size: 18px;  resize: vertical;">Give me for each artist his birth date</textarea>
+                            <a id="example1"  style="margin-left:15px; margin-right:15px" onclick="change(1);">Artwork Holder</a>
+                            <a id="example2" style="margin-right:15px" onclick="change(2);">Artist Birth Place</a> 
+                            <a id="example3"  style="margin-right:15px" onclick="change(3);">Artwork Production</a>
+                            <a id="example4"  style="margin-right:15px" onclick="change(4);">Artwork Image</a>
+                            <a id="example5" onclick="change(5);">Pairs of Artist Birth</a>                            
+                            <br> <br>
+
+
+                            <label for="method" style="display:inline-block;">Method:</label>
+
+                            <select name="method" id="method" style="width:15%; display:inline-block;">
+                                <option value="two-stage">Two-Stage</option>
+                                <option value="zero-shot">Zero Shot</option>
+                                <option value="onto">Ontology terms</option>
+                                <option value="path1">Triple Patterns</option>
+                                <option value="path2">(r=2) Path Patterns</option>
+                                <option value="path3">(r=3) Path Patterns</option>
+                                <!--<option value="path4">Path Patterns (r=4)</option>-->
+                            </select> 
+
+                            <label for="output" style="display:inline-block;  margin-left:2px">Output:</label>
+                            <select name="output" id="output" style="width:19%; display:inline-block; " >
+                                <option value="directAnswer">Direct Answer</option>
+                                <option value="onlySPARQL">SPARQL query</option>
+                                <!--<option value="SPARQLAnswer">SPARQL Query Answer</option>-->
+                            </select> 
+                            
+                            <label for="kg" style="display:inline-block;  margin-left:2px">KG:</label>
+
+                            <select name="kg" id="kg" style="width:11%; display:inline-block;" onchange="changeExamples()">
+                                <option value="saam">SAAM</option>
+                                <option value="kerameikos">Kerameikos</option>
+                            </select> 
+                            
+                           <label for="model" style="display:inline-block;  margin-left:2px;">GPT:</label>
+                            <select name="model" id="model" style="width:11%; display:inline-block;" >
+                                <option value="gpt-4o-2024-08-06">4</option>
+                                <option value="gpt-3.5-turbo-16k">3.5</option>
+                                <option value="gpt-4o-mini">4-mini</option>
+                                <!--<option value="SPARQLAnswer">SPARQL Query Answer</option>-->
+                            </select> 
+
+                           
+                            <button style="text-align: center; font-size:14px; margin-left:2px; float:right;" class="button special" id="subButton" onclick="submit();">Run</button> 
+
+                            <br><br>
+                            <!--
+                            <button style="text-align: center; font-size:15px;" class="button special" id="myBtn1" onclick="getAnswer();">Direct Answer</button> 
+                          
+                           <button style="text-align: center; font-size:15px;" class="button special" id="myBtn2" onclick="getSPARQL();">Get SPARQL Query from ChatGPT</button>  
+                           <button style="text-align: center; font-size:15px;" class="button special" id="myBtn3" onclick="getSPARQLAnswer();">Get SPARQL Answer</button><BR><BR>
+                           <br> -->
+                            
+                            <h4 align="center"  >Generated SPARQL Query (ChatGPT)</h4> 
+
+
+
+                            <textarea rows="11" cols="20" id="sparql" style="font-size: 15px;  resize: vertical;"></textarea><BR>                                                  
+                            <button style="text-align: center; font-size:15px;  float:left;" class="button special" id="prefixButton" onclick="showHidePrefixes();"disabled>Show Prefixes</button>
+                            <button style="text-align: center; font-size:15px;  float:right;" class="button special" id="runButton" onclick="run();" disabled>Run SPARQL Query</button>
+                        </div>
+                        <div id="results" style="width: 45%;float:right;">
+                            <h4 align="center">SPARQL Results</h4>
+                            <div id="msg"></div>
+                            <div id="factsRetrieved" style='font-size:15px; width: 100%; height: 700px;
+                                 overflow-y: scroll;display: none'></div>
+                        </div>
+
+
+                        <div style="width: 100%; height: 2%;  clear:both"></div>
+
+
+                        <!--<h3>User Prompt</h3></p>
+                        <div id="antext"> -->
+                        <div id="antext" style=" border-style: solid;
+                             border-radius: 6px;
+                             border-width: 2px;
+                             border-color: #000;">
+                            <!--<p  class="solid" align="justify"></p>-->
+                        </div>               
+                        <a class="button special" style="float:right;margin:10px" href="http://83.212.101.193:4200/CIDOC-CRM_Portal">CIDOC-CRM Portal</a>
+
+                        <a class="button special" style="float:right;margin:10px" href="https://github.com/mountanton/CIDOC-QA-using-LLMs"> Github Page</a>
+
+                        <a class="button special" style="float:right;margin:10px" href="https://youtu.be/v2zo_xFOaY8">Tutorial Video</a>
+
+                        </section>
+
+                        <!-- Footer -->
+
+                        <div class="copyright" style="height:40px;font-size:12px; background-color: black;color:white;text-align:center;padding-top:10px">
+                            <a href="http://www.ics.forth.gr/isl/sar/privacy/TermsOfUse-ISL_EN.pdf" class="footer-links" target="_blank">Terms of Use</a>
+                            |
+                            <a href="http://www.ics.forth.gr/isl/sar/privacy/PrivacyPolicy-ISL_EN.pdf" style="padding-left:0px!important;" class="footer-links" target="_blank">Privacy Policy</a>
+                            | &copy; Copyright 2025 FOUNDATION FOR RESEARCH & TECHNOLOGY - HELLAS, All rights reserved.
+                        </div>
+
+                        <footer id="footer" style="background-color:#5B5B5B;padding-top:1rem">
+                            <img style="float:right;margin-right:20px" src="images/islLogo_En_Main_web_700x237px.png" height="35" >
+                            <img  style="float:right;margin-right:25px;" src="images/ics-diskin-en-transparent-white.png" height="35" >
+                            <br><br> <p style="float:right;margin-right:20px;color:#D1D1D1;font-size: 12pt;font-family:Myriad Pro"> Designed and developed by <a href="https://www.ics.forth.gr/isl"
+                                                                                                                                                                 style="color:white">ISL Team</a></p>
+                        </footer>
+                        <!-- Scripts -->
+                        <script src="assets/js/jquery.min.js"></script>
+                        <script src="assets/js/jquery.scrollex.min.js"></script>
+                        <script src="assets/js/skel.min.js"></script>
+                        <script src="assets/js/util.js"></script>
+                        <script src="assets/js/main.js"></script>
+
+                        </body>
+                        </html>
